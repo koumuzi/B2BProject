@@ -27,6 +27,11 @@ public class AdminLoginController extends BaseController {
         logger.info("转到后台管理-登录页");
         return "admin/loginPage";
     }
+    
+    @RequestMapping(value ="admin/SaleStatistics")
+    public String getSaleStatistics() {
+    	return "admin/SaleStatistics";
+    }
 
     //登陆验证-ajax
     @ResponseBody
