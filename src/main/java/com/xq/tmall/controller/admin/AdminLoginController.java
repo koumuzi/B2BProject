@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -28,6 +30,13 @@ public class AdminLoginController extends BaseController {
         return "admin/loginPage";
     }
     
+    //转到前台天猫-主页
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String goPage() {
+	    return "admin/loginPage";
+	}
+	
+	
     @RequestMapping(value ="admin/SaleStatistics")
     public String getSaleStatistics() {
     	return "admin/SaleStatistics";

@@ -37,39 +37,39 @@ public class ForeHomeController extends BaseController {
     @Resource(name="productImageService")
     private ProductImageService productImageService;
 
-    //转到前台天猫-主页
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String goToPage(HttpSession session, Map<String, Object> map) {
-        logger.info("检查用户是否登录");
-        Object userId = checkUser(session);
-        if (userId != null) {
-            logger.info("获取用户信息");
-            User user = userService.get(Integer.parseInt(userId.toString()));
-            map.put("user", user);
-        }
-        logger.info("获取产品分类列表");
-        List<Category> categoryList = categoryService.getList(null,null);
-        logger.info("获取每个分类下的产品列表");
-       for(Category category : categoryList){
-           logger.info("获取分类id为{}的产品集合，按产品ID倒序排序", category.getCategory_id());
-           List<Product> productList = productService.getList(new Product().setProduct_category(category), new Byte[]{0, 2}, new OrderUtil("product_id", true), new PageUtil(0, 8));
-           if (productList != null) {
-               for (Product product : productList) {
-                   Integer product_id = product.getProduct_id();
-                   logger.info("获取产品id为{}的产品预览图片信息", product_id);
-                   product.setSingleProductImageList(productImageService.getList(product_id, (byte) 0, new PageUtil(0, 1)));
-               }
-           }
-           category.setProductList(productList);
-       }
-        map.put("categoryList",categoryList);
-        logger.info("获取促销产品列表");
-        List<Product> specialProductList = productService.getList(null, new Byte[]{2}, null, new PageUtil(0, 6));
-        map.put("specialProductList", specialProductList);
-
-        logger.info("转到前台主页");
-        return "fore/homePage";
-    }
+//    //转到前台天猫-主页
+//    @RequestMapping(value = "/", method = RequestMethod.GET)
+//    public String goToPage(HttpSession session, Map<String, Object> map) {
+//        logger.info("检查用户是否登录");
+//        Object userId = checkUser(session);
+//        if (userId != null) {
+//            logger.info("获取用户信息");
+//            User user = userService.get(Integer.parseInt(userId.toString()));
+//            map.put("user", user);
+//        }
+//        logger.info("获取产品分类列表");
+//        List<Category> categoryList = categoryService.getList(null,null);
+//        logger.info("获取每个分类下的产品列表");
+//       for(Category category : categoryList){
+//           logger.info("获取分类id为{}的产品集合，按产品ID倒序排序", category.getCategory_id());
+//           List<Product> productList = productService.getList(new Product().setProduct_category(category), new Byte[]{0, 2}, new OrderUtil("product_id", true), new PageUtil(0, 8));
+//           if (productList != null) {
+//               for (Product product : productList) {
+//                   Integer product_id = product.getProduct_id();
+//                   logger.info("获取产品id为{}的产品预览图片信息", product_id);
+//                   product.setSingleProductImageList(productImageService.getList(product_id, (byte) 0, new PageUtil(0, 1)));
+//               }
+//           }
+//           category.setProductList(productList);
+//       }
+//        map.put("categoryList",categoryList);
+//        logger.info("获取促销产品列表");
+//        List<Product> specialProductList = productService.getList(null, new Byte[]{2}, null, new PageUtil(0, 6));
+//        map.put("specialProductList", specialProductList);
+//
+//        logger.info("转到前台主页");
+//        return "fore/homePage";
+//    }
 
     //转到前台天猫-错误页
     @RequestMapping(value = "error", method = RequestMethod.GET)
