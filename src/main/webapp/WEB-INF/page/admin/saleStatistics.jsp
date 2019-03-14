@@ -3,8 +3,11 @@
 <html>
 <head>
     <script>
+    var myChart
+     $(function () {
+    	 $(function() {	
     var dom = document.getElementById("chartDiv");
-    var myChart = echarts.init(dom);
+    myChart = echarts.init(dom);
     var app = {};
     option = null;
     app.title = '销售情况统计';
@@ -44,20 +47,78 @@
                 data: []
             }
         ]
-    };
-    ;
+    }
     if (option && typeof option === "object") {
         myChart.setOption(option, true);
     }
+   		 getSaleData(null, null, null);
+   		
+    });
     
     //设置日期控件约束
     var date = new Date();
     date.setDate(date.getDate() - 1);
     var formatDate = FormatDate(date);
     $("#input_endDate").attr("max", formatDate).attr("min", "2018-01-07").val(formatDate);
-    date.setDate(date.getDate() - 6);
-    formatDate = FormatDate(date);
-    $("#input_beginDate").val(formatDate).attr("min", formatDate).attr("max", formatDate);
+    $("#input_beginDate").attr("max", formatDate).attr("min", "2018-01-07").val(formatDate);
+    
+	 //格式化日期
+    function FormatDate(strTime) {
+        var date = new Date(strTime);
+        var formatedMonth = ("0" + (date.getMonth() + 1)).slice(-2);
+        var formatedDate = ("0" + (date.getDate())).slice(-2);
+        return date.getFullYear() + "-" + formatedMonth + "-" + formatedDate;
+    }
+	 
+  //获取图表数据
+   
+     });
+    
+    function getSaleData(beginDate, endDate,saleJson ) {
+
+        if (saleJson == null) {
+            $.ajax({
+                url: "/tmall/admin/home/sale",
+                type: "get",
+                data: {"beginDate": beginDate, "endDate": endDate},
+                dataType: "json",
+                success: function (data) {
+                    $(".loader").css("display", "none");
+                    $("#btn_chart_search").attr("disabled", false);
+                    //异步加载数据
+                    myChart.setOption({
+                       yAxis: {
+                    	   	type: "category",
+                            data: data.category
+                        },
+                        series: [{
+                            name: "销售量",
+                            type:"bar",
+                           data: data.salecount
+                        }]
+                    });
+                }, beforeSend: function () {
+                    $(".loader").css("display", "block");
+                    $("#btn_chart_search").attr("disabled", true);
+                    $("span.select").removeClass("select");
+                }
+            });
+        } else {
+            //异步加载数据
+        	myChart.setOption({
+                yAxis: {
+             	   	type: "category",
+                     data: saleJson.category
+                 },
+                 series: [{
+                     name: "销售量",
+                     type:"bar",
+                    data: saleJson.salecount
+                 }]
+             });
+        }
+    }
+    
     </script>
     <style rel="stylesheet">
         #chartByDate {

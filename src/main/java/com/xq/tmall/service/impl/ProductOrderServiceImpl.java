@@ -3,6 +3,7 @@ package com.xq.tmall.service.impl;
 import com.xq.tmall.dao.ProductOrderMapper;
 import com.xq.tmall.entity.OrderGroup;
 import com.xq.tmall.entity.ProductOrder;
+import com.xq.tmall.entity.ProductSale;
 import com.xq.tmall.service.ProductOrderService;
 import com.xq.tmall.util.OrderUtil;
 import com.xq.tmall.util.PageUtil;
@@ -64,4 +65,10 @@ public class ProductOrderServiceImpl implements ProductOrderService{
     public Integer getTotal(ProductOrder productOrder, Byte[] productOrder_status_array) {
         return productOrderMapper.selectTotal(productOrder,productOrder_status_array);
     }
+
+	@Override
+	public List<ProductSale> getSaleByDate(Date beginDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return productOrderMapper.getSaleByDate(beginDate, endDate);
+	}
 }

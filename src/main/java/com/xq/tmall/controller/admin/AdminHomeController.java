@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.Admin;
 import com.xq.tmall.entity.OrderGroup;
+import com.xq.tmall.entity.ProductSale;
 import com.xq.tmall.service.AdminService;
 import com.xq.tmall.service.ProductOrderService;
 import com.xq.tmall.service.ProductService;
@@ -53,6 +54,7 @@ public class AdminHomeController extends BaseController {
         Integer orderTotal = productOrderService.getTotal(null, new Byte[]{3});
         logger.info("获取图表信息");
         map.put("jsonObject", getChartData(null,null));
+        
         map.put("productTotal", productTotal);
         map.put("userTotal", userTotal);
         map.put("orderTotal", orderTotal);
@@ -99,7 +101,7 @@ public class AdminHomeController extends BaseController {
             return getChartData(null, null).toJSONString();
         }
     }
-
+    
     //获取图表的JSON数据
     private JSONObject getChartData(Date beginDate,Date endDate) throws ParseException {
         JSONObject jsonObject = new JSONObject();
@@ -174,4 +176,65 @@ public class AdminHomeController extends BaseController {
         jsonObject.put("dateStr",JSONArray.parseArray(JSON.toJSONString(dateStr)));
         return jsonObject;
     }
+
+    //按日期查询图表数据-ajax
+    @ResponseBody
+    @RequestMapping(value = "admin/home/sale", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public String getSaleDataByDate(@RequestParam(required = false) String beginDate, @RequestParam(required = false) String endDate,Map<String, Object> map) throws ParseException {
+    
+    	if (beginDate != null && endDate != null && beginDate.length()!=0 && endDate.length()!=0) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            return getSaleData(simpleDateFormat.parse(beginDate), simpleDateFormat.parse(endDate)).toJSONString();
+        } else {
+            return getSaleData(null, null).toJSONString();
+        }
+    }
+    
+    //获取图表的JSON数据
+    private JSONObject getSaleData(Date beginDate,Date endDate) throws ParseException {
+        JSONObject saleJson = new JSONObject();
+        SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
+        SimpleDateFormat timeSpecial = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
+        if (beginDate == null || endDate == null) {
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, -7);
+            beginDate = time.parse(time.format(cal.getTime()));
+            cal = Calendar.getInstance();
+            endDate = cal.getTime();
+        } else {
+            beginDate = time.parse(time.format(beginDate));
+            endDate = timeSpecial.parse(time.format(endDate) + " 23:59:59");
+        }
+  
+        SimpleDateFormat time2 = new SimpleDateFormat("MM/dd", Locale.UK);
+        logger.info("获取时间段数组");
+        
+        logger.info("获取总交易额订单列表");
+        List<ProductSale> ProductSaleGroup = productOrderService.getSaleByDate(beginDate, endDate);
+        logger.info("根据订单状态分类");
+        //产品种类
+        List<String> categorylist = new ArrayList<>();
+        //销售量
+        List<Integer> salecountlist = new ArrayList<>();
+        
+        for (ProductSale sale :ProductSaleGroup ) {
+        	categorylist.add(sale.getProduct_category_name());
+        	salecountlist.add(sale.getCount());
+        }
+
+        String[] category = new String[categorylist.size()];
+
+        categorylist.toArray(category);
+        
+        int[] salecount = salecountlist.stream().mapToInt(Integer::intValue).toArray();
+
+        
+        
+        saleJson.put("category", JSONArray.parseArray(JSON.toJSONString(category)));
+        saleJson.put("salecount", JSONArray.parseArray(JSON.toJSONString(salecount)));
+        return saleJson;
+    }
+    
+    
+    
 }

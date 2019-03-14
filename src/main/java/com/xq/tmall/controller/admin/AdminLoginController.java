@@ -39,7 +39,7 @@ public class AdminLoginController extends BaseController {
 	
     @RequestMapping(value ="admin/SaleStatistics")
     public String getSaleStatistics() {
-    	return "admin/SaleStatistics";
+    	return "admin/saleStatistics";
     }
 
     //登陆验证-ajax

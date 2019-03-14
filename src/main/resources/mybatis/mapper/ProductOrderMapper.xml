@@ -150,4 +150,27 @@
         </where>
         GROUP BY DATE_FORMAT(productOrder_pay_date,'%Y-%m-%d'),productOrder_status
     </select>
+    
+    <select id="getSaleByDate" resultType="productSale">
+    	 
+ 	 
+ 	select prod.category_id product_category_id,prod.category_name product_category_name,prod.count count FROM (
+ 		
+ 		select * from 
+ 		
+ 		(
+ 			select category.category_id,category.category_name 
+ 			from category
+ 		) as cate
+ 		inner JOIN 
+ 		(
+ 		select 
+ 					productorder_category_id,count(productorder_category_id)  as count
+ 		from productorder where productorder_confirm_date BETWEEN  #{beginDate} AND #{endDate}
+ 		GROUP BY productorder_category_id )
+ 		as pr on pr.productorder_category_id = cate.category_id 
+ 		 
+ 		) as prod
+ 
+    </select>
 </mapper>
