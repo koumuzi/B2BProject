@@ -36,6 +36,11 @@ public class AdminHomeController extends BaseController {
     @Resource(name = "userService")
     private UserService userService;
 
+    @RequestMapping(value ="admin/saleStatistics")
+    public String getSaleStatistics() {
+    	return "admin/saleStatistics";
+    }
+    
     //转到后台管理-主页
     @RequestMapping(value = "admin", method = RequestMethod.GET)
     public String goToPage(HttpSession session, Map<String, Object> map) throws ParseException {
