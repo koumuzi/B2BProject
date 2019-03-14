@@ -70,9 +70,15 @@
         return date.getFullYear() + "-" + formatedMonth + "-" + formatedDate;
     }
 	 
+    $("#btn_chart_search").click(function () {
+        getSaleData($("#input_beginDate").val(), $("#input_endDate").val(), null);
+    });
+	 
   //获取图表数据
    
      });
+    
+    
     
     function getSaleData(beginDate, endDate,saleJson ) {
 
