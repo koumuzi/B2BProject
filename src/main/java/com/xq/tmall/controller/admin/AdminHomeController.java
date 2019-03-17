@@ -40,6 +40,14 @@ public class AdminHomeController extends BaseController {
     public String getSaleStatistics() {
     	return "admin/saleStatistics";
     }
+    @RequestMapping(value ="admin/productSellYear")
+    public String getTestEcharts() {
+    	return "admin/productSellYear";
+    }
+    @RequestMapping(value ="admin/zout")
+    public String getZout() {
+    	return "admin/zout";
+    }
     
     //转到后台管理-主页
     @RequestMapping(value = "admin", method = RequestMethod.GET)
@@ -239,7 +247,119 @@ public class AdminHomeController extends BaseController {
         saleJson.put("salecount", JSONArray.parseArray(JSON.toJSONString(salecount)));
         return saleJson;
     }
+  //按日期查询图表数据-ajax
+    @ResponseBody
+    @RequestMapping(value = "admin/home/sellYear", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public String getSellDataByDate(@RequestParam(required = false) String beginDate, @RequestParam(required = false) String endDate,Map<String, Object> map) throws ParseException {
     
+    	if (beginDate != null && endDate != null && beginDate.length()!=0 && endDate.length()!=0) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            return getSaleData(simpleDateFormat.parse(beginDate), simpleDateFormat.parse(endDate)).toJSONString();
+        } else {
+            return getSaleData(null, null).toJSONString();
+        }
+    }
     
+    //获取图表的JSON数据
+    private JSONObject getsellYearData(Date beginDate,Date endDate) throws ParseException {
+        JSONObject sellJson = new JSONObject();
+        SimpleDateFormat time = new SimpleDateFormat("yyyy", Locale.UK);
+        SimpleDateFormat timeSpecial = new SimpleDateFormat("yyyy", Locale.UK);
+        if (beginDate == null || endDate == null) {
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, -365);
+            beginDate = time.parse(time.format(cal.getTime()));
+            cal = Calendar.getInstance();
+            endDate = cal.getTime();
+        } else {
+            beginDate = time.parse(time.format(beginDate));
+            endDate = timeSpecial.parse(time.format(endDate) + " 23:59:59");
+        }
+  
+        SimpleDateFormat time2 = new SimpleDateFormat("MM/dd", Locale.UK);
+        logger.info("获取时间段数组");
+        
+        logger.info("获取总交易额订单列表");
+        List<ProductSale> ProductSaleGroup = productOrderService.getSaleByDate(beginDate, endDate);
+        logger.info("根据订单状态分类");
+        //产品种类
+        List<String> categorylist = new ArrayList<>();
+        //销售量
+        List<Integer> salecountlist = new ArrayList<>();
+        
+        for (ProductSale sale :ProductSaleGroup ) {
+        	categorylist.add(sale.getProduct_category_name());
+        	salecountlist.add(sale.getCount());
+        }
+
+        String[] category = new String[categorylist.size()];
+
+        categorylist.toArray(category);
+        
+        int[] salecount = salecountlist.stream().mapToInt(Integer::intValue).toArray();
+
+        
+        
+        sellJson.put("category", JSONArray.parseArray(JSON.toJSONString(category)));
+        sellJson.put("salecount", JSONArray.parseArray(JSON.toJSONString(salecount)));
+        return sellJson;
+    }
+  //按日期查询图表数据-ajax
+    @ResponseBody
+    @RequestMapping(value = "admin/home/zout", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public String getzoutDataByDate(@RequestParam(required = false) String beginDate, @RequestParam(required = false) String endDate,Map<String, Object> map) throws ParseException {
+        
+    	if (beginDate != null && endDate != null && beginDate.length()!=0 && endDate.length()!=0) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            return getSaleData(simpleDateFormat.parse(beginDate), simpleDateFormat.parse(endDate)).toJSONString();
+        } else {
+            return getSaleData(null, null).toJSONString();
+        }
+    }
+    
+    //获取图表的JSON数据
+    private JSONObject getzoutData(Date beginDate,Date endDate) throws ParseException {
+        JSONObject sellJson = new JSONObject();
+        SimpleDateFormat time = new SimpleDateFormat("yyyy", Locale.UK);
+        SimpleDateFormat timeSpecial = new SimpleDateFormat("yyyy", Locale.UK);
+        if (beginDate == null || endDate == null) {
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, -365);
+            beginDate = time.parse(time.format(cal.getTime()));
+            cal = Calendar.getInstance();
+            endDate = cal.getTime();
+        } else {
+            beginDate = time.parse(time.format(beginDate));
+            endDate = timeSpecial.parse(time.format(endDate) + " 23:59:59");
+        }
+  
+        SimpleDateFormat time2 = new SimpleDateFormat("MM/dd", Locale.UK);
+        logger.info("获取时间段数组");
+        
+        logger.info("获取总交易额订单列表");
+        List<ProductSale> ProductSaleGroup = productOrderService.getSaleByDate(beginDate, endDate);
+        logger.info("根据订单状态分类");
+        //产品种类
+        List<String> categorylist = new ArrayList<>();
+        //销售量
+        List<Integer> salecountlist = new ArrayList<>();
+        
+        for (ProductSale sale :ProductSaleGroup ) {
+        	categorylist.add(sale.getProduct_category_name());
+        	salecountlist.add(sale.getCount());
+        }
+
+        String[] category = new String[categorylist.size()];
+
+        categorylist.toArray(category);
+        
+        int[] salecount = salecountlist.stream().mapToInt(Integer::intValue).toArray();
+
+        
+        
+        sellJson.put("category", JSONArray.parseArray(JSON.toJSONString(category)));
+        sellJson.put("salecount", JSONArray.parseArray(JSON.toJSONString(salecount)));
+        return sellJson;
+    }
     
 }

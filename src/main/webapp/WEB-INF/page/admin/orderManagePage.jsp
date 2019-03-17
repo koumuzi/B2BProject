@@ -167,7 +167,7 @@
         function getChildPage(obj) {
             //设置样式
             $("#div_home_title").children("span").text("订单详情");
-            document.title = "Tmall管理后台 - 订单详情";
+            document.title = "大创项目管理后台 - 订单详情";
             //ajax请求页面
             ajaxUtil.getPage("order/" + $(obj).parents("tr").find(".order_id").text(), null, true);
         }
