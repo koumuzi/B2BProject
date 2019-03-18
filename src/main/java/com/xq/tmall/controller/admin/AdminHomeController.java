@@ -49,6 +49,11 @@ public class AdminHomeController extends BaseController {
     	return "admin/zout";
     }
     
+    @RequestMapping(value ="admin/RegionalDistribution")
+    public String getDistributionDate() {
+    	return "admin/regionalDistribution";
+    }
+    
     //转到后台管理-主页
     @RequestMapping(value = "admin", method = RequestMethod.GET)
     public String goToPage(HttpSession session, Map<String, Object> map) throws ParseException {
