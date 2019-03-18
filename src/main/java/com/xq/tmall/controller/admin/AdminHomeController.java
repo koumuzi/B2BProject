@@ -319,19 +319,20 @@ public class AdminHomeController extends BaseController {
     
     //获取图表的JSON数据
     private JSONObject getzoutData(Date beginDate,Date endDate) throws ParseException {
-        JSONObject sellJson = new JSONObject();
-        SimpleDateFormat time = new SimpleDateFormat("yyyy", Locale.UK);
-        SimpleDateFormat timeSpecial = new SimpleDateFormat("yyyy", Locale.UK);
-        if (beginDate == null || endDate == null) {
-            Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.DATE, -365);
-            beginDate = time.parse(time.format(cal.getTime()));
-            cal = Calendar.getInstance();
-            endDate = cal.getTime();
-        } else {
-            beginDate = time.parse(time.format(beginDate));
-            endDate = timeSpecial.parse(time.format(endDate) + " 23:59:59");
-        }
+    	 JSONObject zoutJson = new JSONObject();
+         SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
+         SimpleDateFormat timeSpecial = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
+         if (beginDate == null || endDate == null) {
+             Calendar cal = Calendar.getInstance();
+             cal.add(Calendar.MONTH, -1);
+             beginDate = time.parse(time.format(cal.getTime()));
+             cal = Calendar.getInstance();
+             endDate = cal.getTime();
+         } else {
+             beginDate = time.parse(time.format(beginDate));
+             endDate = timeSpecial.parse(time.format(endDate) + " 23:59:59");
+         }
+   
   
         SimpleDateFormat time2 = new SimpleDateFormat("MM/dd", Locale.UK);
         logger.info("获取时间段数组");
@@ -357,9 +358,9 @@ public class AdminHomeController extends BaseController {
 
         
         
-        sellJson.put("category", JSONArray.parseArray(JSON.toJSONString(category)));
-        sellJson.put("salecount", JSONArray.parseArray(JSON.toJSONString(salecount)));
-        return sellJson;
+        zoutJson.put("category", JSONArray.parseArray(JSON.toJSONString(category)));
+        zoutJson.put("salecount", JSONArray.parseArray(JSON.toJSONString(salecount)));
+        return zoutJson;
     }
     
 }
