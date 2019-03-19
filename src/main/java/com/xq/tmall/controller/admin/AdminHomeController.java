@@ -48,7 +48,10 @@ public class AdminHomeController extends BaseController {
     public String getZout() {
     	return "admin/zout";
     }
-    
+    @RequestMapping(value ="admin/map")
+    public String getMap() {
+    	return "admin/map";
+    }
     @RequestMapping(value ="admin/RegionalDistribution")
     public String getDistributionDate() {
     	return "admin/regionalDistribution";
@@ -256,6 +259,17 @@ public class AdminHomeController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "admin/home/sellYear", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     public String getSellDataByDate(@RequestParam(required = false) String beginDate, @RequestParam(required = false) String endDate,Map<String, Object> map) throws ParseException {
+    
+    	if (beginDate != null && endDate != null && beginDate.length()!=0 && endDate.length()!=0) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            return getSaleData(simpleDateFormat.parse(beginDate), simpleDateFormat.parse(endDate)).toJSONString();
+        } else {
+            return getSaleData(null, null).toJSONString();
+        }
+    }
+    @ResponseBody
+    @RequestMapping(value = "admin/home/map", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public String getMapByDate(@RequestParam(required = false) String beginDate, @RequestParam(required = false) String endDate,Map<String, Object> map) throws ParseException {
     
     	if (beginDate != null && endDate != null && beginDate.length()!=0 && endDate.length()!=0) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
