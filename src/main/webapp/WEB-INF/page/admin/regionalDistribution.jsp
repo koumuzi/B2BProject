@@ -5,8 +5,8 @@
    <head>
        <meta charset="utf-8">
    </head>
-   <body style="height: 100%; margin: 0">
-       <div id="container" style="height: 900px;width: 100%"></div>
+   <body style="height: 100%">
+       <div id="container" style="height: 900px"></div>
        <script type="text/javascript">
        $(document).ready(function(){
 var dom = document.getElementById("container");
