@@ -48,10 +48,10 @@ public class AdminHomeController extends BaseController {
     public String getZout() {
     	return "admin/zout";
     }
-//    @RequestMapping(value ="admin/map")
-//    public String getMap() {
-//    	return "admin/map";
-//    }
+    @RequestMapping(value ="admin/map")
+    public String getMap() {
+    	return "admin/map";
+    }
     @RequestMapping(value ="admin/RegionalDistribution")
     public String getDistributionDate() {
     	return "admin/regionalDistribution";
