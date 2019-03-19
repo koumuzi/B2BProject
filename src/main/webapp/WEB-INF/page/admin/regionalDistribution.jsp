@@ -7,20 +7,18 @@
    </head>
    <body style="height: 100%; margin: 0">
        <div id="container" style="height: 100%"></div>
-       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
-       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
-       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
-       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
-       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
-       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
-       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
-       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+       <script src="/tmall/res/js/echarts.min.js"></script>
+       <script  src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script  src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script  src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script  src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script  src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script  src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
        <script type="text/javascript">
 var dom = document.getElementById("container");
 var myChart = echarts.init(dom);
 var app = {};
 option = null;
-
 var data = [
     {name: '海门', value: 9},
     {name: '鄂尔多斯', value: 12},
@@ -213,7 +211,6 @@ var data = [
     {name: '武汉', value: 273},
     {name: '大庆', value: 279}
 ];
-
 var geoCoordMap = {
     '海门':[121.15,31.89],
     '鄂尔多斯':[109.781327,39.608266],
@@ -421,47 +418,12 @@ var convertData = function (data) {
     return res;
 };
 
-function renderItem(params, api) {
-    var coords = [
-        [116.7,39.53],
-        [103.73,36.03],
-        [112.91,27.87],
-        [120.65,28.01],
-        [119.57,39.95]
-    ];
-    var points = [];
-    for (var i = 0; i < coords.length; i++) {
-        points.push(api.coord(coords[i][0]),coords[i][0]);
-    }
-    var color = api.visual('color');
-
-    return {
-        type: 'polygon',
-        shape: {
-            points: echarts.graphic.clipPointsByRect(points, {
-                x: params.coordSys.x,
-                y: params.coordSys.y,
-                width: params.coordSys.width,
-                height: params.coordSys.height
-            })
-        },
-        style: api.style({
-            fill: color,
-            stroke: echarts.color.lift(color)
-        })
-    };
-}
-
 option = {
-    // backgroundColor: '#404a59',
     title: {
-        text: '全国主要城市空气质量',
+        text: '全国主要城市空气质量 - 百度地图',
         subtext: 'data from PM25.in',
         sublink: 'http://www.pm25.in',
-        left: 'center',
-        textStyle: {
-            color: '#fff'
-        }
+        left: 'center'
     },
     tooltip : {
         trigger: 'item'
@@ -471,136 +433,103 @@ option = {
         zoom: 5,
         roam: true,
         mapStyle: {
-            styleJson: [
-                    {
-                        "featureType": "water",
-                        "elementType": "all",
-                        "stylers": {
-                            "color": "#044161"
-                        }
-                    },
-                    {
-                        "featureType": "land",
-                        "elementType": "all",
-                        "stylers": {
-                            "color": "#004981"
-                        }
-                    },
-                    {
-                        "featureType": "boundary",
-                        "elementType": "geometry",
-                        "stylers": {
-                            "color": "#064f85"
-                        }
-                    },
-                    {
-                        "featureType": "railway",
-                        "elementType": "all",
-                        "stylers": {
-                            "visibility": "off"
-                        }
-                    },
-                    {
-                        "featureType": "highway",
-                        "elementType": "geometry",
-                        "stylers": {
-                            "color": "#004981"
-                        }
-                    },
-                    {
-                        "featureType": "highway",
-                        "elementType": "geometry.fill",
-                        "stylers": {
-                            "color": "#005b96",
-                            "lightness": 1
-                        }
-                    },
-                    {
-                        "featureType": "highway",
-                        "elementType": "labels",
-                        "stylers": {
-                            "visibility": "off"
-                        }
-                    },
-                    {
-                        "featureType": "arterial",
-                        "elementType": "geometry",
-                        "stylers": {
-                            "color": "#004981"
-                        }
-                    },
-                    {
-                        "featureType": "arterial",
-                        "elementType": "geometry.fill",
-                        "stylers": {
-                            "color": "#00508b"
-                        }
-                    },
-                    {
-                        "featureType": "poi",
-                        "elementType": "all",
-                        "stylers": {
-                            "visibility": "off"
-                        }
-                    },
-                    {
-                        "featureType": "green",
-                        "elementType": "all",
-                        "stylers": {
-                            "color": "#056197",
-                            "visibility": "off"
-                        }
-                    },
-                    {
-                        "featureType": "subway",
-                        "elementType": "all",
-                        "stylers": {
-                            "visibility": "off"
-                        }
-                    },
-                    {
-                        "featureType": "manmade",
-                        "elementType": "all",
-                        "stylers": {
-                            "visibility": "off"
-                        }
-                    },
-                    {
-                        "featureType": "local",
-                        "elementType": "all",
-                        "stylers": {
-                            "visibility": "off"
-                        }
-                    },
-                    {
-                        "featureType": "arterial",
-                        "elementType": "labels",
-                        "stylers": {
-                            "visibility": "off"
-                        }
-                    },
-                    {
-                        "featureType": "boundary",
-                        "elementType": "geometry.fill",
-                        "stylers": {
-                            "color": "#029fd4"
-                        }
-                    },
-                    {
-                        "featureType": "building",
-                        "elementType": "all",
-                        "stylers": {
-                            "color": "#1a5787"
-                        }
-                    },
-                    {
-                        "featureType": "label",
-                        "elementType": "all",
-                        "stylers": {
-                            "visibility": "off"
-                        }
-                    }
-            ]
+            styleJson: [{
+                'featureType': 'water',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#d1d1d1'
+                }
+            }, {
+                'featureType': 'land',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#f3f3f3'
+                }
+            }, {
+                'featureType': 'railway',
+                'elementType': 'all',
+                'stylers': {
+                    'visibility': 'off'
+                }
+            }, {
+                'featureType': 'highway',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#fdfdfd'
+                }
+            }, {
+                'featureType': 'highway',
+                'elementType': 'labels',
+                'stylers': {
+                    'visibility': 'off'
+                }
+            }, {
+                'featureType': 'arterial',
+                'elementType': 'geometry',
+                'stylers': {
+                    'color': '#fefefe'
+                }
+            }, {
+                'featureType': 'arterial',
+                'elementType': 'geometry.fill',
+                'stylers': {
+                    'color': '#fefefe'
+                }
+            }, {
+                'featureType': 'poi',
+                'elementType': 'all',
+                'stylers': {
+                    'visibility': 'off'
+                }
+            }, {
+                'featureType': 'green',
+                'elementType': 'all',
+                'stylers': {
+                    'visibility': 'off'
+                }
+            }, {
+                'featureType': 'subway',
+                'elementType': 'all',
+                'stylers': {
+                    'visibility': 'off'
+                }
+            }, {
+                'featureType': 'manmade',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#d1d1d1'
+                }
+            }, {
+                'featureType': 'local',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#d1d1d1'
+                }
+            }, {
+                'featureType': 'arterial',
+                'elementType': 'labels',
+                'stylers': {
+                    'visibility': 'off'
+                }
+            }, {
+                'featureType': 'boundary',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#fefefe'
+                }
+            }, {
+                'featureType': 'building',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#d1d1d1'
+                }
+            }, {
+                'featureType': 'label',
+                'elementType': 'labels.text.fill',
+                'stylers': {
+                    'color': '#999999'
+                }
+            }]
         }
     },
     series : [
@@ -624,7 +553,7 @@ option = {
             },
             itemStyle: {
                 normal: {
-                    color: '#ddb926'
+                    color: 'purple'
                 }
             }
         },
@@ -638,7 +567,7 @@ option = {
             symbolSize: function (val) {
                 return val[2] / 10;
             },
-            showEffectOn: 'emphasis',
+            showEffectOn: 'render',
             rippleEffect: {
                 brushType: 'stroke'
             },
@@ -652,32 +581,22 @@ option = {
             },
             itemStyle: {
                 normal: {
-                    color: '#f4e925',
+                    color: 'purple',
                     shadowBlur: 10,
                     shadowColor: '#333'
                 }
             },
             zlevel: 1
-        },
-        {
-            type: 'custom',
-            coordinateSystem: 'bmap',
-            renderItem: renderItem,
-            itemStyle: {
-                normal: {
-                    opacity: 0.5
-                }
-            },
-            animation: false,
-            silent: true,
-            data: [0],
-            z: -10
         }
     ]
 };;
 if (option && typeof option === "object") {
     myChart.setOption(option, true);
 }
+
+// 使用刚指定的配置项和数据显示图表。
+myChart.setOption(option);
+
        </script>
    </body>
 </html>
