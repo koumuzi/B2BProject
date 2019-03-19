@@ -15,6 +15,4 @@
     <script src="${pageContext.request.contextPath}/res/js/defaults-zh_CN.min.js"></script>
     <script src="${pageContext.request.contextPath}/res/js/echarts.js"></script>
     <script src="${pageContext.request.contextPath}/res/js/base.js"></script>
-    <script src="${pageContext.request.contextPath}/res/js/china.js"></script>
-	<script src="${pageContext.request.contextPath}/res/js/world.js"></script>
 </head>
