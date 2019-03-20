@@ -141,7 +141,7 @@ option = {
     animationDurationUpdate: 1000,
     animationEasingUpdate: 'cubicInOut',
     title: [{
-        text: '全国用电量对比',
+        text: '农村地区生滞销鲜农产品分布',
         link: 'http://pages.anjuke.com/expert/newexpert.html',
         subtext: 'data from Anjuke',
         sublink: 'http://pages.anjuke.com/expert/newexpert.html',
