@@ -166,7 +166,7 @@
  		(
  		select 
  					productorder_category_id,count(productorder_category_id)  as count
- 		from productorder where productorder_confirm_date BETWEEN  #{beginDate} AND #{endDate}
+ 		from productOrder where productorder_confirm_date BETWEEN  #{beginDate} AND #{endDate}
  		GROUP BY productorder_category_id )
  		as pr on pr.productorder_category_id = cate.category_id 
  		 

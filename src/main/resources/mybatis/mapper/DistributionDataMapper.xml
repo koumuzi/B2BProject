@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "mybatis-3-mapper.dtd">
+<mapper namespace="com.xq.tmall.dao.DistributionDataMapper">
+    <resultMap id="UserDistributionInfo" type="com.xq.tmall.entity.UserDistributionInfo">
+        <result property="name" column="name"/>
+        <result property="lng" column="lng"/>
+        <result property="lat" column="lat"/>
+        <result property="count" column="count"/>
+    </resultMap>
+    
+    <select id="getUserDistributionData" resultType="UserDistributionInfo">
+        SELECT * FROM (
+		SELECT sharea.address_areaId,sharea.`name` name,sharea.lat,sharea.lng,userinfo.count FROM (
+    SELECT sh_area.address_areaId,sh_area.`name`,sh_area.lng,sh_area.lat 
+		from sh_area 
+		) as sharea
+		INNER JOIN  (
+		SELECT `user`.user_address,count(`user`.user_address) as count
+		from `user` GROUP BY `user`.user_address)  as userinfo
+		on sharea.address_areaId = userinfo.user_address
+) as userinfo
+    </select>
+</mapper>
