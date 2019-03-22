@@ -52,10 +52,7 @@ public class AdminHomeController extends BaseController {
     public String getMap() {
     	return "admin/map";
     }
-    @RequestMapping(value ="admin/RegionalDistribution")
-    public String getDistributionDate() {
-    	return "admin/regionalDistribution";
-    }
+    
     
     //转到后台管理-主页
     @RequestMapping(value = "admin", method = RequestMethod.GET)
@@ -310,15 +307,9 @@ public class AdminHomeController extends BaseController {
         	categorylist.add(sale.getProduct_category_name());
         	salecountlist.add(sale.getCount());
         }
-
         String[] category = new String[categorylist.size()];
-
         categorylist.toArray(category);
-        
         int[] salecount = salecountlist.stream().mapToInt(Integer::intValue).toArray();
-
-        
-        
         sellJson.put("category", JSONArray.parseArray(JSON.toJSONString(category)));
         sellJson.put("salecount", JSONArray.parseArray(JSON.toJSONString(salecount)));
         return sellJson;
