@@ -4633,7 +4633,7 @@ if (debugMode === 1) {
   };
 }
 
-var zrLog = log;
+var log$1 = log;
 
 /**
  * @alias modue:zrender/mixin/Animatable
@@ -4691,7 +4691,7 @@ Animatable.prototype = {
     }
 
     if (!target) {
-      zrLog('Property "' + path + '" is not existed in element ' + el.id);
+      log$1('Property "' + path + '" is not existed in element ' + el.id);
       return;
     }
 
@@ -7326,9 +7326,7 @@ var STYLE_REG = /\{([a-zA-Z0-9_]+)\|([^}]*)\}/g;
 var DEFAULT_FONT$1 = '12px sans-serif'; // Avoid assign to an exported variable, for transforming to cjs.
 
 var methods$1 = {};
-function $override$1(name, fn) {
-  methods$1[name] = fn;
-}
+
 /**
  * @public
  * @param {string} text
@@ -9503,13 +9501,13 @@ Painter.prototype = {
     var domRoot = this._domRoot;
 
     if (layersMap[zlevel]) {
-      zrLog('ZLevel ' + zlevel + ' has been used already');
+      log$1('ZLevel ' + zlevel + ' has been used already');
       return;
     } // Check if is a valid layer
 
 
     if (!isLayerValid(layer)) {
-      zrLog('Layer of zlevel ' + zlevel + ' is not valid');
+      log$1('Layer of zlevel ' + zlevel + ' is not valid');
       return;
     }
 
@@ -9641,7 +9639,7 @@ Painter.prototype = {
       }
 
       if (!layer.__builtin__) {
-        zrLog('ZLevel ' + zlevel + ' has been used by unkown layer ' + layer.id);
+        log$1('ZLevel ' + zlevel + ' has been used by unkown layer ' + layer.id);
       }
 
       if (layer !== prevLayer) {
@@ -16790,7 +16788,7 @@ function createIcon(iconStr, opt, rect) {
 }
 
 
-var graphic = (Object.freeze || Object)({
+var graphicUtil = (Object.freeze || Object)({
 	Z2_EMPHASIS_LIFT: Z2_EMPHASIS_LIFT,
 	extendShape: extendShape,
 	extendPath: extendPath,
@@ -33438,9 +33436,9 @@ var ecUtil = {};
 each$1(['map', 'each', 'filter', 'indexOf', 'inherits', 'reduce', 'filter', 'bind', 'curry', 'isArray', 'isString', 'isObject', 'isFunction', 'extend', 'defaults', 'clone', 'merge'], function (name) {
   ecUtil[name] = zrUtil[name];
 });
-var graphic$1 = {};
+var graphic = {};
 each$1(['extendShape', 'extendPath', 'makePath', 'makeImage', 'mergePath', 'resizePath', 'createIcon', 'setHoverStyle', 'setLabelStyle', 'setTextStyle', 'setText', 'getFont', 'updateProps', 'initProps', 'getTransform', 'clipPointsByRect', 'clipRectByRect', 'Group', 'Image', 'Text', 'Circle', 'Sector', 'Ring', 'Polygon', 'Polyline', 'Rect', 'Line', 'BezierCurve', 'Arc', 'IncrementalDisplayable', 'CompoundPath', 'LinearGradient', 'RadialGradient', 'BoundingRect'], function (name) {
-  graphic$1[name] = graphic[name];
+  graphic[name] = graphicUtil[name];
 });
 
 /*
@@ -35125,7 +35123,7 @@ var elementCreator = {
       var animateTarget = {};
       rectShape[animateProperty] = 0;
       animateTarget[animateProperty] = layout[animateProperty];
-      graphic[isUpdate ? 'updateProps' : 'initProps'](rect, {
+      graphicUtil[isUpdate ? 'updateProps' : 'initProps'](rect, {
         shape: animateTarget
       }, animationModel, dataIndex);
     }
@@ -35150,7 +35148,7 @@ var elementCreator = {
       var animateTarget = {};
       sectorShape[animateProperty] = isRadial ? 0 : layout.startAngle;
       animateTarget[animateProperty] = layout[animateProperty];
-      graphic[isUpdate ? 'updateProps' : 'initProps'](sector, {
+      graphicUtil[isUpdate ? 'updateProps' : 'initProps'](sector, {
         shape: animateTarget
       }, animationModel, dataIndex);
     }
@@ -40983,6 +40981,2700 @@ registerLayout(pointsLayout('effectScatter'));
 * specific language governing permissions and limitations
 * under the License.
 */
+// Fix for 南海诸岛
+var geoCoord = [126, 25];
+var points$1 = [[[0, 3.5], [7, 11.2], [15, 11.9], [30, 7], [42, 0.7], [52, 0.7], [56, 7.7], [59, 0.7], [64, 0.7], [64, 0], [5, 0], [0, 3.5]], [[13, 16.1], [19, 14.7], [16, 21.7], [11, 23.1], [13, 16.1]], [[12, 32.2], [14, 38.5], [15, 38.5], [13, 32.2], [12, 32.2]], [[16, 47.6], [12, 53.2], [13, 53.2], [18, 47.6], [16, 47.6]], [[6, 64.4], [8, 70], [9, 70], [8, 64.4], [6, 64.4]], [[23, 82.6], [29, 79.8], [30, 79.8], [25, 82.6], [23, 82.6]], [[37, 70.7], [43, 62.3], [44, 62.3], [39, 70.7], [37, 70.7]], [[48, 51.1], [51, 45.5], [53, 45.5], [50, 51.1], [48, 51.1]], [[51, 35], [51, 28.7], [53, 28.7], [53, 35], [51, 35]], [[52, 22.4], [55, 17.5], [56, 17.5], [53, 22.4], [52, 22.4]], [[58, 12.6], [62, 7], [63, 7], [60, 12.6], [58, 12.6]], [[0, 3.5], [0, 93.1], [64, 93.1], [64, 0], [63, 0], [63, 92.4], [1, 92.4], [1, 3.5], [0, 3.5]]];
+
+for (var i$1 = 0; i$1 < points$1.length; i$1++) {
+  for (var k = 0; k < points$1[i$1].length; k++) {
+    points$1[i$1][k][0] /= 10.5;
+    points$1[i$1][k][1] /= -10.5 / 0.75;
+    points$1[i$1][k][0] += geoCoord[0];
+    points$1[i$1][k][1] += geoCoord[1];
+  }
+}
+
+var fixNanhai = function (mapType, regions) {
+  if (mapType === 'china') {
+    regions.push(new Region('南海诸岛', map(points$1, function (exterior) {
+      return {
+        type: 'polygon',
+        exterior: exterior
+      };
+    }), geoCoord));
+  }
+};
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+var coordsOffsetMap = {
+  '南海诸岛': [32, 80],
+  // 全国
+  '广东': [0, -10],
+  '香港': [10, 5],
+  '澳门': [-10, 10],
+  //'北京': [-10, 0],
+  '天津': [5, 5]
+};
+var fixTextCoord = function (mapType, region) {
+  if (mapType === 'china') {
+    var coordFix = coordsOffsetMap[region.name];
+
+    if (coordFix) {
+      var cp = region.center;
+      cp[0] += coordFix[0] / 10.5;
+      cp[1] += -coordFix[1] / (10.5 / 0.75);
+    }
+  }
+};
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+var geoCoordMap = {
+  'Russia': [100, 60],
+  'United States': [-99, 38],
+  'United States of America': [-99, 38]
+};
+var fixGeoCoord = function (mapType, region) {
+  if (mapType === 'world') {
+    var geoCoord = geoCoordMap[region.name];
+
+    if (geoCoord) {
+      var cp = region.center;
+      cp[0] = geoCoord[0];
+      cp[1] = geoCoord[1];
+    }
+  }
+};
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+// Fix for 钓鱼岛
+// var Region = require('../Region');
+// var zrUtil = require('zrender/src/core/util');
+// var geoCoord = [126, 25];
+var points$2 = [[[123.45165252685547, 25.73527164402261], [123.49731445312499, 25.73527164402261], [123.49731445312499, 25.750734064600884], [123.45165252685547, 25.750734064600884], [123.45165252685547, 25.73527164402261]]];
+var fixDiaoyuIsland = function (mapType, region) {
+  if (mapType === 'china' && region.name === '台湾') {
+    region.geometries.push({
+      type: 'polygon',
+      exterior: points$2[0]
+    });
+  }
+};
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+var inner$7 = makeInner();
+var geoJSONLoader = {
+  /**
+   * @param {string} mapName
+   * @param {Object} mapRecord {specialAreas, geoJSON}
+   * @return {Object} {regions, boundingRect}
+   */
+  load: function (mapName, mapRecord) {
+    var parsed = inner$7(mapRecord).parsed;
+
+    if (parsed) {
+      return parsed;
+    }
+
+    var specialAreas = mapRecord.specialAreas || {};
+    var geoJSON = mapRecord.geoJSON;
+    var regions; // https://jsperf.com/try-catch-performance-overhead
+
+    try {
+      regions = geoJSON ? parseGeoJson$1(geoJSON) : [];
+    } catch (e) {
+      throw new Error('Invalid geoJson format\n' + e.message);
+    }
+
+    each$1(regions, function (region) {
+      var regionName = region.name;
+      fixTextCoord(mapName, region);
+      fixGeoCoord(mapName, region);
+      fixDiaoyuIsland(mapName, region); // Some area like Alaska in USA map needs to be tansformed
+      // to look better
+
+      var specialArea = specialAreas[regionName];
+
+      if (specialArea) {
+        region.transformTo(specialArea.left, specialArea.top, specialArea.width, specialArea.height);
+      }
+    });
+    fixNanhai(mapName, regions);
+    return inner$7(mapRecord).parsed = {
+      regions: regions,
+      boundingRect: getBoundingRect$1(regions)
+    };
+  }
+};
+
+function getBoundingRect$1(regions) {
+  var rect;
+
+  for (var i = 0; i < regions.length; i++) {
+    var regionRect = regions[i].getBoundingRect();
+    rect = rect || regionRect.clone();
+    rect.union(regionRect);
+  }
+
+  return rect;
+}
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+var inner$8 = makeInner();
+var geoSVGLoader = {
+  /**
+   * @param {string} mapName
+   * @param {Object} mapRecord {specialAreas, geoJSON}
+   * @return {Object} {root, boundingRect}
+   */
+  load: function (mapName, mapRecord) {
+    var originRoot = inner$8(mapRecord).originRoot;
+
+    if (originRoot) {
+      return {
+        root: originRoot,
+        boundingRect: inner$8(mapRecord).boundingRect
+      };
+    }
+
+    var graphic = buildGraphic(mapRecord);
+    inner$8(mapRecord).originRoot = graphic.root;
+    inner$8(mapRecord).boundingRect = graphic.boundingRect;
+    return graphic;
+  },
+  makeGraphic: function (mapName, mapRecord, hostKey) {
+    // For performance consideration (in large SVG), graphic only maked
+    // when necessary and reuse them according to hostKey.
+    var field = inner$8(mapRecord);
+    var rootMap = field.rootMap || (field.rootMap = createHashMap());
+    var root = rootMap.get(hostKey);
+
+    if (root) {
+      return root;
+    }
+
+    var originRoot = field.originRoot;
+    var boundingRect = field.boundingRect; // For performance, if originRoot is not used by a view,
+    // assign it to a view, but not reproduce graphic elements.
+
+    if (!field.originRootHostKey) {
+      field.originRootHostKey = hostKey;
+      root = originRoot;
+    } else {
+      root = buildGraphic(mapRecord, boundingRect).root;
+    }
+
+    return rootMap.set(hostKey, root);
+  },
+  removeGraphic: function (mapName, mapRecord, hostKey) {
+    var field = inner$8(mapRecord);
+    var rootMap = field.rootMap;
+    rootMap && rootMap.removeKey(hostKey);
+
+    if (hostKey === field.originRootHostKey) {
+      field.originRootHostKey = null;
+    }
+  }
+};
+
+function buildGraphic(mapRecord, boundingRect) {
+  var svgXML = mapRecord.svgXML;
+  var result;
+  var root;
+
+  try {
+    result = svgXML && parseSVG(svgXML, {
+      ignoreViewBox: true,
+      ignoreRootClip: true
+    }) || {};
+    root = result.root;
+    assert$1(root != null);
+  } catch (e) {
+    throw new Error('Invalid svg format\n' + e.message);
+  }
+
+  var svgWidth = result.width;
+  var svgHeight = result.height;
+  var viewBoxRect = result.viewBoxRect;
+
+  if (!boundingRect) {
+    boundingRect = svgWidth == null || svgHeight == null ? // If svg width / height not specified, calculate
+    // bounding rect as the width / height
+    root.getBoundingRect() : new BoundingRect(0, 0, 0, 0);
+
+    if (svgWidth != null) {
+      boundingRect.width = svgWidth;
+    }
+
+    if (svgHeight != null) {
+      boundingRect.height = svgHeight;
+    }
+  }
+
+  if (viewBoxRect) {
+    var viewBoxTransform = makeViewBoxTransform(viewBoxRect, boundingRect.width, boundingRect.height);
+    var elRoot = root;
+    root = new Group();
+    root.add(elRoot);
+    elRoot.scale = viewBoxTransform.scale;
+    elRoot.position = viewBoxTransform.position;
+  }
+
+  root.setClipPath(new Rect({
+    shape: boundingRect.plain()
+  }));
+  return {
+    root: root,
+    boundingRect: boundingRect
+  };
+}
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+var loaders = {
+  geoJSON: geoJSONLoader,
+  svg: geoSVGLoader
+};
+var geoSourceManager = {
+  /**
+   * @param {string} mapName
+   * @param {Object} nameMap
+   * @return {Object} source {regions, regionsMap, nameCoordMap, boundingRect}
+   */
+  load: function (mapName, nameMap) {
+    var regions = [];
+    var regionsMap = createHashMap();
+    var nameCoordMap = createHashMap();
+    var boundingRect;
+    var mapRecords = retrieveMap(mapName);
+    each$1(mapRecords, function (record) {
+      var singleSource = loaders[record.type].load(mapName, record);
+      each$1(singleSource.regions, function (region) {
+        var regionName = region.name; // Try use the alias in geoNameMap
+
+        if (nameMap && nameMap.hasOwnProperty(regionName)) {
+          region = region.cloneShallow(regionName = nameMap[regionName]);
+        }
+
+        regions.push(region);
+        regionsMap.set(regionName, region);
+        nameCoordMap.set(regionName, region.center);
+      });
+      var rect = singleSource.boundingRect;
+
+      if (rect) {
+        boundingRect ? boundingRect.union(rect) : boundingRect = rect.clone();
+      }
+    });
+    return {
+      regions: regions,
+      regionsMap: regionsMap,
+      nameCoordMap: nameCoordMap,
+      // FIXME Always return new ?
+      boundingRect: boundingRect || new BoundingRect(0, 0, 0, 0)
+    };
+  },
+
+  /**
+   * @param {string} mapName
+   * @param {string} hostKey For cache.
+   * @return {Array.<module:zrender/Element>} Roots.
+   */
+  makeGraphic: makeInvoker('makeGraphic'),
+
+  /**
+   * @param {string} mapName
+   * @param {string} hostKey For cache.
+   */
+  removeGraphic: makeInvoker('removeGraphic')
+};
+
+function makeInvoker(methodName) {
+  return function (mapName, hostKey) {
+    var mapRecords = retrieveMap(mapName);
+    var results = [];
+    each$1(mapRecords, function (record) {
+      var method = loaders[record.type][methodName];
+      method && results.push(method(mapName, record, hostKey));
+    });
+    return results;
+  };
+}
+
+function retrieveMap(mapName) {
+  var mapRecords = mapDataStorage.retrieveMap(mapName) || [];
+  return mapRecords;
+}
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+var MapSeries = SeriesModel.extend({
+  type: 'series.map',
+  dependencies: ['geo'],
+  layoutMode: 'box',
+
+  /**
+   * Only first map series of same mapType will drawMap
+   * @type {boolean}
+   */
+  needsDrawMap: false,
+
+  /**
+   * Group of all map series with same mapType
+   * @type {boolean}
+   */
+  seriesGroup: [],
+  getInitialData: function (option) {
+    var data = createListSimply(this, ['value']);
+    var valueDim = data.mapDimension('value');
+    var dataNameMap = createHashMap();
+    var selectTargetList = [];
+    var toAppendNames = [];
+
+    for (var i = 0, len = data.count(); i < len; i++) {
+      var name = data.getName(i);
+      dataNameMap.set(name, true);
+      selectTargetList.push({
+        name: name,
+        value: data.get(valueDim, i),
+        selected: retrieveRawAttr(data, i, 'selected')
+      });
+    }
+
+    var geoSource = geoSourceManager.load(this.getMapType(), this.option.nameMap);
+    each$1(geoSource.regions, function (region) {
+      var name = region.name;
+
+      if (!dataNameMap.get(name)) {
+        selectTargetList.push({
+          name: name
+        });
+        toAppendNames.push(name);
+      }
+    });
+    this.updateSelectedMap(selectTargetList); // Complete data with missing regions. The consequent processes (like visual
+    // map and render) can not be performed without a "full data". For example,
+    // find `dataIndex` by name.
+
+    data.appendValues([], toAppendNames);
+    return data;
+  },
+
+  /**
+   * If no host geo model, return null, which means using a
+   * inner exclusive geo model.
+   */
+  getHostGeoModel: function () {
+    var geoIndex = this.option.geoIndex;
+    return geoIndex != null ? this.dependentModels.geo[geoIndex] : null;
+  },
+  getMapType: function () {
+    return (this.getHostGeoModel() || this).option.map;
+  },
+  // _fillOption: function (option, mapName) {
+  // Shallow clone
+  // option = zrUtil.extend({}, option);
+  // option.data = geoCreator.getFilledRegions(option.data, mapName, option.nameMap);
+  // return option;
+  // },
+  getRawValue: function (dataIndex) {
+    // Use value stored in data instead because it is calculated from multiple series
+    // FIXME Provide all value of multiple series ?
+    var data = this.getData();
+    return data.get(data.mapDimension('value'), dataIndex);
+  },
+
+  /**
+   * Get model of region
+   * @param  {string} name
+   * @return {module:echarts/model/Model}
+   */
+  getRegionModel: function (regionName) {
+    var data = this.getData();
+    return data.getItemModel(data.indexOfName(regionName));
+  },
+
+  /**
+   * Map tooltip formatter
+   *
+   * @param {number} dataIndex
+   */
+  formatTooltip: function (dataIndex) {
+    // FIXME orignalData and data is a bit confusing
+    var data = this.getData();
+    var formattedValue = addCommas(this.getRawValue(dataIndex));
+    var name = data.getName(dataIndex);
+    var seriesGroup = this.seriesGroup;
+    var seriesNames = [];
+
+    for (var i = 0; i < seriesGroup.length; i++) {
+      var otherIndex = seriesGroup[i].originalData.indexOfName(name);
+      var valueDim = data.mapDimension('value');
+
+      if (!isNaN(seriesGroup[i].originalData.get(valueDim, otherIndex))) {
+        seriesNames.push(encodeHTML(seriesGroup[i].name));
+      }
+    }
+
+    return seriesNames.join(', ') + '<br />' + encodeHTML(name + ' : ' + formattedValue);
+  },
+
+  /**
+   * @implement
+   */
+  getTooltipPosition: function (dataIndex) {
+    if (dataIndex != null) {
+      var name = this.getData().getName(dataIndex);
+      var geo = this.coordinateSystem;
+      var region = geo.getRegion(name);
+      return region && geo.dataToPoint(region.center);
+    }
+  },
+  setZoom: function (zoom) {
+    this.option.zoom = zoom;
+  },
+  setCenter: function (center) {
+    this.option.center = center;
+  },
+  defaultOption: {
+    // 一级层叠
+    zlevel: 0,
+    // 二级层叠
+    z: 2,
+    coordinateSystem: 'geo',
+    // map should be explicitly specified since ec3.
+    map: '',
+    // If `geoIndex` is not specified, a exclusive geo will be
+    // created. Otherwise use the specified geo component, and
+    // `map` and `mapType` are ignored.
+    // geoIndex: 0,
+    // 'center' | 'left' | 'right' | 'x%' | {number}
+    left: 'center',
+    // 'center' | 'top' | 'bottom' | 'x%' | {number}
+    top: 'center',
+    // right
+    // bottom
+    // width:
+    // height
+    // Aspect is width / height. Inited to be geoJson bbox aspect
+    // This parameter is used for scale this aspect
+    aspectScale: 0.75,
+    ///// Layout with center and size
+    // If you wan't to put map in a fixed size box with right aspect ratio
+    // This two properties may more conveninet
+    // layoutCenter: [50%, 50%]
+    // layoutSize: 100
+    // 数值合并方式，默认加和，可选为：
+    // 'sum' | 'average' | 'max' | 'min'
+    // mapValueCalculation: 'sum',
+    // 地图数值计算结果小数精度
+    // mapValuePrecision: 0,
+    // 显示图例颜色标识（系列标识的小圆点），图例开启时有效
+    showLegendSymbol: true,
+    // 选择模式，默认关闭，可选single，multiple
+    // selectedMode: false,
+    dataRangeHoverLink: true,
+    // 是否开启缩放及漫游模式
+    // roam: false,
+    // Define left-top, right-bottom coords to control view
+    // For example, [ [180, 90], [-180, -90] ],
+    // higher priority than center and zoom
+    boundingCoords: null,
+    // Default on center of map
+    center: null,
+    zoom: 1,
+    scaleLimit: null,
+    label: {
+      show: false,
+      color: '#000'
+    },
+    // scaleLimit: null,
+    itemStyle: {
+      borderWidth: 0.5,
+      borderColor: '#444',
+      areaColor: '#eee'
+    },
+    emphasis: {
+      label: {
+        show: true,
+        color: 'rgb(100,0,0)'
+      },
+      itemStyle: {
+        areaColor: 'rgba(255,215,0,0.8)'
+      }
+    }
+  }
+});
+mixin(MapSeries, selectableMixin);
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+var ATTR = '\0_ec_interaction_mutex';
+function take(zr, resourceKey, userKey) {
+  var store = getStore(zr);
+  store[resourceKey] = userKey;
+}
+function release(zr, resourceKey, userKey) {
+  var store = getStore(zr);
+  var uKey = store[resourceKey];
+
+  if (uKey === userKey) {
+    store[resourceKey] = null;
+  }
+}
+function isTaken(zr, resourceKey) {
+  return !!getStore(zr)[resourceKey];
+}
+
+function getStore(zr) {
+  return zr[ATTR] || (zr[ATTR] = {});
+}
+/**
+ * payload: {
+ *     type: 'takeGlobalCursor',
+ *     key: 'dataZoomSelect', or 'brush', or ...,
+ *         If no userKey, release global cursor.
+ * }
+ */
+
+
+registerAction({
+  type: 'takeGlobalCursor',
+  event: 'globalCursorTaken',
+  update: 'update'
+}, function () {});
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+/**
+ * @alias module:echarts/component/helper/RoamController
+ * @constructor
+ * @mixin {module:zrender/mixin/Eventful}
+ *
+ * @param {module:zrender/zrender~ZRender} zr
+ */
+
+function RoamController(zr) {
+  /**
+   * @type {Function}
+   */
+  this.pointerChecker;
+  /**
+   * @type {module:zrender}
+   */
+
+  this._zr = zr;
+  /**
+   * @type {Object}
+   */
+
+  this._opt = {}; // Avoid two roamController bind the same handler
+
+  var bind$$1 = bind;
+  var mousedownHandler = bind$$1(mousedown, this);
+  var mousemoveHandler = bind$$1(mousemove, this);
+  var mouseupHandler = bind$$1(mouseup, this);
+  var mousewheelHandler = bind$$1(mousewheel, this);
+  var pinchHandler = bind$$1(pinch, this);
+  Eventful.call(this);
+  /**
+   * @param {Function} pointerChecker
+   *                   input: x, y
+   *                   output: boolean
+   */
+
+  this.setPointerChecker = function (pointerChecker) {
+    this.pointerChecker = pointerChecker;
+  };
+  /**
+   * Notice: only enable needed types. For example, if 'zoom'
+   * is not needed, 'zoom' should not be enabled, otherwise
+   * default mousewheel behaviour (scroll page) will be disabled.
+   *
+   * @param  {boolean|string} [controlType=true] Specify the control type,
+   *                          which can be null/undefined or true/false
+   *                          or 'pan/move' or 'zoom'/'scale'
+   * @param {Object} [opt]
+   * @param {Object} [opt.zoomOnMouseWheel=true] The value can be: true / false / 'shift' / 'ctrl' / 'alt'.
+   * @param {Object} [opt.moveOnMouseMove=true] The value can be: true / false / 'shift' / 'ctrl' / 'alt'.
+   * @param {Object} [opt.moveOnMouseWheel=false] The value can be: true / false / 'shift' / 'ctrl' / 'alt'.
+   * @param {Object} [opt.preventDefaultMouseMove=true] When pan.
+   */
+
+
+  this.enable = function (controlType, opt) {
+    // Disable previous first
+    this.disable();
+    this._opt = defaults(clone(opt) || {}, {
+      zoomOnMouseWheel: true,
+      moveOnMouseMove: true,
+      // By default, wheel do not trigger move.
+      moveOnMouseWheel: false,
+      preventDefaultMouseMove: true
+    });
+
+    if (controlType == null) {
+      controlType = true;
+    }
+
+    if (controlType === true || controlType === 'move' || controlType === 'pan') {
+      zr.on('mousedown', mousedownHandler);
+      zr.on('mousemove', mousemoveHandler);
+      zr.on('mouseup', mouseupHandler);
+    }
+
+    if (controlType === true || controlType === 'scale' || controlType === 'zoom') {
+      zr.on('mousewheel', mousewheelHandler);
+      zr.on('pinch', pinchHandler);
+    }
+  };
+
+  this.disable = function () {
+    zr.off('mousedown', mousedownHandler);
+    zr.off('mousemove', mousemoveHandler);
+    zr.off('mouseup', mouseupHandler);
+    zr.off('mousewheel', mousewheelHandler);
+    zr.off('pinch', pinchHandler);
+  };
+
+  this.dispose = this.disable;
+
+  this.isDragging = function () {
+    return this._dragging;
+  };
+
+  this.isPinching = function () {
+    return this._pinching;
+  };
+}
+
+mixin(RoamController, Eventful);
+
+function mousedown(e) {
+  if (isMiddleOrRightButtonOnMouseUpDown(e) || e.target && e.target.draggable) {
+    return;
+  }
+
+  var x = e.offsetX;
+  var y = e.offsetY; // Only check on mosedown, but not mousemove.
+  // Mouse can be out of target when mouse moving.
+
+  if (this.pointerChecker && this.pointerChecker(e, x, y)) {
+    this._x = x;
+    this._y = y;
+    this._dragging = true;
+  }
+}
+
+function mousemove(e) {
+  if (!this._dragging || !isAvailableBehavior('moveOnMouseMove', e, this._opt) || e.gestureEvent === 'pinch' || isTaken(this._zr, 'globalPan')) {
+    return;
+  }
+
+  var x = e.offsetX;
+  var y = e.offsetY;
+  var oldX = this._x;
+  var oldY = this._y;
+  var dx = x - oldX;
+  var dy = y - oldY;
+  this._x = x;
+  this._y = y;
+  this._opt.preventDefaultMouseMove && stop(e.event);
+  trigger(this, 'pan', 'moveOnMouseMove', e, {
+    dx: dx,
+    dy: dy,
+    oldX: oldX,
+    oldY: oldY,
+    newX: x,
+    newY: y
+  });
+}
+
+function mouseup(e) {
+  if (!isMiddleOrRightButtonOnMouseUpDown(e)) {
+    this._dragging = false;
+  }
+}
+
+function mousewheel(e) {
+  var shouldZoom = isAvailableBehavior('zoomOnMouseWheel', e, this._opt);
+  var shouldMove = isAvailableBehavior('moveOnMouseWheel', e, this._opt);
+  var wheelDelta = e.wheelDelta;
+  var absWheelDeltaDelta = Math.abs(wheelDelta);
+  var originX = e.offsetX;
+  var originY = e.offsetY; // wheelDelta maybe -0 in chrome mac.
+
+  if (wheelDelta === 0 || !shouldZoom && !shouldMove) {
+    return;
+  } // If both `shouldZoom` and `shouldMove` is true, trigger
+  // their event both, and the final behavior is determined
+  // by event listener themselves.
+
+
+  if (shouldZoom) {
+    // Convenience:
+    // Mac and VM Windows on Mac: scroll up: zoom out.
+    // Windows: scroll up: zoom in.
+    // FIXME: Should do more test in different environment.
+    // wheelDelta is too complicated in difference nvironment
+    // (https://developer.mozilla.org/en-US/docs/Web/Events/mousewheel),
+    // although it has been normallized by zrender.
+    // wheelDelta of mouse wheel is bigger than touch pad.
+    var factor = absWheelDeltaDelta > 3 ? 1.4 : absWheelDeltaDelta > 1 ? 1.2 : 1.1;
+    var scale = wheelDelta > 0 ? factor : 1 / factor;
+    checkPointerAndTrigger(this, 'zoom', 'zoomOnMouseWheel', e, {
+      scale: scale,
+      originX: originX,
+      originY: originY
+    });
+  }
+
+  if (shouldMove) {
+    // FIXME: Should do more test in different environment.
+    var absDelta = Math.abs(wheelDelta); // wheelDelta of mouse wheel is bigger than touch pad.
+
+    var scrollDelta = (wheelDelta > 0 ? 1 : -1) * (absDelta > 3 ? 0.4 : absDelta > 1 ? 0.15 : 0.05);
+    checkPointerAndTrigger(this, 'scrollMove', 'moveOnMouseWheel', e, {
+      scrollDelta: scrollDelta,
+      originX: originX,
+      originY: originY
+    });
+  }
+}
+
+function pinch(e) {
+  if (isTaken(this._zr, 'globalPan')) {
+    return;
+  }
+
+  var scale = e.pinchScale > 1 ? 1.1 : 1 / 1.1;
+  checkPointerAndTrigger(this, 'zoom', null, e, {
+    scale: scale,
+    originX: e.pinchX,
+    originY: e.pinchY
+  });
+}
+
+function checkPointerAndTrigger(controller, eventName, behaviorToCheck, e, contollerEvent) {
+  if (controller.pointerChecker && controller.pointerChecker(e, contollerEvent.originX, contollerEvent.originY)) {
+    // When mouse is out of roamController rect,
+    // default befavoius should not be be disabled, otherwise
+    // page sliding is disabled, contrary to expectation.
+    stop(e.event);
+    trigger(controller, eventName, behaviorToCheck, e, contollerEvent);
+  }
+}
+
+function trigger(controller, eventName, behaviorToCheck, e, contollerEvent) {
+  // Also provide behavior checker for event listener, for some case that
+  // multiple components share one listener.
+  contollerEvent.isAvailableBehavior = bind(isAvailableBehavior, null, behaviorToCheck, e);
+  controller.trigger(eventName, contollerEvent);
+} // settings: {
+//     zoomOnMouseWheel
+//     moveOnMouseMove
+//     moveOnMouseWheel
+// }
+// The value can be: true / false / 'shift' / 'ctrl' / 'alt'.
+
+
+function isAvailableBehavior(behaviorToCheck, e, settings) {
+  var setting = settings[behaviorToCheck];
+  return !behaviorToCheck || setting && (!isString(setting) || e.event[setting + 'Key']);
+}
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
+/**
+ * For geo and graph.
+ *
+ * @param {Object} controllerHost
+ * @param {module:zrender/Element} controllerHost.target
+ */
+function updateViewOnPan(controllerHost, dx, dy) {
+  var target = controllerHost.target;
+  var pos = target.position;
+  pos[0] += dx;
+  pos[1] += dy;
+  target.dirty();
+}
+/**
+ * For geo and graph.
+ *
+ * @param {Object} controllerHost
+ * @param {module:zrender/Element} controllerHost.target
+ * @param {number} controllerHost.zoom
+ * @param {number} controllerHost.zoomLimit like: {min: 1, max: 2}
+ */
+
+function updateViewOnZoom(controllerHost, zoomDelta, zoomX, zoomY) {
+  var target = controllerHost.target;
+  var zoomLimit = controllerHost.zoomLimit;
+  var pos = target.position;
+  var scale = target.scale;
+  var newZoom = controllerHost.zoom = controllerHost.zoom || 1;
+  newZoom *= zoomDelta;
+
+  if (zoomLimit) {
+    var zoomMin = zoomLimit.min || 0;
+    var zoomMax = zoomLimit.max || Infinity;
+    newZoom = Math.max(Math.min(zoomMax, newZoom), zoomMin);
+  }
+
+  var zoomScale = newZoom / controllerHost.zoom;
+  controllerHost.zoom = newZoom; // Keep the mouse center when scaling
+
+  pos[0] -= (zoomX - pos[0]) * (zoomScale - 1);
+  pos[1] -= (zoomY - pos[1]) * (zoomScale - 1);
+  scale[0] *= zoomScale;
+  scale[1] *= zoomScale;
+  target.dirty();
+}
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+var IRRELEVANT_EXCLUDES = {
+  'axisPointer': 1,
+  'tooltip': 1,
+  'brush': 1
+};
+/**
+ * Avoid that: mouse click on a elements that is over geo or graph,
+ * but roam is triggered.
+ */
+
+function onIrrelevantElement(e, api, targetCoordSysModel) {
+  var model = api.getComponentByElement(e.topTarget); // If model is axisModel, it works only if it is injected with coordinateSystem.
+
+  var coordSys = model && model.coordinateSystem;
+  return model && model !== targetCoordSysModel && !IRRELEVANT_EXCLUDES[model.mainType] && coordSys && coordSys.model !== targetCoordSysModel;
+}
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+function getFixedItemStyle(model, scale) {
+  var itemStyle = model.getItemStyle();
+  var areaColor = model.get('areaColor'); // If user want the color not to be changed when hover,
+  // they should both set areaColor and color to be null.
+
+  if (areaColor != null) {
+    itemStyle.fill = areaColor;
+  }
+
+  return itemStyle;
+}
+
+function updateMapSelectHandler(mapDraw, mapOrGeoModel, regionsGroup, api, fromView) {
+  regionsGroup.off('click');
+  regionsGroup.off('mousedown');
+
+  if (mapOrGeoModel.get('selectedMode')) {
+    regionsGroup.on('mousedown', function () {
+      mapDraw._mouseDownFlag = true;
+    });
+    regionsGroup.on('click', function (e) {
+      if (!mapDraw._mouseDownFlag) {
+        return;
+      }
+
+      mapDraw._mouseDownFlag = false;
+      var el = e.target;
+
+      while (!el.__regions) {
+        el = el.parent;
+      }
+
+      if (!el) {
+        return;
+      }
+
+      var action = {
+        type: (mapOrGeoModel.mainType === 'geo' ? 'geo' : 'map') + 'ToggleSelect',
+        batch: map(el.__regions, function (region) {
+          return {
+            name: region.name,
+            from: fromView.uid
+          };
+        })
+      };
+      action[mapOrGeoModel.mainType + 'Id'] = mapOrGeoModel.id;
+      api.dispatchAction(action);
+      updateMapSelected(mapOrGeoModel, regionsGroup);
+    });
+  }
+}
+
+function updateMapSelected(mapOrGeoModel, regionsGroup) {
+  // FIXME
+  regionsGroup.eachChild(function (otherRegionEl) {
+    each$1(otherRegionEl.__regions, function (region) {
+      otherRegionEl.trigger(mapOrGeoModel.isSelected(region.name) ? 'emphasis' : 'normal');
+    });
+  });
+}
+/**
+ * @alias module:echarts/component/helper/MapDraw
+ * @param {module:echarts/ExtensionAPI} api
+ * @param {boolean} updateGroup
+ */
+
+
+function MapDraw(api, updateGroup) {
+  var group = new Group();
+  /**
+   * @type {string}
+   * @private
+   */
+
+  this.uid = getUID('ec_map_draw');
+  /**
+   * @type {module:echarts/component/helper/RoamController}
+   * @private
+   */
+
+  this._controller = new RoamController(api.getZr());
+  /**
+   * @type {Object} {target, zoom, zoomLimit}
+   * @private
+   */
+
+  this._controllerHost = {
+    target: updateGroup ? group : null
+  };
+  /**
+   * @type {module:zrender/container/Group}
+   * @readOnly
+   */
+
+  this.group = group;
+  /**
+   * @type {boolean}
+   * @private
+   */
+
+  this._updateGroup = updateGroup;
+  /**
+   * This flag is used to make sure that only one among
+   * `pan`, `zoom`, `click` can occurs, otherwise 'selected'
+   * action may be triggered when `pan`, which is unexpected.
+   * @type {booelan}
+   */
+
+  this._mouseDownFlag;
+  /**
+   * @type {string}
+   */
+
+  this._mapName;
+  /**
+   * @type {boolean}
+   */
+
+  this._initialized;
+  /**
+   * @type {module:zrender/container/Group}
+   */
+
+  group.add(this._regionsGroup = new Group());
+  /**
+   * @type {module:zrender/container/Group}
+   */
+
+  group.add(this._backgroundGroup = new Group());
+}
+
+MapDraw.prototype = {
+  constructor: MapDraw,
+  draw: function (mapOrGeoModel, ecModel, api, fromView, payload) {
+    var isGeo = mapOrGeoModel.mainType === 'geo'; // Map series has data. GEO model that controlled by map series
+    // will be assigned with map data. Other GEO model has no data.
+
+    var data = mapOrGeoModel.getData && mapOrGeoModel.getData();
+    isGeo && ecModel.eachComponent({
+      mainType: 'series',
+      subType: 'map'
+    }, function (mapSeries) {
+      if (!data && mapSeries.getHostGeoModel() === mapOrGeoModel) {
+        data = mapSeries.getData();
+      }
+    });
+    var geo = mapOrGeoModel.coordinateSystem;
+
+    this._updateBackground(geo);
+
+    var regionsGroup = this._regionsGroup;
+    var group = this.group;
+    var scale = geo.scale;
+    var transform = {
+      position: geo.position,
+      scale: scale
+    }; // No animation when first draw or in action
+
+    if (!regionsGroup.childAt(0) || payload) {
+      group.attr(transform);
+    } else {
+      updateProps(group, transform, mapOrGeoModel);
+    }
+
+    regionsGroup.removeAll();
+    var itemStyleAccessPath = ['itemStyle'];
+    var hoverItemStyleAccessPath = ['emphasis', 'itemStyle'];
+    var labelAccessPath = ['label'];
+    var hoverLabelAccessPath = ['emphasis', 'label'];
+    var nameMap = createHashMap();
+    each$1(geo.regions, function (region) {
+      // Consider in GeoJson properties.name may be duplicated, for example,
+      // there is multiple region named "United Kindom" or "France" (so many
+      // colonies). And it is not appropriate to merge them in geo, which
+      // will make them share the same label and bring trouble in label
+      // location calculation.
+      var regionGroup = nameMap.get(region.name) || nameMap.set(region.name, new Group());
+      var compoundPath = new CompoundPath({
+        shape: {
+          paths: []
+        }
+      });
+      regionGroup.add(compoundPath);
+      var regionModel = mapOrGeoModel.getRegionModel(region.name) || mapOrGeoModel;
+      var itemStyleModel = regionModel.getModel(itemStyleAccessPath);
+      var hoverItemStyleModel = regionModel.getModel(hoverItemStyleAccessPath);
+      var itemStyle = getFixedItemStyle(itemStyleModel, scale);
+      var hoverItemStyle = getFixedItemStyle(hoverItemStyleModel, scale);
+      var labelModel = regionModel.getModel(labelAccessPath);
+      var hoverLabelModel = regionModel.getModel(hoverLabelAccessPath);
+      var dataIdx; // Use the itemStyle in data if has data
+
+      if (data) {
+        dataIdx = data.indexOfName(region.name); // Only visual color of each item will be used. It can be encoded by dataRange
+        // But visual color of series is used in symbol drawing
+        //
+        // Visual color for each series is for the symbol draw
+
+        var visualColor = data.getItemVisual(dataIdx, 'color', true);
+
+        if (visualColor) {
+          itemStyle.fill = visualColor;
+        }
+      }
+
+      each$1(region.geometries, function (geometry) {
+        if (geometry.type !== 'polygon') {
+          return;
+        }
+
+        compoundPath.shape.paths.push(new Polygon({
+          shape: {
+            points: geometry.exterior
+          }
+        }));
+
+        for (var i = 0; i < (geometry.interiors ? geometry.interiors.length : 0); i++) {
+          compoundPath.shape.paths.push(new Polygon({
+            shape: {
+              points: geometry.interiors[i]
+            }
+          }));
+        }
+      });
+      compoundPath.setStyle(itemStyle);
+      compoundPath.style.strokeNoScale = true;
+      compoundPath.culling = true; // Label
+
+      var showLabel = labelModel.get('show');
+      var hoverShowLabel = hoverLabelModel.get('show');
+      var isDataNaN = data && isNaN(data.get(data.mapDimension('value'), dataIdx));
+      var itemLayout = data && data.getItemLayout(dataIdx); // In the following cases label will be drawn
+      // 1. In map series and data value is NaN
+      // 2. In geo component
+      // 4. Region has no series legendSymbol, which will be add a showLabel flag in mapSymbolLayout
+
+      if (isGeo || isDataNaN && (showLabel || hoverShowLabel) || itemLayout && itemLayout.showLabel) {
+        var query = !isGeo ? dataIdx : region.name;
+        var labelFetcher; // Consider dataIdx not found.
+
+        if (!data || dataIdx >= 0) {
+          labelFetcher = mapOrGeoModel;
+        }
+
+        var textEl = new Text({
+          position: region.center.slice(),
+          // FIXME
+          // label rotation is not support yet in geo or regions of series-map
+          // that has no data. The rotation will be effected by this `scale`.
+          // So needed to change to RectText?
+          scale: [1 / scale[0], 1 / scale[1]],
+          z2: 10,
+          silent: true
+        });
+        setLabelStyle(textEl.style, textEl.hoverStyle = {}, labelModel, hoverLabelModel, {
+          labelFetcher: labelFetcher,
+          labelDataIndex: query,
+          defaultText: region.name,
+          useInsideStyle: false
+        }, {
+          textAlign: 'center',
+          textVerticalAlign: 'middle'
+        });
+        regionGroup.add(textEl);
+      } // setItemGraphicEl, setHoverStyle after all polygons and labels
+      // are added to the rigionGroup
+
+
+      if (data) {
+        data.setItemGraphicEl(dataIdx, regionGroup);
+      } else {
+        var regionModel = mapOrGeoModel.getRegionModel(region.name); // Package custom mouse event for geo component
+
+        compoundPath.eventData = {
+          componentType: 'geo',
+          componentIndex: mapOrGeoModel.componentIndex,
+          geoIndex: mapOrGeoModel.componentIndex,
+          name: region.name,
+          region: regionModel && regionModel.option || {}
+        };
+      }
+
+      var groupRegions = regionGroup.__regions || (regionGroup.__regions = []);
+      groupRegions.push(region);
+      setHoverStyle(regionGroup, hoverItemStyle, {
+        hoverSilentOnTouch: !!mapOrGeoModel.get('selectedMode')
+      });
+      regionsGroup.add(regionGroup);
+    });
+
+    this._updateController(mapOrGeoModel, ecModel, api);
+
+    updateMapSelectHandler(this, mapOrGeoModel, regionsGroup, api, fromView);
+    updateMapSelected(mapOrGeoModel, regionsGroup);
+  },
+  remove: function () {
+    this._regionsGroup.removeAll();
+
+    this._backgroundGroup.removeAll();
+
+    this._controller.dispose();
+
+    this._mapName && geoSourceManager.removeGraphic(this._mapName, this.uid);
+    this._mapName = null;
+    this._controllerHost = {};
+  },
+  _updateBackground: function (geo) {
+    var mapName = geo.map;
+
+    if (this._mapName !== mapName) {
+      each$1(geoSourceManager.makeGraphic(mapName, this.uid), function (root) {
+        this._backgroundGroup.add(root);
+      }, this);
+    }
+
+    this._mapName = mapName;
+  },
+  _updateController: function (mapOrGeoModel, ecModel, api) {
+    var geo = mapOrGeoModel.coordinateSystem;
+    var controller = this._controller;
+    var controllerHost = this._controllerHost;
+    controllerHost.zoomLimit = mapOrGeoModel.get('scaleLimit');
+    controllerHost.zoom = geo.getZoom(); // roamType is will be set default true if it is null
+
+    controller.enable(mapOrGeoModel.get('roam') || false);
+    var mainType = mapOrGeoModel.mainType;
+
+    function makeActionBase() {
+      var action = {
+        type: 'geoRoam',
+        componentType: mainType
+      };
+      action[mainType + 'Id'] = mapOrGeoModel.id;
+      return action;
+    }
+
+    controller.off('pan').on('pan', function (e) {
+      this._mouseDownFlag = false;
+      updateViewOnPan(controllerHost, e.dx, e.dy);
+      api.dispatchAction(extend(makeActionBase(), {
+        dx: e.dx,
+        dy: e.dy
+      }));
+    }, this);
+    controller.off('zoom').on('zoom', function (e) {
+      this._mouseDownFlag = false;
+      updateViewOnZoom(controllerHost, e.scale, e.originX, e.originY);
+      api.dispatchAction(extend(makeActionBase(), {
+        zoom: e.scale,
+        originX: e.originX,
+        originY: e.originY
+      }));
+
+      if (this._updateGroup) {
+        var scale = this.group.scale;
+
+        this._regionsGroup.traverse(function (el) {
+          if (el.type === 'text') {
+            el.attr('scale', [1 / scale[0], 1 / scale[1]]);
+          }
+        });
+      }
+    }, this);
+    controller.setPointerChecker(function (e, x, y) {
+      return geo.getViewRectAfterRoam().contain(x, y) && !onIrrelevantElement(e, api, mapOrGeoModel);
+    });
+  }
+};
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+var HIGH_DOWN_PROP = '__seriesMapHighDown';
+var RECORD_VERSION_PROP = '__seriesMapCallKey';
+extendChartView({
+  type: 'map',
+  render: function (mapModel, ecModel, api, payload) {
+    // Not render if it is an toggleSelect action from self
+    if (payload && payload.type === 'mapToggleSelect' && payload.from === this.uid) {
+      return;
+    }
+
+    var group = this.group;
+    group.removeAll();
+
+    if (mapModel.getHostGeoModel()) {
+      return;
+    } // Not update map if it is an roam action from self
+
+
+    if (!(payload && payload.type === 'geoRoam' && payload.componentType === 'series' && payload.seriesId === mapModel.id)) {
+      if (mapModel.needsDrawMap) {
+        var mapDraw = this._mapDraw || new MapDraw(api, true);
+        group.add(mapDraw.group);
+        mapDraw.draw(mapModel, ecModel, api, this, payload);
+        this._mapDraw = mapDraw;
+      } else {
+        // Remove drawed map
+        this._mapDraw && this._mapDraw.remove();
+        this._mapDraw = null;
+      }
+    } else {
+      var mapDraw = this._mapDraw;
+      mapDraw && group.add(mapDraw.group);
+    }
+
+    mapModel.get('showLegendSymbol') && ecModel.getComponent('legend') && this._renderSymbols(mapModel, ecModel, api);
+  },
+  remove: function () {
+    this._mapDraw && this._mapDraw.remove();
+    this._mapDraw = null;
+    this.group.removeAll();
+  },
+  dispose: function () {
+    this._mapDraw && this._mapDraw.remove();
+    this._mapDraw = null;
+  },
+  _renderSymbols: function (mapModel, ecModel, api) {
+    var originalData = mapModel.originalData;
+    var group = this.group;
+    originalData.each(originalData.mapDimension('value'), function (value, originalDataIndex) {
+      if (isNaN(value)) {
+        return;
+      }
+
+      var layout = originalData.getItemLayout(originalDataIndex);
+
+      if (!layout || !layout.point) {
+        // Not exists in map
+        return;
+      }
+
+      var point = layout.point;
+      var offset = layout.offset;
+      var circle = new Circle({
+        style: {
+          // Because the special of map draw.
+          // Which needs statistic of multiple series and draw on one map.
+          // And each series also need a symbol with legend color
+          //
+          // Layout and visual are put one the different data
+          fill: mapModel.getData().getVisual('color')
+        },
+        shape: {
+          cx: point[0] + offset * 9,
+          cy: point[1],
+          r: 3
+        },
+        silent: true,
+        // Do not overlap the first series, on which labels are displayed.
+        z2: 8 + (!offset ? Z2_EMPHASIS_LIFT + 1 : 0)
+      }); // Only the series that has the first value on the same region is in charge of rendering the label.
+      // But consider the case:
+      // series: [
+      //     {id: 'X', type: 'map', map: 'm', {data: [{name: 'A', value: 11}, {name: 'B', {value: 22}]},
+      //     {id: 'Y', type: 'map', map: 'm', {data: [{name: 'A', value: 21}, {name: 'C', {value: 33}]}
+      // ]
+      // The offset `0` of item `A` is at series `X`, but of item `C` is at series `Y`.
+      // For backward compatibility, we follow the rule that render label `A` by the
+      // settings on series `X` but render label `C` by the settings on series `Y`.
+
+      if (!offset) {
+        var fullData = mapModel.mainSeries.getData();
+        var name = originalData.getName(originalDataIndex);
+        var fullIndex = fullData.indexOfName(name);
+        var itemModel = originalData.getItemModel(originalDataIndex);
+        var labelModel = itemModel.getModel('label');
+        var hoverLabelModel = itemModel.getModel('emphasis.label');
+        var regionGroup = fullData.getItemGraphicEl(fullIndex); // `getFormattedLabel` needs to use `getData` inside. Here
+        // `mapModel.getData()` is shallow cloned from `mainSeries.getData()`.
+        // FIXME
+        // If this is not the `mainSeries`, the item model (like label formatter)
+        // set on original data item will never get. But it has been working
+        // like that from the begining, and this scenario is rarely encountered.
+        // So it won't be fixed until have to.
+
+        var normalText = retrieve2(mapModel.getFormattedLabel(fullIndex, 'normal'), name);
+        var emphasisText = retrieve2(mapModel.getFormattedLabel(fullIndex, 'emphasis'), normalText);
+        var highDownRecord = regionGroup[HIGH_DOWN_PROP];
+        var recordVersion = Math.random(); // Prevent from register listeners duplicatedly when roaming.
+
+        if (!highDownRecord) {
+          highDownRecord = regionGroup[HIGH_DOWN_PROP] = {};
+          var onEmphasis = curry(onRegionHighDown, true);
+          var onNormal = curry(onRegionHighDown, false);
+          regionGroup.on('mouseover', onEmphasis).on('mouseout', onNormal).on('emphasis', onEmphasis).on('normal', onNormal);
+        } // Prevent removed regions effect current grapics.
+
+
+        regionGroup[RECORD_VERSION_PROP] = recordVersion;
+        extend(highDownRecord, {
+          recordVersion: recordVersion,
+          circle: circle,
+          labelModel: labelModel,
+          hoverLabelModel: hoverLabelModel,
+          emphasisText: emphasisText,
+          normalText: normalText
+        }); // FIXME
+        // Consider set option when emphasis.
+
+        enterRegionHighDown(highDownRecord, false);
+      }
+
+      group.add(circle);
+    });
+  }
+});
+
+function onRegionHighDown(toHighOrDown) {
+  var highDownRecord = this[HIGH_DOWN_PROP];
+
+  if (highDownRecord && highDownRecord.recordVersion === this[RECORD_VERSION_PROP]) {
+    enterRegionHighDown(highDownRecord, toHighOrDown);
+  }
+}
+
+function enterRegionHighDown(highDownRecord, toHighOrDown) {
+  var circle = highDownRecord.circle;
+  var labelModel = highDownRecord.labelModel;
+  var hoverLabelModel = highDownRecord.hoverLabelModel;
+  var emphasisText = highDownRecord.emphasisText;
+  var normalText = highDownRecord.normalText;
+
+  if (toHighOrDown) {
+    circle.style.extendFrom(setTextStyle({}, hoverLabelModel, {
+      text: hoverLabelModel.get('show') ? emphasisText : null
+    }, {
+      isRectText: true,
+      useInsideStyle: false
+    }, true)); // Make label upper than others if overlaps.
+
+    circle.__mapOriginalZ2 = circle.z2;
+    circle.z2 += Z2_EMPHASIS_LIFT;
+  } else {
+    setTextStyle(circle.style, labelModel, {
+      text: labelModel.get('show') ? normalText : null,
+      textPosition: labelModel.getShallow('position') || 'bottom'
+    }, {
+      isRectText: true,
+      useInsideStyle: false
+    }); // Trigger normalize style like padding.
+
+    circle.dirty(false);
+
+    if (circle.__mapOriginalZ2 != null) {
+      circle.z2 = circle.__mapOriginalZ2;
+      circle.__mapOriginalZ2 = null;
+    }
+  }
+}
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
+/**
+ * @param {module:echarts/coord/View} view
+ * @param {Object} payload
+ * @param {Object} [zoomLimit]
+ */
+function updateCenterAndZoom(view, payload, zoomLimit) {
+  var previousZoom = view.getZoom();
+  var center = view.getCenter();
+  var zoom = payload.zoom;
+  var point = view.dataToPoint(center);
+
+  if (payload.dx != null && payload.dy != null) {
+    point[0] -= payload.dx;
+    point[1] -= payload.dy;
+    var center = view.pointToData(point);
+    view.setCenter(center);
+  }
+
+  if (zoom != null) {
+    if (zoomLimit) {
+      var zoomMin = zoomLimit.min || 0;
+      var zoomMax = zoomLimit.max || Infinity;
+      zoom = Math.max(Math.min(previousZoom * zoom, zoomMax), zoomMin) / previousZoom;
+    } // Zoom on given point(originX, originY)
+
+
+    view.scale[0] *= zoom;
+    view.scale[1] *= zoom;
+    var position = view.position;
+    var fixX = (payload.originX - position[0]) * (zoom - 1);
+    var fixY = (payload.originY - position[1]) * (zoom - 1);
+    position[0] -= fixX;
+    position[1] -= fixY;
+    view.updateTransform(); // Get the new center
+
+    var center = view.pointToData(point);
+    view.setCenter(center);
+    view.setZoom(zoom * previousZoom);
+  }
+
+  return {
+    center: view.getCenter(),
+    zoom: view.getZoom()
+  };
+}
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+/**
+ * @payload
+ * @property {string} [componentType=series]
+ * @property {number} [dx]
+ * @property {number} [dy]
+ * @property {number} [zoom]
+ * @property {number} [originX]
+ * @property {number} [originY]
+ */
+
+registerAction({
+  type: 'geoRoam',
+  event: 'geoRoam',
+  update: 'updateTransform'
+}, function (payload, ecModel) {
+  var componentType = payload.componentType || 'series';
+  ecModel.eachComponent({
+    mainType: componentType,
+    query: payload
+  }, function (componentModel) {
+    var geo = componentModel.coordinateSystem;
+
+    if (geo.type !== 'geo') {
+      return;
+    }
+
+    var res = updateCenterAndZoom(geo, payload, componentModel.get('scaleLimit'));
+    componentModel.setCenter && componentModel.setCenter(res.center);
+    componentModel.setZoom && componentModel.setZoom(res.zoom); // All map series with same `map` use the same geo coordinate system
+    // So the center and zoom must be in sync. Include the series not selected by legend
+
+    if (componentType === 'series') {
+      each$1(componentModel.seriesGroup, function (seriesModel) {
+        seriesModel.setCenter(res.center);
+        seriesModel.setZoom(res.zoom);
+      });
+    }
+  });
+});
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+
+/**
+ * Simple view coordinate system
+ * Mapping given x, y to transformd view x, y
+ */
+var v2ApplyTransform$1 = applyTransform; // Dummy transform node
+
+function TransformDummy() {
+  Transformable.call(this);
+}
+
+mixin(TransformDummy, Transformable);
+
+function View(name) {
+  /**
+   * @type {string}
+   */
+  this.name = name;
+  /**
+   * @type {Object}
+   */
+
+  this.zoomLimit;
+  Transformable.call(this);
+  this._roamTransformable = new TransformDummy();
+  this._rawTransformable = new TransformDummy();
+  this._center;
+  this._zoom;
+}
+
+View.prototype = {
+  constructor: View,
+  type: 'view',
+
+  /**
+   * @param {Array.<string>}
+   * @readOnly
+   */
+  dimensions: ['x', 'y'],
+
+  /**
+   * Set bounding rect
+   * @param {number} x
+   * @param {number} y
+   * @param {number} width
+   * @param {number} height
+   */
+  // PENDING to getRect
+  setBoundingRect: function (x, y, width, height) {
+    this._rect = new BoundingRect(x, y, width, height);
+    return this._rect;
+  },
+
+  /**
+   * @return {module:zrender/core/BoundingRect}
+   */
+  // PENDING to getRect
+  getBoundingRect: function () {
+    return this._rect;
+  },
+
+  /**
+   * @param {number} x
+   * @param {number} y
+   * @param {number} width
+   * @param {number} height
+   */
+  setViewRect: function (x, y, width, height) {
+    this.transformTo(x, y, width, height);
+    this._viewRect = new BoundingRect(x, y, width, height);
+  },
+
+  /**
+   * Transformed to particular position and size
+   * @param {number} x
+   * @param {number} y
+   * @param {number} width
+   * @param {number} height
+   */
+  transformTo: function (x, y, width, height) {
+    var rect = this.getBoundingRect();
+    var rawTransform = this._rawTransformable;
+    rawTransform.transform = rect.calculateTransform(new BoundingRect(x, y, width, height));
+    rawTransform.decomposeTransform();
+
+    this._updateTransform();
+  },
+
+  /**
+   * Set center of view
+   * @param {Array.<number>} [centerCoord]
+   */
+  setCenter: function (centerCoord) {
+    if (!centerCoord) {
+      return;
+    }
+
+    this._center = centerCoord;
+
+    this._updateCenterAndZoom();
+  },
+
+  /**
+   * @param {number} zoom
+   */
+  setZoom: function (zoom) {
+    zoom = zoom || 1;
+    var zoomLimit = this.zoomLimit;
+
+    if (zoomLimit) {
+      if (zoomLimit.max != null) {
+        zoom = Math.min(zoomLimit.max, zoom);
+      }
+
+      if (zoomLimit.min != null) {
+        zoom = Math.max(zoomLimit.min, zoom);
+      }
+    }
+
+    this._zoom = zoom;
+
+    this._updateCenterAndZoom();
+  },
+
+  /**
+   * Get default center without roam
+   */
+  getDefaultCenter: function () {
+    // Rect before any transform
+    var rawRect = this.getBoundingRect();
+    var cx = rawRect.x + rawRect.width / 2;
+    var cy = rawRect.y + rawRect.height / 2;
+    return [cx, cy];
+  },
+  getCenter: function () {
+    return this._center || this.getDefaultCenter();
+  },
+  getZoom: function () {
+    return this._zoom || 1;
+  },
+
+  /**
+   * @return {Array.<number}
+   */
+  getRoamTransform: function () {
+    return this._roamTransformable.getLocalTransform();
+  },
+
+  /**
+   * Remove roam
+   */
+  _updateCenterAndZoom: function () {
+    // Must update after view transform updated
+    var rawTransformMatrix = this._rawTransformable.getLocalTransform();
+
+    var roamTransform = this._roamTransformable;
+    var defaultCenter = this.getDefaultCenter();
+    var center = this.getCenter();
+    var zoom = this.getZoom();
+    center = applyTransform([], center, rawTransformMatrix);
+    defaultCenter = applyTransform([], defaultCenter, rawTransformMatrix);
+    roamTransform.origin = center;
+    roamTransform.position = [defaultCenter[0] - center[0], defaultCenter[1] - center[1]];
+    roamTransform.scale = [zoom, zoom];
+
+    this._updateTransform();
+  },
+
+  /**
+   * Update transform from roam and mapLocation
+   * @private
+   */
+  _updateTransform: function () {
+    var roamTransformable = this._roamTransformable;
+    var rawTransformable = this._rawTransformable;
+    rawTransformable.parent = roamTransformable;
+    roamTransformable.updateTransform();
+    rawTransformable.updateTransform();
+    copy$1(this.transform || (this.transform = []), rawTransformable.transform || create$1());
+    this._rawTransform = rawTransformable.getLocalTransform();
+    this.invTransform = this.invTransform || [];
+    invert(this.invTransform, this.transform);
+    this.decomposeTransform();
+  },
+
+  /**
+   * @return {module:zrender/core/BoundingRect}
+   */
+  getViewRect: function () {
+    return this._viewRect;
+  },
+
+  /**
+   * Get view rect after roam transform
+   * @return {module:zrender/core/BoundingRect}
+   */
+  getViewRectAfterRoam: function () {
+    var rect = this.getBoundingRect().clone();
+    rect.applyTransform(this.transform);
+    return rect;
+  },
+
+  /**
+   * Convert a single (lon, lat) data item to (x, y) point.
+   * @param {Array.<number>} data
+   * @param {boolean} noRoam
+   * @param {Array.<number>} [out]
+   * @return {Array.<number>}
+   */
+  dataToPoint: function (data, noRoam, out) {
+    var transform = noRoam ? this._rawTransform : this.transform;
+    out = out || [];
+    return transform ? v2ApplyTransform$1(out, data, transform) : copy(out, data);
+  },
+
+  /**
+   * Convert a (x, y) point to (lon, lat) data
+   * @param {Array.<number>} point
+   * @return {Array.<number>}
+   */
+  pointToData: function (point) {
+    var invTransform = this.invTransform;
+    return invTransform ? v2ApplyTransform$1([], point, invTransform) : [point[0], point[1]];
+  },
+
+  /**
+   * @implements
+   * see {module:echarts/CoodinateSystem}
+   */
+  convertToPixel: curry(doConvert$1, 'dataToPoint'),
+
+  /**
+   * @implements
+   * see {module:echarts/CoodinateSystem}
+   */
+  convertFromPixel: curry(doConvert$1, 'pointToData'),
+
+  /**
+   * @implements
+   * see {module:echarts/CoodinateSystem}
+   */
+  containPoint: function (point) {
+    return this.getViewRectAfterRoam().contain(point[0], point[1]);
+  }
+  /**
+   * @return {number}
+   */
+  // getScalarScale: function () {
+  //     // Use determinant square root of transform to mutiply scalar
+  //     var m = this.transform;
+  //     var det = Math.sqrt(Math.abs(m[0] * m[3] - m[2] * m[1]));
+  //     return det;
+  // }
+
+};
+mixin(View, Transformable);
+
+function doConvert$1(methodName, ecModel, finder, value) {
+  var seriesModel = finder.seriesModel;
+  var coordSys = seriesModel ? seriesModel.coordinateSystem : null; // e.g., graph.
+
+  return coordSys === this ? coordSys[methodName](value) : null;
+}
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+/**
+ * [Geo description]
+ * For backward compatibility, the orginal interface:
+ * `name, map, geoJson, specialAreas, nameMap` is kept.
+ *
+ * @param {string|Object} name
+ * @param {string} map Map type
+ *        Specify the positioned areas by left, top, width, height
+ * @param {Object.<string, string>} [nameMap]
+ *        Specify name alias
+ * @param {boolean} [invertLongitute=true]
+ */
+
+function Geo(name, map$$1, nameMap, invertLongitute) {
+  View.call(this, name);
+  /**
+   * Map type
+   * @type {string}
+   */
+
+  this.map = map$$1;
+  var source = geoSourceManager.load(map$$1, nameMap);
+  this._nameCoordMap = source.nameCoordMap;
+  this._regionsMap = source.regionsMap;
+  this._invertLongitute = invertLongitute == null ? true : invertLongitute;
+  /**
+   * @readOnly
+   */
+
+  this.regions = source.regions;
+  /**
+   * @type {module:zrender/src/core/BoundingRect}
+   */
+
+  this._rect = source.boundingRect;
+}
+
+Geo.prototype = {
+  constructor: Geo,
+  type: 'geo',
+
+  /**
+   * @param {Array.<string>}
+   * @readOnly
+   */
+  dimensions: ['lng', 'lat'],
+
+  /**
+   * If contain given lng,lat coord
+   * @param {Array.<number>}
+   * @readOnly
+   */
+  containCoord: function (coord) {
+    var regions = this.regions;
+
+    for (var i = 0; i < regions.length; i++) {
+      if (regions[i].contain(coord)) {
+        return true;
+      }
+    }
+
+    return false;
+  },
+
+  /**
+   * @override
+   */
+  transformTo: function (x, y, width, height) {
+    var rect = this.getBoundingRect();
+    var invertLongitute = this._invertLongitute;
+    rect = rect.clone();
+
+    if (invertLongitute) {
+      // Longitute is inverted
+      rect.y = -rect.y - rect.height;
+    }
+
+    var rawTransformable = this._rawTransformable;
+    rawTransformable.transform = rect.calculateTransform(new BoundingRect(x, y, width, height));
+    rawTransformable.decomposeTransform();
+
+    if (invertLongitute) {
+      var scale = rawTransformable.scale;
+      scale[1] = -scale[1];
+    }
+
+    rawTransformable.updateTransform();
+
+    this._updateTransform();
+  },
+
+  /**
+   * @param {string} name
+   * @return {module:echarts/coord/geo/Region}
+   */
+  getRegion: function (name) {
+    return this._regionsMap.get(name);
+  },
+  getRegionByCoord: function (coord) {
+    var regions = this.regions;
+
+    for (var i = 0; i < regions.length; i++) {
+      if (regions[i].contain(coord)) {
+        return regions[i];
+      }
+    }
+  },
+
+  /**
+   * Add geoCoord for indexing by name
+   * @param {string} name
+   * @param {Array.<number>} geoCoord
+   */
+  addGeoCoord: function (name, geoCoord) {
+    this._nameCoordMap.set(name, geoCoord);
+  },
+
+  /**
+   * Get geoCoord by name
+   * @param {string} name
+   * @return {Array.<number>}
+   */
+  getGeoCoord: function (name) {
+    return this._nameCoordMap.get(name);
+  },
+
+  /**
+   * @override
+   */
+  getBoundingRect: function () {
+    return this._rect;
+  },
+
+  /**
+   * @param {string|Array.<number>} data
+   * @param {boolean} noRoam
+   * @param {Array.<number>} [out]
+   * @return {Array.<number>}
+   */
+  dataToPoint: function (data, noRoam, out) {
+    if (typeof data === 'string') {
+      // Map area name to geoCoord
+      data = this.getGeoCoord(data);
+    }
+
+    if (data) {
+      return View.prototype.dataToPoint.call(this, data, noRoam, out);
+    }
+  },
+
+  /**
+   * @override
+   */
+  convertToPixel: curry(doConvert, 'dataToPoint'),
+
+  /**
+   * @override
+   */
+  convertFromPixel: curry(doConvert, 'pointToData')
+};
+mixin(Geo, View);
+
+function doConvert(methodName, ecModel, finder, value) {
+  var geoModel = finder.geoModel;
+  var seriesModel = finder.seriesModel;
+  var coordSys = geoModel ? geoModel.coordinateSystem : seriesModel ? seriesModel.coordinateSystem // For map.
+  || (seriesModel.getReferringComponents('geo')[0] || {}).coordinateSystem : null;
+  return coordSys === this ? coordSys[methodName](value) : null;
+}
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+/**
+ * Resize method bound to the geo
+ * @param {module:echarts/coord/geo/GeoModel|module:echarts/chart/map/MapModel} geoModel
+ * @param {module:echarts/ExtensionAPI} api
+ */
+
+function resizeGeo(geoModel, api) {
+  var boundingCoords = geoModel.get('boundingCoords');
+
+  if (boundingCoords != null) {
+    var leftTop = boundingCoords[0];
+    var rightBottom = boundingCoords[1];
+
+    if (isNaN(leftTop[0]) || isNaN(leftTop[1]) || isNaN(rightBottom[0]) || isNaN(rightBottom[1])) {} else {
+      this.setBoundingRect(leftTop[0], leftTop[1], rightBottom[0] - leftTop[0], rightBottom[1] - leftTop[1]);
+    }
+  }
+
+  var rect = this.getBoundingRect();
+  var boxLayoutOption;
+  var center = geoModel.get('layoutCenter');
+  var size = geoModel.get('layoutSize');
+  var viewWidth = api.getWidth();
+  var viewHeight = api.getHeight();
+  var aspect = rect.width / rect.height * this.aspectScale;
+  var useCenterAndSize = false;
+
+  if (center && size) {
+    center = [parsePercent$1(center[0], viewWidth), parsePercent$1(center[1], viewHeight)];
+    size = parsePercent$1(size, Math.min(viewWidth, viewHeight));
+
+    if (!isNaN(center[0]) && !isNaN(center[1]) && !isNaN(size)) {
+      useCenterAndSize = true;
+    } else {}
+  }
+
+  var viewRect;
+
+  if (useCenterAndSize) {
+    var viewRect = {};
+
+    if (aspect > 1) {
+      // Width is same with size
+      viewRect.width = size;
+      viewRect.height = size / aspect;
+    } else {
+      viewRect.height = size;
+      viewRect.width = size * aspect;
+    }
+
+    viewRect.y = center[1] - viewRect.height / 2;
+    viewRect.x = center[0] - viewRect.width / 2;
+  } else {
+    // Use left/top/width/height
+    boxLayoutOption = geoModel.getBoxLayoutParams(); // 0.75 rate
+
+    boxLayoutOption.aspect = aspect;
+    viewRect = getLayoutRect(boxLayoutOption, {
+      width: viewWidth,
+      height: viewHeight
+    });
+  }
+
+  this.setViewRect(viewRect.x, viewRect.y, viewRect.width, viewRect.height);
+  this.setCenter(geoModel.get('center'));
+  this.setZoom(geoModel.get('zoom'));
+}
+/**
+ * @param {module:echarts/coord/Geo} geo
+ * @param {module:echarts/model/Model} model
+ * @inner
+ */
+
+
+function setGeoCoords(geo, model) {
+  each$1(model.get('geoCoord'), function (geoCoord, name) {
+    geo.addGeoCoord(name, geoCoord);
+  });
+}
+
+var geoCreator = {
+  // For deciding which dimensions to use when creating list data
+  dimensions: Geo.prototype.dimensions,
+  create: function (ecModel, api) {
+    var geoList = []; // FIXME Create each time may be slow
+
+    ecModel.eachComponent('geo', function (geoModel, idx) {
+      var name = geoModel.get('map');
+      var aspectScale = geoModel.get('aspectScale');
+      var invertLongitute = true;
+      var mapRecords = mapDataStorage.retrieveMap(name);
+
+      if (mapRecords && mapRecords[0] && mapRecords[0].type === 'svg') {
+        aspectScale == null && (aspectScale = 1);
+        invertLongitute = false;
+      } else {
+        aspectScale == null && (aspectScale = 0.75);
+      }
+
+      var geo = new Geo(name + idx, name, geoModel.get('nameMap'), invertLongitute);
+      geo.aspectScale = aspectScale;
+      geo.zoomLimit = geoModel.get('scaleLimit');
+      geoList.push(geo);
+      setGeoCoords(geo, geoModel);
+      geoModel.coordinateSystem = geo;
+      geo.model = geoModel; // Inject resize method
+
+      geo.resize = resizeGeo;
+      geo.resize(geoModel, api);
+    });
+    ecModel.eachSeries(function (seriesModel) {
+      var coordSys = seriesModel.get('coordinateSystem');
+
+      if (coordSys === 'geo') {
+        var geoIndex = seriesModel.get('geoIndex') || 0;
+        seriesModel.coordinateSystem = geoList[geoIndex];
+      }
+    }); // If has map series
+
+    var mapModelGroupBySeries = {};
+    ecModel.eachSeriesByType('map', function (seriesModel) {
+      if (!seriesModel.getHostGeoModel()) {
+        var mapType = seriesModel.getMapType();
+        mapModelGroupBySeries[mapType] = mapModelGroupBySeries[mapType] || [];
+        mapModelGroupBySeries[mapType].push(seriesModel);
+      }
+    });
+    each$1(mapModelGroupBySeries, function (mapSeries, mapType) {
+      var nameMapList = map(mapSeries, function (singleMapSeries) {
+        return singleMapSeries.get('nameMap');
+      });
+      var geo = new Geo(mapType, mapType, mergeAll(nameMapList));
+      geo.zoomLimit = retrieve.apply(null, map(mapSeries, function (singleMapSeries) {
+        return singleMapSeries.get('scaleLimit');
+      }));
+      geoList.push(geo); // Inject resize method
+
+      geo.resize = resizeGeo;
+      geo.aspectScale = mapSeries[0].get('aspectScale');
+      geo.resize(mapSeries[0], api);
+      each$1(mapSeries, function (singleMapSeries) {
+        singleMapSeries.coordinateSystem = geo;
+        setGeoCoords(geo, singleMapSeries);
+      });
+    });
+    return geoList;
+  },
+
+  /**
+   * Fill given regions array
+   * @param  {Array.<Object>} originRegionArr
+   * @param  {string} mapName
+   * @param  {Object} [nameMap]
+   * @return {Array}
+   */
+  getFilledRegions: function (originRegionArr, mapName, nameMap) {
+    // Not use the original
+    var regionsArr = (originRegionArr || []).slice();
+    var dataNameMap = createHashMap();
+
+    for (var i = 0; i < regionsArr.length; i++) {
+      dataNameMap.set(regionsArr[i].name, regionsArr[i]);
+    }
+
+    var source = geoSourceManager.load(mapName, nameMap);
+    each$1(source.regions, function (region) {
+      var name = region.name;
+      !dataNameMap.get(name) && regionsArr.push({
+        name: name
+      });
+    });
+    return regionsArr;
+  }
+};
+registerCoordinateSystem('geo', geoCreator);
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+var mapSymbolLayout = function (ecModel) {
+  var processedMapType = {};
+  ecModel.eachSeriesByType('map', function (mapSeries) {
+    var mapType = mapSeries.getMapType();
+
+    if (mapSeries.getHostGeoModel() || processedMapType[mapType]) {
+      return;
+    }
+
+    var mapSymbolOffsets = {};
+    each$1(mapSeries.seriesGroup, function (subMapSeries) {
+      var geo = subMapSeries.coordinateSystem;
+      var data = subMapSeries.originalData;
+
+      if (subMapSeries.get('showLegendSymbol') && ecModel.getComponent('legend')) {
+        data.each(data.mapDimension('value'), function (value, idx) {
+          var name = data.getName(idx);
+          var region = geo.getRegion(name); // If input series.data is [11, 22, '-'/null/undefined, 44],
+          // it will be filled with NaN: [11, 22, NaN, 44] and NaN will
+          // not be drawn. So here must validate if value is NaN.
+
+          if (!region || isNaN(value)) {
+            return;
+          }
+
+          var offset = mapSymbolOffsets[name] || 0;
+          var point = geo.dataToPoint(region.center);
+          mapSymbolOffsets[name] = offset + 1;
+          data.setItemLayout(idx, {
+            point: point,
+            offset: offset
+          });
+        });
+      }
+    }); // Show label of those region not has legendSymbol(which is offset 0)
+
+    var data = mapSeries.getData();
+    data.each(function (idx) {
+      var name = data.getName(idx);
+      var layout = data.getItemLayout(idx) || {};
+      layout.showLabel = !mapSymbolOffsets[name];
+      data.setItemLayout(idx, layout);
+    });
+    processedMapType[mapType] = true;
+  });
+};
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+var mapVisual = function (ecModel) {
+  ecModel.eachSeriesByType('map', function (seriesModel) {
+    var colorList = seriesModel.get('color');
+    var itemStyleModel = seriesModel.getModel('itemStyle');
+    var areaColor = itemStyleModel.get('areaColor');
+    var color = itemStyleModel.get('color') || colorList[seriesModel.seriesIndex % colorList.length];
+    seriesModel.getData().setVisual({
+      'areaColor': areaColor,
+      'color': color
+    });
+  });
+};
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+/**
+ * @param {Array.<module:echarts/data/List>} datas
+ * @param {string} statisticType 'average' 'sum'
+ * @inner
+ */
+
+function dataStatistics(datas, statisticType) {
+  var dataNameMap = {};
+  each$1(datas, function (data) {
+    data.each(data.mapDimension('value'), function (value, idx) {
+      // Add prefix to avoid conflict with Object.prototype.
+      var mapKey = 'ec-' + data.getName(idx);
+      dataNameMap[mapKey] = dataNameMap[mapKey] || [];
+
+      if (!isNaN(value)) {
+        dataNameMap[mapKey].push(value);
+      }
+    });
+  });
+  return datas[0].map(datas[0].mapDimension('value'), function (value, idx) {
+    var mapKey = 'ec-' + datas[0].getName(idx);
+    var sum = 0;
+    var min = Infinity;
+    var max = -Infinity;
+    var len = dataNameMap[mapKey].length;
+
+    for (var i = 0; i < len; i++) {
+      min = Math.min(min, dataNameMap[mapKey][i]);
+      max = Math.max(max, dataNameMap[mapKey][i]);
+      sum += dataNameMap[mapKey][i];
+    }
+
+    var result;
+
+    if (statisticType === 'min') {
+      result = min;
+    } else if (statisticType === 'max') {
+      result = max;
+    } else if (statisticType === 'average') {
+      result = sum / len;
+    } else {
+      result = sum;
+    }
+
+    return len === 0 ? NaN : result;
+  });
+}
+
+var mapDataStatistic = function (ecModel) {
+  var seriesGroups = {};
+  ecModel.eachSeriesByType('map', function (seriesModel) {
+    var hostGeoModel = seriesModel.getHostGeoModel();
+    var key = hostGeoModel ? 'o' + hostGeoModel.id : 'i' + seriesModel.getMapType();
+    (seriesGroups[key] = seriesGroups[key] || []).push(seriesModel);
+  });
+  each$1(seriesGroups, function (seriesList, key) {
+    var data = dataStatistics(map(seriesList, function (seriesModel) {
+      return seriesModel.getData();
+    }), seriesList[0].get('mapValueCalculation'));
+
+    for (var i = 0; i < seriesList.length; i++) {
+      seriesList[i].originalData = seriesList[i].getData();
+    } // FIXME Put where?
+
+
+    for (var i = 0; i < seriesList.length; i++) {
+      seriesList[i].seriesGroup = seriesList;
+      seriesList[i].needsDrawMap = i === 0 && !seriesList[i].getHostGeoModel();
+      seriesList[i].setData(data.cloneShallow());
+      seriesList[i].mainSeries = seriesList[0];
+    }
+  });
+};
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+var backwardCompat$1 = function (option) {
+  // Save geoCoord
+  var mapSeries = [];
+  each$1(option.series, function (seriesOpt) {
+    if (seriesOpt && seriesOpt.type === 'map') {
+      mapSeries.push(seriesOpt);
+      seriesOpt.map = seriesOpt.map || seriesOpt.mapType; // Put x, y, width, height, x2, y2 in the top level
+
+      defaults(seriesOpt, seriesOpt.mapLocation);
+    }
+  });
+};
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+registerLayout(mapSymbolLayout);
+registerVisual(mapVisual);
+registerProcessor(PRIORITY.PROCESSOR.STATISTIC, mapDataStatistic);
+registerPreprocessor(backwardCompat$1);
+createDataSelectAction('map', [{
+  type: 'mapToggleSelect',
+  event: 'mapselectchanged',
+  method: 'toggleSelected'
+}, {
+  type: 'mapSelect',
+  event: 'mapselected',
+  method: 'select'
+}, {
+  type: 'mapUnSelect',
+  event: 'mapunselected',
+  method: 'unSelect'
+}]);
+
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
 
 /* global Uint32Array, Float64Array, Float32Array */
 var Uint32Arr = typeof Uint32Array === 'undefined' ? Array : Uint32Array;
@@ -43235,7 +45927,7 @@ function createEl(elOption) {
     el = new Text({});
     el.__customText = elOption.style.text;
   } else {
-    var Clz = graphic[graphicType.charAt(0).toUpperCase() + graphicType.slice(1)];
+    var Clz = graphicUtil[graphicType.charAt(0).toUpperCase() + graphicType.slice(1)];
     el = new Clz();
   }
 
@@ -43665,1113 +46357,6 @@ function hasOwn(host, prop) {
 * specific language governing permissions and limitations
 * under the License.
 */
-
-/**
- * Simple view coordinate system
- * Mapping given x, y to transformd view x, y
- */
-var v2ApplyTransform$1 = applyTransform; // Dummy transform node
-
-function TransformDummy() {
-  Transformable.call(this);
-}
-
-mixin(TransformDummy, Transformable);
-
-function View(name) {
-  /**
-   * @type {string}
-   */
-  this.name = name;
-  /**
-   * @type {Object}
-   */
-
-  this.zoomLimit;
-  Transformable.call(this);
-  this._roamTransformable = new TransformDummy();
-  this._rawTransformable = new TransformDummy();
-  this._center;
-  this._zoom;
-}
-
-View.prototype = {
-  constructor: View,
-  type: 'view',
-
-  /**
-   * @param {Array.<string>}
-   * @readOnly
-   */
-  dimensions: ['x', 'y'],
-
-  /**
-   * Set bounding rect
-   * @param {number} x
-   * @param {number} y
-   * @param {number} width
-   * @param {number} height
-   */
-  // PENDING to getRect
-  setBoundingRect: function (x, y, width, height) {
-    this._rect = new BoundingRect(x, y, width, height);
-    return this._rect;
-  },
-
-  /**
-   * @return {module:zrender/core/BoundingRect}
-   */
-  // PENDING to getRect
-  getBoundingRect: function () {
-    return this._rect;
-  },
-
-  /**
-   * @param {number} x
-   * @param {number} y
-   * @param {number} width
-   * @param {number} height
-   */
-  setViewRect: function (x, y, width, height) {
-    this.transformTo(x, y, width, height);
-    this._viewRect = new BoundingRect(x, y, width, height);
-  },
-
-  /**
-   * Transformed to particular position and size
-   * @param {number} x
-   * @param {number} y
-   * @param {number} width
-   * @param {number} height
-   */
-  transformTo: function (x, y, width, height) {
-    var rect = this.getBoundingRect();
-    var rawTransform = this._rawTransformable;
-    rawTransform.transform = rect.calculateTransform(new BoundingRect(x, y, width, height));
-    rawTransform.decomposeTransform();
-
-    this._updateTransform();
-  },
-
-  /**
-   * Set center of view
-   * @param {Array.<number>} [centerCoord]
-   */
-  setCenter: function (centerCoord) {
-    if (!centerCoord) {
-      return;
-    }
-
-    this._center = centerCoord;
-
-    this._updateCenterAndZoom();
-  },
-
-  /**
-   * @param {number} zoom
-   */
-  setZoom: function (zoom) {
-    zoom = zoom || 1;
-    var zoomLimit = this.zoomLimit;
-
-    if (zoomLimit) {
-      if (zoomLimit.max != null) {
-        zoom = Math.min(zoomLimit.max, zoom);
-      }
-
-      if (zoomLimit.min != null) {
-        zoom = Math.max(zoomLimit.min, zoom);
-      }
-    }
-
-    this._zoom = zoom;
-
-    this._updateCenterAndZoom();
-  },
-
-  /**
-   * Get default center without roam
-   */
-  getDefaultCenter: function () {
-    // Rect before any transform
-    var rawRect = this.getBoundingRect();
-    var cx = rawRect.x + rawRect.width / 2;
-    var cy = rawRect.y + rawRect.height / 2;
-    return [cx, cy];
-  },
-  getCenter: function () {
-    return this._center || this.getDefaultCenter();
-  },
-  getZoom: function () {
-    return this._zoom || 1;
-  },
-
-  /**
-   * @return {Array.<number}
-   */
-  getRoamTransform: function () {
-    return this._roamTransformable.getLocalTransform();
-  },
-
-  /**
-   * Remove roam
-   */
-  _updateCenterAndZoom: function () {
-    // Must update after view transform updated
-    var rawTransformMatrix = this._rawTransformable.getLocalTransform();
-
-    var roamTransform = this._roamTransformable;
-    var defaultCenter = this.getDefaultCenter();
-    var center = this.getCenter();
-    var zoom = this.getZoom();
-    center = applyTransform([], center, rawTransformMatrix);
-    defaultCenter = applyTransform([], defaultCenter, rawTransformMatrix);
-    roamTransform.origin = center;
-    roamTransform.position = [defaultCenter[0] - center[0], defaultCenter[1] - center[1]];
-    roamTransform.scale = [zoom, zoom];
-
-    this._updateTransform();
-  },
-
-  /**
-   * Update transform from roam and mapLocation
-   * @private
-   */
-  _updateTransform: function () {
-    var roamTransformable = this._roamTransformable;
-    var rawTransformable = this._rawTransformable;
-    rawTransformable.parent = roamTransformable;
-    roamTransformable.updateTransform();
-    rawTransformable.updateTransform();
-    copy$1(this.transform || (this.transform = []), rawTransformable.transform || create$1());
-    this._rawTransform = rawTransformable.getLocalTransform();
-    this.invTransform = this.invTransform || [];
-    invert(this.invTransform, this.transform);
-    this.decomposeTransform();
-  },
-
-  /**
-   * @return {module:zrender/core/BoundingRect}
-   */
-  getViewRect: function () {
-    return this._viewRect;
-  },
-
-  /**
-   * Get view rect after roam transform
-   * @return {module:zrender/core/BoundingRect}
-   */
-  getViewRectAfterRoam: function () {
-    var rect = this.getBoundingRect().clone();
-    rect.applyTransform(this.transform);
-    return rect;
-  },
-
-  /**
-   * Convert a single (lon, lat) data item to (x, y) point.
-   * @param {Array.<number>} data
-   * @param {boolean} noRoam
-   * @param {Array.<number>} [out]
-   * @return {Array.<number>}
-   */
-  dataToPoint: function (data, noRoam, out) {
-    var transform = noRoam ? this._rawTransform : this.transform;
-    out = out || [];
-    return transform ? v2ApplyTransform$1(out, data, transform) : copy(out, data);
-  },
-
-  /**
-   * Convert a (x, y) point to (lon, lat) data
-   * @param {Array.<number>} point
-   * @return {Array.<number>}
-   */
-  pointToData: function (point) {
-    var invTransform = this.invTransform;
-    return invTransform ? v2ApplyTransform$1([], point, invTransform) : [point[0], point[1]];
-  },
-
-  /**
-   * @implements
-   * see {module:echarts/CoodinateSystem}
-   */
-  convertToPixel: curry(doConvert$1, 'dataToPoint'),
-
-  /**
-   * @implements
-   * see {module:echarts/CoodinateSystem}
-   */
-  convertFromPixel: curry(doConvert$1, 'pointToData'),
-
-  /**
-   * @implements
-   * see {module:echarts/CoodinateSystem}
-   */
-  containPoint: function (point) {
-    return this.getViewRectAfterRoam().contain(point[0], point[1]);
-  }
-  /**
-   * @return {number}
-   */
-  // getScalarScale: function () {
-  //     // Use determinant square root of transform to mutiply scalar
-  //     var m = this.transform;
-  //     var det = Math.sqrt(Math.abs(m[0] * m[3] - m[2] * m[1]));
-  //     return det;
-  // }
-
-};
-mixin(View, Transformable);
-
-function doConvert$1(methodName, ecModel, finder, value) {
-  var seriesModel = finder.seriesModel;
-  var coordSys = seriesModel ? seriesModel.coordinateSystem : null; // e.g., graph.
-
-  return coordSys === this ? coordSys[methodName](value) : null;
-}
-
-/*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*   http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
-// Fix for 南海诸岛
-var geoCoord = [126, 25];
-var points$1 = [[[0, 3.5], [7, 11.2], [15, 11.9], [30, 7], [42, 0.7], [52, 0.7], [56, 7.7], [59, 0.7], [64, 0.7], [64, 0], [5, 0], [0, 3.5]], [[13, 16.1], [19, 14.7], [16, 21.7], [11, 23.1], [13, 16.1]], [[12, 32.2], [14, 38.5], [15, 38.5], [13, 32.2], [12, 32.2]], [[16, 47.6], [12, 53.2], [13, 53.2], [18, 47.6], [16, 47.6]], [[6, 64.4], [8, 70], [9, 70], [8, 64.4], [6, 64.4]], [[23, 82.6], [29, 79.8], [30, 79.8], [25, 82.6], [23, 82.6]], [[37, 70.7], [43, 62.3], [44, 62.3], [39, 70.7], [37, 70.7]], [[48, 51.1], [51, 45.5], [53, 45.5], [50, 51.1], [48, 51.1]], [[51, 35], [51, 28.7], [53, 28.7], [53, 35], [51, 35]], [[52, 22.4], [55, 17.5], [56, 17.5], [53, 22.4], [52, 22.4]], [[58, 12.6], [62, 7], [63, 7], [60, 12.6], [58, 12.6]], [[0, 3.5], [0, 93.1], [64, 93.1], [64, 0], [63, 0], [63, 92.4], [1, 92.4], [1, 3.5], [0, 3.5]]];
-
-for (var i$1 = 0; i$1 < points$1.length; i$1++) {
-  for (var k = 0; k < points$1[i$1].length; k++) {
-    points$1[i$1][k][0] /= 10.5;
-    points$1[i$1][k][1] /= -10.5 / 0.75;
-    points$1[i$1][k][0] += geoCoord[0];
-    points$1[i$1][k][1] += geoCoord[1];
-  }
-}
-
-var fixNanhai = function (mapType, regions) {
-  if (mapType === 'china') {
-    regions.push(new Region('南海诸岛', map(points$1, function (exterior) {
-      return {
-        type: 'polygon',
-        exterior: exterior
-      };
-    }), geoCoord));
-  }
-};
-
-/*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*   http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
-var coordsOffsetMap = {
-  '南海诸岛': [32, 80],
-  // 全国
-  '广东': [0, -10],
-  '香港': [10, 5],
-  '澳门': [-10, 10],
-  //'北京': [-10, 0],
-  '天津': [5, 5]
-};
-var fixTextCoord = function (mapType, region) {
-  if (mapType === 'china') {
-    var coordFix = coordsOffsetMap[region.name];
-
-    if (coordFix) {
-      var cp = region.center;
-      cp[0] += coordFix[0] / 10.5;
-      cp[1] += -coordFix[1] / (10.5 / 0.75);
-    }
-  }
-};
-
-/*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*   http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
-var geoCoordMap = {
-  'Russia': [100, 60],
-  'United States': [-99, 38],
-  'United States of America': [-99, 38]
-};
-var fixGeoCoord = function (mapType, region) {
-  if (mapType === 'world') {
-    var geoCoord = geoCoordMap[region.name];
-
-    if (geoCoord) {
-      var cp = region.center;
-      cp[0] = geoCoord[0];
-      cp[1] = geoCoord[1];
-    }
-  }
-};
-
-/*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*   http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
-// Fix for 钓鱼岛
-// var Region = require('../Region');
-// var zrUtil = require('zrender/src/core/util');
-// var geoCoord = [126, 25];
-var points$2 = [[[123.45165252685547, 25.73527164402261], [123.49731445312499, 25.73527164402261], [123.49731445312499, 25.750734064600884], [123.45165252685547, 25.750734064600884], [123.45165252685547, 25.73527164402261]]];
-var fixDiaoyuIsland = function (mapType, region) {
-  if (mapType === 'china' && region.name === '台湾') {
-    region.geometries.push({
-      type: 'polygon',
-      exterior: points$2[0]
-    });
-  }
-};
-
-/*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*   http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
-var inner$7 = makeInner();
-var geoJSONLoader = {
-  /**
-   * @param {string} mapName
-   * @param {Object} mapRecord {specialAreas, geoJSON}
-   * @return {Object} {regions, boundingRect}
-   */
-  load: function (mapName, mapRecord) {
-    var parsed = inner$7(mapRecord).parsed;
-
-    if (parsed) {
-      return parsed;
-    }
-
-    var specialAreas = mapRecord.specialAreas || {};
-    var geoJSON = mapRecord.geoJSON;
-    var regions; // https://jsperf.com/try-catch-performance-overhead
-
-    try {
-      regions = geoJSON ? parseGeoJson$1(geoJSON) : [];
-    } catch (e) {
-      throw new Error('Invalid geoJson format\n' + e.message);
-    }
-
-    each$1(regions, function (region) {
-      var regionName = region.name;
-      fixTextCoord(mapName, region);
-      fixGeoCoord(mapName, region);
-      fixDiaoyuIsland(mapName, region); // Some area like Alaska in USA map needs to be tansformed
-      // to look better
-
-      var specialArea = specialAreas[regionName];
-
-      if (specialArea) {
-        region.transformTo(specialArea.left, specialArea.top, specialArea.width, specialArea.height);
-      }
-    });
-    fixNanhai(mapName, regions);
-    return inner$7(mapRecord).parsed = {
-      regions: regions,
-      boundingRect: getBoundingRect$1(regions)
-    };
-  }
-};
-
-function getBoundingRect$1(regions) {
-  var rect;
-
-  for (var i = 0; i < regions.length; i++) {
-    var regionRect = regions[i].getBoundingRect();
-    rect = rect || regionRect.clone();
-    rect.union(regionRect);
-  }
-
-  return rect;
-}
-
-/*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*   http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
-var inner$8 = makeInner();
-var geoSVGLoader = {
-  /**
-   * @param {string} mapName
-   * @param {Object} mapRecord {specialAreas, geoJSON}
-   * @return {Object} {root, boundingRect}
-   */
-  load: function (mapName, mapRecord) {
-    var originRoot = inner$8(mapRecord).originRoot;
-
-    if (originRoot) {
-      return {
-        root: originRoot,
-        boundingRect: inner$8(mapRecord).boundingRect
-      };
-    }
-
-    var graphic = buildGraphic(mapRecord);
-    inner$8(mapRecord).originRoot = graphic.root;
-    inner$8(mapRecord).boundingRect = graphic.boundingRect;
-    return graphic;
-  },
-  makeGraphic: function (mapName, mapRecord, hostKey) {
-    // For performance consideration (in large SVG), graphic only maked
-    // when necessary and reuse them according to hostKey.
-    var field = inner$8(mapRecord);
-    var rootMap = field.rootMap || (field.rootMap = createHashMap());
-    var root = rootMap.get(hostKey);
-
-    if (root) {
-      return root;
-    }
-
-    var originRoot = field.originRoot;
-    var boundingRect = field.boundingRect; // For performance, if originRoot is not used by a view,
-    // assign it to a view, but not reproduce graphic elements.
-
-    if (!field.originRootHostKey) {
-      field.originRootHostKey = hostKey;
-      root = originRoot;
-    } else {
-      root = buildGraphic(mapRecord, boundingRect).root;
-    }
-
-    return rootMap.set(hostKey, root);
-  },
-  removeGraphic: function (mapName, mapRecord, hostKey) {
-    var field = inner$8(mapRecord);
-    var rootMap = field.rootMap;
-    rootMap && rootMap.removeKey(hostKey);
-
-    if (hostKey === field.originRootHostKey) {
-      field.originRootHostKey = null;
-    }
-  }
-};
-
-function buildGraphic(mapRecord, boundingRect) {
-  var svgXML = mapRecord.svgXML;
-  var result;
-  var root;
-
-  try {
-    result = svgXML && parseSVG(svgXML, {
-      ignoreViewBox: true,
-      ignoreRootClip: true
-    }) || {};
-    root = result.root;
-    assert$1(root != null);
-  } catch (e) {
-    throw new Error('Invalid svg format\n' + e.message);
-  }
-
-  var svgWidth = result.width;
-  var svgHeight = result.height;
-  var viewBoxRect = result.viewBoxRect;
-
-  if (!boundingRect) {
-    boundingRect = svgWidth == null || svgHeight == null ? // If svg width / height not specified, calculate
-    // bounding rect as the width / height
-    root.getBoundingRect() : new BoundingRect(0, 0, 0, 0);
-
-    if (svgWidth != null) {
-      boundingRect.width = svgWidth;
-    }
-
-    if (svgHeight != null) {
-      boundingRect.height = svgHeight;
-    }
-  }
-
-  if (viewBoxRect) {
-    var viewBoxTransform = makeViewBoxTransform(viewBoxRect, boundingRect.width, boundingRect.height);
-    var elRoot = root;
-    root = new Group();
-    root.add(elRoot);
-    elRoot.scale = viewBoxTransform.scale;
-    elRoot.position = viewBoxTransform.position;
-  }
-
-  root.setClipPath(new Rect({
-    shape: boundingRect.plain()
-  }));
-  return {
-    root: root,
-    boundingRect: boundingRect
-  };
-}
-
-/*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*   http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
-var loaders = {
-  geoJSON: geoJSONLoader,
-  svg: geoSVGLoader
-};
-var geoSourceManager = {
-  /**
-   * @param {string} mapName
-   * @param {Object} nameMap
-   * @return {Object} source {regions, regionsMap, nameCoordMap, boundingRect}
-   */
-  load: function (mapName, nameMap) {
-    var regions = [];
-    var regionsMap = createHashMap();
-    var nameCoordMap = createHashMap();
-    var boundingRect;
-    var mapRecords = retrieveMap(mapName);
-    each$1(mapRecords, function (record) {
-      var singleSource = loaders[record.type].load(mapName, record);
-      each$1(singleSource.regions, function (region) {
-        var regionName = region.name; // Try use the alias in geoNameMap
-
-        if (nameMap && nameMap.hasOwnProperty(regionName)) {
-          region = region.cloneShallow(regionName = nameMap[regionName]);
-        }
-
-        regions.push(region);
-        regionsMap.set(regionName, region);
-        nameCoordMap.set(regionName, region.center);
-      });
-      var rect = singleSource.boundingRect;
-
-      if (rect) {
-        boundingRect ? boundingRect.union(rect) : boundingRect = rect.clone();
-      }
-    });
-    return {
-      regions: regions,
-      regionsMap: regionsMap,
-      nameCoordMap: nameCoordMap,
-      // FIXME Always return new ?
-      boundingRect: boundingRect || new BoundingRect(0, 0, 0, 0)
-    };
-  },
-
-  /**
-   * @param {string} mapName
-   * @param {string} hostKey For cache.
-   * @return {Array.<module:zrender/Element>} Roots.
-   */
-  makeGraphic: makeInvoker('makeGraphic'),
-
-  /**
-   * @param {string} mapName
-   * @param {string} hostKey For cache.
-   */
-  removeGraphic: makeInvoker('removeGraphic')
-};
-
-function makeInvoker(methodName) {
-  return function (mapName, hostKey) {
-    var mapRecords = retrieveMap(mapName);
-    var results = [];
-    each$1(mapRecords, function (record) {
-      var method = loaders[record.type][methodName];
-      method && results.push(method(mapName, record, hostKey));
-    });
-    return results;
-  };
-}
-
-function retrieveMap(mapName) {
-  var mapRecords = mapDataStorage.retrieveMap(mapName) || [];
-  return mapRecords;
-}
-
-/*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*   http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
-/**
- * [Geo description]
- * For backward compatibility, the orginal interface:
- * `name, map, geoJson, specialAreas, nameMap` is kept.
- *
- * @param {string|Object} name
- * @param {string} map Map type
- *        Specify the positioned areas by left, top, width, height
- * @param {Object.<string, string>} [nameMap]
- *        Specify name alias
- * @param {boolean} [invertLongitute=true]
- */
-
-function Geo(name, map$$1, nameMap, invertLongitute) {
-  View.call(this, name);
-  /**
-   * Map type
-   * @type {string}
-   */
-
-  this.map = map$$1;
-  var source = geoSourceManager.load(map$$1, nameMap);
-  this._nameCoordMap = source.nameCoordMap;
-  this._regionsMap = source.regionsMap;
-  this._invertLongitute = invertLongitute == null ? true : invertLongitute;
-  /**
-   * @readOnly
-   */
-
-  this.regions = source.regions;
-  /**
-   * @type {module:zrender/src/core/BoundingRect}
-   */
-
-  this._rect = source.boundingRect;
-}
-
-Geo.prototype = {
-  constructor: Geo,
-  type: 'geo',
-
-  /**
-   * @param {Array.<string>}
-   * @readOnly
-   */
-  dimensions: ['lng', 'lat'],
-
-  /**
-   * If contain given lng,lat coord
-   * @param {Array.<number>}
-   * @readOnly
-   */
-  containCoord: function (coord) {
-    var regions = this.regions;
-
-    for (var i = 0; i < regions.length; i++) {
-      if (regions[i].contain(coord)) {
-        return true;
-      }
-    }
-
-    return false;
-  },
-
-  /**
-   * @override
-   */
-  transformTo: function (x, y, width, height) {
-    var rect = this.getBoundingRect();
-    var invertLongitute = this._invertLongitute;
-    rect = rect.clone();
-
-    if (invertLongitute) {
-      // Longitute is inverted
-      rect.y = -rect.y - rect.height;
-    }
-
-    var rawTransformable = this._rawTransformable;
-    rawTransformable.transform = rect.calculateTransform(new BoundingRect(x, y, width, height));
-    rawTransformable.decomposeTransform();
-
-    if (invertLongitute) {
-      var scale = rawTransformable.scale;
-      scale[1] = -scale[1];
-    }
-
-    rawTransformable.updateTransform();
-
-    this._updateTransform();
-  },
-
-  /**
-   * @param {string} name
-   * @return {module:echarts/coord/geo/Region}
-   */
-  getRegion: function (name) {
-    return this._regionsMap.get(name);
-  },
-  getRegionByCoord: function (coord) {
-    var regions = this.regions;
-
-    for (var i = 0; i < regions.length; i++) {
-      if (regions[i].contain(coord)) {
-        return regions[i];
-      }
-    }
-  },
-
-  /**
-   * Add geoCoord for indexing by name
-   * @param {string} name
-   * @param {Array.<number>} geoCoord
-   */
-  addGeoCoord: function (name, geoCoord) {
-    this._nameCoordMap.set(name, geoCoord);
-  },
-
-  /**
-   * Get geoCoord by name
-   * @param {string} name
-   * @return {Array.<number>}
-   */
-  getGeoCoord: function (name) {
-    return this._nameCoordMap.get(name);
-  },
-
-  /**
-   * @override
-   */
-  getBoundingRect: function () {
-    return this._rect;
-  },
-
-  /**
-   * @param {string|Array.<number>} data
-   * @param {boolean} noRoam
-   * @param {Array.<number>} [out]
-   * @return {Array.<number>}
-   */
-  dataToPoint: function (data, noRoam, out) {
-    if (typeof data === 'string') {
-      // Map area name to geoCoord
-      data = this.getGeoCoord(data);
-    }
-
-    if (data) {
-      return View.prototype.dataToPoint.call(this, data, noRoam, out);
-    }
-  },
-
-  /**
-   * @override
-   */
-  convertToPixel: curry(doConvert, 'dataToPoint'),
-
-  /**
-   * @override
-   */
-  convertFromPixel: curry(doConvert, 'pointToData')
-};
-mixin(Geo, View);
-
-function doConvert(methodName, ecModel, finder, value) {
-  var geoModel = finder.geoModel;
-  var seriesModel = finder.seriesModel;
-  var coordSys = geoModel ? geoModel.coordinateSystem : seriesModel ? seriesModel.coordinateSystem // For map.
-  || (seriesModel.getReferringComponents('geo')[0] || {}).coordinateSystem : null;
-  return coordSys === this ? coordSys[methodName](value) : null;
-}
-
-/*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*   http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
-/**
- * Resize method bound to the geo
- * @param {module:echarts/coord/geo/GeoModel|module:echarts/chart/map/MapModel} geoModel
- * @param {module:echarts/ExtensionAPI} api
- */
-
-function resizeGeo(geoModel, api) {
-  var boundingCoords = geoModel.get('boundingCoords');
-
-  if (boundingCoords != null) {
-    var leftTop = boundingCoords[0];
-    var rightBottom = boundingCoords[1];
-
-    if (isNaN(leftTop[0]) || isNaN(leftTop[1]) || isNaN(rightBottom[0]) || isNaN(rightBottom[1])) {} else {
-      this.setBoundingRect(leftTop[0], leftTop[1], rightBottom[0] - leftTop[0], rightBottom[1] - leftTop[1]);
-    }
-  }
-
-  var rect = this.getBoundingRect();
-  var boxLayoutOption;
-  var center = geoModel.get('layoutCenter');
-  var size = geoModel.get('layoutSize');
-  var viewWidth = api.getWidth();
-  var viewHeight = api.getHeight();
-  var aspect = rect.width / rect.height * this.aspectScale;
-  var useCenterAndSize = false;
-
-  if (center && size) {
-    center = [parsePercent$1(center[0], viewWidth), parsePercent$1(center[1], viewHeight)];
-    size = parsePercent$1(size, Math.min(viewWidth, viewHeight));
-
-    if (!isNaN(center[0]) && !isNaN(center[1]) && !isNaN(size)) {
-      useCenterAndSize = true;
-    } else {}
-  }
-
-  var viewRect;
-
-  if (useCenterAndSize) {
-    var viewRect = {};
-
-    if (aspect > 1) {
-      // Width is same with size
-      viewRect.width = size;
-      viewRect.height = size / aspect;
-    } else {
-      viewRect.height = size;
-      viewRect.width = size * aspect;
-    }
-
-    viewRect.y = center[1] - viewRect.height / 2;
-    viewRect.x = center[0] - viewRect.width / 2;
-  } else {
-    // Use left/top/width/height
-    boxLayoutOption = geoModel.getBoxLayoutParams(); // 0.75 rate
-
-    boxLayoutOption.aspect = aspect;
-    viewRect = getLayoutRect(boxLayoutOption, {
-      width: viewWidth,
-      height: viewHeight
-    });
-  }
-
-  this.setViewRect(viewRect.x, viewRect.y, viewRect.width, viewRect.height);
-  this.setCenter(geoModel.get('center'));
-  this.setZoom(geoModel.get('zoom'));
-}
-/**
- * @param {module:echarts/coord/Geo} geo
- * @param {module:echarts/model/Model} model
- * @inner
- */
-
-
-function setGeoCoords(geo, model) {
-  each$1(model.get('geoCoord'), function (geoCoord, name) {
-    geo.addGeoCoord(name, geoCoord);
-  });
-}
-
-var geoCreator = {
-  // For deciding which dimensions to use when creating list data
-  dimensions: Geo.prototype.dimensions,
-  create: function (ecModel, api) {
-    var geoList = []; // FIXME Create each time may be slow
-
-    ecModel.eachComponent('geo', function (geoModel, idx) {
-      var name = geoModel.get('map');
-      var aspectScale = geoModel.get('aspectScale');
-      var invertLongitute = true;
-      var mapRecords = mapDataStorage.retrieveMap(name);
-
-      if (mapRecords && mapRecords[0] && mapRecords[0].type === 'svg') {
-        aspectScale == null && (aspectScale = 1);
-        invertLongitute = false;
-      } else {
-        aspectScale == null && (aspectScale = 0.75);
-      }
-
-      var geo = new Geo(name + idx, name, geoModel.get('nameMap'), invertLongitute);
-      geo.aspectScale = aspectScale;
-      geo.zoomLimit = geoModel.get('scaleLimit');
-      geoList.push(geo);
-      setGeoCoords(geo, geoModel);
-      geoModel.coordinateSystem = geo;
-      geo.model = geoModel; // Inject resize method
-
-      geo.resize = resizeGeo;
-      geo.resize(geoModel, api);
-    });
-    ecModel.eachSeries(function (seriesModel) {
-      var coordSys = seriesModel.get('coordinateSystem');
-
-      if (coordSys === 'geo') {
-        var geoIndex = seriesModel.get('geoIndex') || 0;
-        seriesModel.coordinateSystem = geoList[geoIndex];
-      }
-    }); // If has map series
-
-    var mapModelGroupBySeries = {};
-    ecModel.eachSeriesByType('map', function (seriesModel) {
-      if (!seriesModel.getHostGeoModel()) {
-        var mapType = seriesModel.getMapType();
-        mapModelGroupBySeries[mapType] = mapModelGroupBySeries[mapType] || [];
-        mapModelGroupBySeries[mapType].push(seriesModel);
-      }
-    });
-    each$1(mapModelGroupBySeries, function (mapSeries, mapType) {
-      var nameMapList = map(mapSeries, function (singleMapSeries) {
-        return singleMapSeries.get('nameMap');
-      });
-      var geo = new Geo(mapType, mapType, mergeAll(nameMapList));
-      geo.zoomLimit = retrieve.apply(null, map(mapSeries, function (singleMapSeries) {
-        return singleMapSeries.get('scaleLimit');
-      }));
-      geoList.push(geo); // Inject resize method
-
-      geo.resize = resizeGeo;
-      geo.aspectScale = mapSeries[0].get('aspectScale');
-      geo.resize(mapSeries[0], api);
-      each$1(mapSeries, function (singleMapSeries) {
-        singleMapSeries.coordinateSystem = geo;
-        setGeoCoords(geo, singleMapSeries);
-      });
-    });
-    return geoList;
-  },
-
-  /**
-   * Fill given regions array
-   * @param  {Array.<Object>} originRegionArr
-   * @param  {string} mapName
-   * @param  {Object} [nameMap]
-   * @return {Array}
-   */
-  getFilledRegions: function (originRegionArr, mapName, nameMap) {
-    // Not use the original
-    var regionsArr = (originRegionArr || []).slice();
-    var dataNameMap = createHashMap();
-
-    for (var i = 0; i < regionsArr.length; i++) {
-      dataNameMap.set(regionsArr[i].name, regionsArr[i]);
-    }
-
-    var source = geoSourceManager.load(mapName, nameMap);
-    each$1(source.regions, function (region) {
-      var name = region.name;
-      !dataNameMap.get(name) && regionsArr.push({
-        name: name
-      });
-    });
-    return regionsArr;
-  }
-};
-registerCoordinateSystem('geo', geoCreator);
-
-/*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*   http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
 var GeoModel = ComponentModel.extend({
   type: 'geo',
 
@@ -44907,801 +46492,6 @@ mixin(GeoModel, selectableMixin);
 * specific language governing permissions and limitations
 * under the License.
 */
-var ATTR = '\0_ec_interaction_mutex';
-function take(zr, resourceKey, userKey) {
-  var store = getStore(zr);
-  store[resourceKey] = userKey;
-}
-function release(zr, resourceKey, userKey) {
-  var store = getStore(zr);
-  var uKey = store[resourceKey];
-
-  if (uKey === userKey) {
-    store[resourceKey] = null;
-  }
-}
-function isTaken(zr, resourceKey) {
-  return !!getStore(zr)[resourceKey];
-}
-
-function getStore(zr) {
-  return zr[ATTR] || (zr[ATTR] = {});
-}
-/**
- * payload: {
- *     type: 'takeGlobalCursor',
- *     key: 'dataZoomSelect', or 'brush', or ...,
- *         If no userKey, release global cursor.
- * }
- */
-
-
-registerAction({
-  type: 'takeGlobalCursor',
-  event: 'globalCursorTaken',
-  update: 'update'
-}, function () {});
-
-/*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*   http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
-/**
- * @alias module:echarts/component/helper/RoamController
- * @constructor
- * @mixin {module:zrender/mixin/Eventful}
- *
- * @param {module:zrender/zrender~ZRender} zr
- */
-
-function RoamController(zr) {
-  /**
-   * @type {Function}
-   */
-  this.pointerChecker;
-  /**
-   * @type {module:zrender}
-   */
-
-  this._zr = zr;
-  /**
-   * @type {Object}
-   */
-
-  this._opt = {}; // Avoid two roamController bind the same handler
-
-  var bind$$1 = bind;
-  var mousedownHandler = bind$$1(mousedown, this);
-  var mousemoveHandler = bind$$1(mousemove, this);
-  var mouseupHandler = bind$$1(mouseup, this);
-  var mousewheelHandler = bind$$1(mousewheel, this);
-  var pinchHandler = bind$$1(pinch, this);
-  Eventful.call(this);
-  /**
-   * @param {Function} pointerChecker
-   *                   input: x, y
-   *                   output: boolean
-   */
-
-  this.setPointerChecker = function (pointerChecker) {
-    this.pointerChecker = pointerChecker;
-  };
-  /**
-   * Notice: only enable needed types. For example, if 'zoom'
-   * is not needed, 'zoom' should not be enabled, otherwise
-   * default mousewheel behaviour (scroll page) will be disabled.
-   *
-   * @param  {boolean|string} [controlType=true] Specify the control type,
-   *                          which can be null/undefined or true/false
-   *                          or 'pan/move' or 'zoom'/'scale'
-   * @param {Object} [opt]
-   * @param {Object} [opt.zoomOnMouseWheel=true] The value can be: true / false / 'shift' / 'ctrl' / 'alt'.
-   * @param {Object} [opt.moveOnMouseMove=true] The value can be: true / false / 'shift' / 'ctrl' / 'alt'.
-   * @param {Object} [opt.moveOnMouseWheel=false] The value can be: true / false / 'shift' / 'ctrl' / 'alt'.
-   * @param {Object} [opt.preventDefaultMouseMove=true] When pan.
-   */
-
-
-  this.enable = function (controlType, opt) {
-    // Disable previous first
-    this.disable();
-    this._opt = defaults(clone(opt) || {}, {
-      zoomOnMouseWheel: true,
-      moveOnMouseMove: true,
-      // By default, wheel do not trigger move.
-      moveOnMouseWheel: false,
-      preventDefaultMouseMove: true
-    });
-
-    if (controlType == null) {
-      controlType = true;
-    }
-
-    if (controlType === true || controlType === 'move' || controlType === 'pan') {
-      zr.on('mousedown', mousedownHandler);
-      zr.on('mousemove', mousemoveHandler);
-      zr.on('mouseup', mouseupHandler);
-    }
-
-    if (controlType === true || controlType === 'scale' || controlType === 'zoom') {
-      zr.on('mousewheel', mousewheelHandler);
-      zr.on('pinch', pinchHandler);
-    }
-  };
-
-  this.disable = function () {
-    zr.off('mousedown', mousedownHandler);
-    zr.off('mousemove', mousemoveHandler);
-    zr.off('mouseup', mouseupHandler);
-    zr.off('mousewheel', mousewheelHandler);
-    zr.off('pinch', pinchHandler);
-  };
-
-  this.dispose = this.disable;
-
-  this.isDragging = function () {
-    return this._dragging;
-  };
-
-  this.isPinching = function () {
-    return this._pinching;
-  };
-}
-
-mixin(RoamController, Eventful);
-
-function mousedown(e) {
-  if (isMiddleOrRightButtonOnMouseUpDown(e) || e.target && e.target.draggable) {
-    return;
-  }
-
-  var x = e.offsetX;
-  var y = e.offsetY; // Only check on mosedown, but not mousemove.
-  // Mouse can be out of target when mouse moving.
-
-  if (this.pointerChecker && this.pointerChecker(e, x, y)) {
-    this._x = x;
-    this._y = y;
-    this._dragging = true;
-  }
-}
-
-function mousemove(e) {
-  if (!this._dragging || !isAvailableBehavior('moveOnMouseMove', e, this._opt) || e.gestureEvent === 'pinch' || isTaken(this._zr, 'globalPan')) {
-    return;
-  }
-
-  var x = e.offsetX;
-  var y = e.offsetY;
-  var oldX = this._x;
-  var oldY = this._y;
-  var dx = x - oldX;
-  var dy = y - oldY;
-  this._x = x;
-  this._y = y;
-  this._opt.preventDefaultMouseMove && stop(e.event);
-  trigger(this, 'pan', 'moveOnMouseMove', e, {
-    dx: dx,
-    dy: dy,
-    oldX: oldX,
-    oldY: oldY,
-    newX: x,
-    newY: y
-  });
-}
-
-function mouseup(e) {
-  if (!isMiddleOrRightButtonOnMouseUpDown(e)) {
-    this._dragging = false;
-  }
-}
-
-function mousewheel(e) {
-  var shouldZoom = isAvailableBehavior('zoomOnMouseWheel', e, this._opt);
-  var shouldMove = isAvailableBehavior('moveOnMouseWheel', e, this._opt);
-  var wheelDelta = e.wheelDelta;
-  var absWheelDeltaDelta = Math.abs(wheelDelta);
-  var originX = e.offsetX;
-  var originY = e.offsetY; // wheelDelta maybe -0 in chrome mac.
-
-  if (wheelDelta === 0 || !shouldZoom && !shouldMove) {
-    return;
-  } // If both `shouldZoom` and `shouldMove` is true, trigger
-  // their event both, and the final behavior is determined
-  // by event listener themselves.
-
-
-  if (shouldZoom) {
-    // Convenience:
-    // Mac and VM Windows on Mac: scroll up: zoom out.
-    // Windows: scroll up: zoom in.
-    // FIXME: Should do more test in different environment.
-    // wheelDelta is too complicated in difference nvironment
-    // (https://developer.mozilla.org/en-US/docs/Web/Events/mousewheel),
-    // although it has been normallized by zrender.
-    // wheelDelta of mouse wheel is bigger than touch pad.
-    var factor = absWheelDeltaDelta > 3 ? 1.4 : absWheelDeltaDelta > 1 ? 1.2 : 1.1;
-    var scale = wheelDelta > 0 ? factor : 1 / factor;
-    checkPointerAndTrigger(this, 'zoom', 'zoomOnMouseWheel', e, {
-      scale: scale,
-      originX: originX,
-      originY: originY
-    });
-  }
-
-  if (shouldMove) {
-    // FIXME: Should do more test in different environment.
-    var absDelta = Math.abs(wheelDelta); // wheelDelta of mouse wheel is bigger than touch pad.
-
-    var scrollDelta = (wheelDelta > 0 ? 1 : -1) * (absDelta > 3 ? 0.4 : absDelta > 1 ? 0.15 : 0.05);
-    checkPointerAndTrigger(this, 'scrollMove', 'moveOnMouseWheel', e, {
-      scrollDelta: scrollDelta,
-      originX: originX,
-      originY: originY
-    });
-  }
-}
-
-function pinch(e) {
-  if (isTaken(this._zr, 'globalPan')) {
-    return;
-  }
-
-  var scale = e.pinchScale > 1 ? 1.1 : 1 / 1.1;
-  checkPointerAndTrigger(this, 'zoom', null, e, {
-    scale: scale,
-    originX: e.pinchX,
-    originY: e.pinchY
-  });
-}
-
-function checkPointerAndTrigger(controller, eventName, behaviorToCheck, e, contollerEvent) {
-  if (controller.pointerChecker && controller.pointerChecker(e, contollerEvent.originX, contollerEvent.originY)) {
-    // When mouse is out of roamController rect,
-    // default befavoius should not be be disabled, otherwise
-    // page sliding is disabled, contrary to expectation.
-    stop(e.event);
-    trigger(controller, eventName, behaviorToCheck, e, contollerEvent);
-  }
-}
-
-function trigger(controller, eventName, behaviorToCheck, e, contollerEvent) {
-  // Also provide behavior checker for event listener, for some case that
-  // multiple components share one listener.
-  contollerEvent.isAvailableBehavior = bind(isAvailableBehavior, null, behaviorToCheck, e);
-  controller.trigger(eventName, contollerEvent);
-} // settings: {
-//     zoomOnMouseWheel
-//     moveOnMouseMove
-//     moveOnMouseWheel
-// }
-// The value can be: true / false / 'shift' / 'ctrl' / 'alt'.
-
-
-function isAvailableBehavior(behaviorToCheck, e, settings) {
-  var setting = settings[behaviorToCheck];
-  return !behaviorToCheck || setting && (!isString(setting) || e.event[setting + 'Key']);
-}
-
-/*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*   http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
-
-/**
- * For geo and graph.
- *
- * @param {Object} controllerHost
- * @param {module:zrender/Element} controllerHost.target
- */
-function updateViewOnPan(controllerHost, dx, dy) {
-  var target = controllerHost.target;
-  var pos = target.position;
-  pos[0] += dx;
-  pos[1] += dy;
-  target.dirty();
-}
-/**
- * For geo and graph.
- *
- * @param {Object} controllerHost
- * @param {module:zrender/Element} controllerHost.target
- * @param {number} controllerHost.zoom
- * @param {number} controllerHost.zoomLimit like: {min: 1, max: 2}
- */
-
-function updateViewOnZoom(controllerHost, zoomDelta, zoomX, zoomY) {
-  var target = controllerHost.target;
-  var zoomLimit = controllerHost.zoomLimit;
-  var pos = target.position;
-  var scale = target.scale;
-  var newZoom = controllerHost.zoom = controllerHost.zoom || 1;
-  newZoom *= zoomDelta;
-
-  if (zoomLimit) {
-    var zoomMin = zoomLimit.min || 0;
-    var zoomMax = zoomLimit.max || Infinity;
-    newZoom = Math.max(Math.min(zoomMax, newZoom), zoomMin);
-  }
-
-  var zoomScale = newZoom / controllerHost.zoom;
-  controllerHost.zoom = newZoom; // Keep the mouse center when scaling
-
-  pos[0] -= (zoomX - pos[0]) * (zoomScale - 1);
-  pos[1] -= (zoomY - pos[1]) * (zoomScale - 1);
-  scale[0] *= zoomScale;
-  scale[1] *= zoomScale;
-  target.dirty();
-}
-
-/*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*   http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
-var IRRELEVANT_EXCLUDES = {
-  'axisPointer': 1,
-  'tooltip': 1,
-  'brush': 1
-};
-/**
- * Avoid that: mouse click on a elements that is over geo or graph,
- * but roam is triggered.
- */
-
-function onIrrelevantElement(e, api, targetCoordSysModel) {
-  var model = api.getComponentByElement(e.topTarget); // If model is axisModel, it works only if it is injected with coordinateSystem.
-
-  var coordSys = model && model.coordinateSystem;
-  return model && model !== targetCoordSysModel && !IRRELEVANT_EXCLUDES[model.mainType] && coordSys && coordSys.model !== targetCoordSysModel;
-}
-
-/*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*   http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
-function getFixedItemStyle(model, scale) {
-  var itemStyle = model.getItemStyle();
-  var areaColor = model.get('areaColor'); // If user want the color not to be changed when hover,
-  // they should both set areaColor and color to be null.
-
-  if (areaColor != null) {
-    itemStyle.fill = areaColor;
-  }
-
-  return itemStyle;
-}
-
-function updateMapSelectHandler(mapDraw, mapOrGeoModel, regionsGroup, api, fromView) {
-  regionsGroup.off('click');
-  regionsGroup.off('mousedown');
-
-  if (mapOrGeoModel.get('selectedMode')) {
-    regionsGroup.on('mousedown', function () {
-      mapDraw._mouseDownFlag = true;
-    });
-    regionsGroup.on('click', function (e) {
-      if (!mapDraw._mouseDownFlag) {
-        return;
-      }
-
-      mapDraw._mouseDownFlag = false;
-      var el = e.target;
-
-      while (!el.__regions) {
-        el = el.parent;
-      }
-
-      if (!el) {
-        return;
-      }
-
-      var action = {
-        type: (mapOrGeoModel.mainType === 'geo' ? 'geo' : 'map') + 'ToggleSelect',
-        batch: map(el.__regions, function (region) {
-          return {
-            name: region.name,
-            from: fromView.uid
-          };
-        })
-      };
-      action[mapOrGeoModel.mainType + 'Id'] = mapOrGeoModel.id;
-      api.dispatchAction(action);
-      updateMapSelected(mapOrGeoModel, regionsGroup);
-    });
-  }
-}
-
-function updateMapSelected(mapOrGeoModel, regionsGroup) {
-  // FIXME
-  regionsGroup.eachChild(function (otherRegionEl) {
-    each$1(otherRegionEl.__regions, function (region) {
-      otherRegionEl.trigger(mapOrGeoModel.isSelected(region.name) ? 'emphasis' : 'normal');
-    });
-  });
-}
-/**
- * @alias module:echarts/component/helper/MapDraw
- * @param {module:echarts/ExtensionAPI} api
- * @param {boolean} updateGroup
- */
-
-
-function MapDraw(api, updateGroup) {
-  var group = new Group();
-  /**
-   * @type {string}
-   * @private
-   */
-
-  this.uid = getUID('ec_map_draw');
-  /**
-   * @type {module:echarts/component/helper/RoamController}
-   * @private
-   */
-
-  this._controller = new RoamController(api.getZr());
-  /**
-   * @type {Object} {target, zoom, zoomLimit}
-   * @private
-   */
-
-  this._controllerHost = {
-    target: updateGroup ? group : null
-  };
-  /**
-   * @type {module:zrender/container/Group}
-   * @readOnly
-   */
-
-  this.group = group;
-  /**
-   * @type {boolean}
-   * @private
-   */
-
-  this._updateGroup = updateGroup;
-  /**
-   * This flag is used to make sure that only one among
-   * `pan`, `zoom`, `click` can occurs, otherwise 'selected'
-   * action may be triggered when `pan`, which is unexpected.
-   * @type {booelan}
-   */
-
-  this._mouseDownFlag;
-  /**
-   * @type {string}
-   */
-
-  this._mapName;
-  /**
-   * @type {boolean}
-   */
-
-  this._initialized;
-  /**
-   * @type {module:zrender/container/Group}
-   */
-
-  group.add(this._regionsGroup = new Group());
-  /**
-   * @type {module:zrender/container/Group}
-   */
-
-  group.add(this._backgroundGroup = new Group());
-}
-
-MapDraw.prototype = {
-  constructor: MapDraw,
-  draw: function (mapOrGeoModel, ecModel, api, fromView, payload) {
-    var isGeo = mapOrGeoModel.mainType === 'geo'; // Map series has data. GEO model that controlled by map series
-    // will be assigned with map data. Other GEO model has no data.
-
-    var data = mapOrGeoModel.getData && mapOrGeoModel.getData();
-    isGeo && ecModel.eachComponent({
-      mainType: 'series',
-      subType: 'map'
-    }, function (mapSeries) {
-      if (!data && mapSeries.getHostGeoModel() === mapOrGeoModel) {
-        data = mapSeries.getData();
-      }
-    });
-    var geo = mapOrGeoModel.coordinateSystem;
-
-    this._updateBackground(geo);
-
-    var regionsGroup = this._regionsGroup;
-    var group = this.group;
-    var scale = geo.scale;
-    var transform = {
-      position: geo.position,
-      scale: scale
-    }; // No animation when first draw or in action
-
-    if (!regionsGroup.childAt(0) || payload) {
-      group.attr(transform);
-    } else {
-      updateProps(group, transform, mapOrGeoModel);
-    }
-
-    regionsGroup.removeAll();
-    var itemStyleAccessPath = ['itemStyle'];
-    var hoverItemStyleAccessPath = ['emphasis', 'itemStyle'];
-    var labelAccessPath = ['label'];
-    var hoverLabelAccessPath = ['emphasis', 'label'];
-    var nameMap = createHashMap();
-    each$1(geo.regions, function (region) {
-      // Consider in GeoJson properties.name may be duplicated, for example,
-      // there is multiple region named "United Kindom" or "France" (so many
-      // colonies). And it is not appropriate to merge them in geo, which
-      // will make them share the same label and bring trouble in label
-      // location calculation.
-      var regionGroup = nameMap.get(region.name) || nameMap.set(region.name, new Group());
-      var compoundPath = new CompoundPath({
-        shape: {
-          paths: []
-        }
-      });
-      regionGroup.add(compoundPath);
-      var regionModel = mapOrGeoModel.getRegionModel(region.name) || mapOrGeoModel;
-      var itemStyleModel = regionModel.getModel(itemStyleAccessPath);
-      var hoverItemStyleModel = regionModel.getModel(hoverItemStyleAccessPath);
-      var itemStyle = getFixedItemStyle(itemStyleModel, scale);
-      var hoverItemStyle = getFixedItemStyle(hoverItemStyleModel, scale);
-      var labelModel = regionModel.getModel(labelAccessPath);
-      var hoverLabelModel = regionModel.getModel(hoverLabelAccessPath);
-      var dataIdx; // Use the itemStyle in data if has data
-
-      if (data) {
-        dataIdx = data.indexOfName(region.name); // Only visual color of each item will be used. It can be encoded by dataRange
-        // But visual color of series is used in symbol drawing
-        //
-        // Visual color for each series is for the symbol draw
-
-        var visualColor = data.getItemVisual(dataIdx, 'color', true);
-
-        if (visualColor) {
-          itemStyle.fill = visualColor;
-        }
-      }
-
-      each$1(region.geometries, function (geometry) {
-        if (geometry.type !== 'polygon') {
-          return;
-        }
-
-        compoundPath.shape.paths.push(new Polygon({
-          shape: {
-            points: geometry.exterior
-          }
-        }));
-
-        for (var i = 0; i < (geometry.interiors ? geometry.interiors.length : 0); i++) {
-          compoundPath.shape.paths.push(new Polygon({
-            shape: {
-              points: geometry.interiors[i]
-            }
-          }));
-        }
-      });
-      compoundPath.setStyle(itemStyle);
-      compoundPath.style.strokeNoScale = true;
-      compoundPath.culling = true; // Label
-
-      var showLabel = labelModel.get('show');
-      var hoverShowLabel = hoverLabelModel.get('show');
-      var isDataNaN = data && isNaN(data.get(data.mapDimension('value'), dataIdx));
-      var itemLayout = data && data.getItemLayout(dataIdx); // In the following cases label will be drawn
-      // 1. In map series and data value is NaN
-      // 2. In geo component
-      // 4. Region has no series legendSymbol, which will be add a showLabel flag in mapSymbolLayout
-
-      if (isGeo || isDataNaN && (showLabel || hoverShowLabel) || itemLayout && itemLayout.showLabel) {
-        var query = !isGeo ? dataIdx : region.name;
-        var labelFetcher; // Consider dataIdx not found.
-
-        if (!data || dataIdx >= 0) {
-          labelFetcher = mapOrGeoModel;
-        }
-
-        var textEl = new Text({
-          position: region.center.slice(),
-          // FIXME
-          // label rotation is not support yet in geo or regions of series-map
-          // that has no data. The rotation will be effected by this `scale`.
-          // So needed to change to RectText?
-          scale: [1 / scale[0], 1 / scale[1]],
-          z2: 10,
-          silent: true
-        });
-        setLabelStyle(textEl.style, textEl.hoverStyle = {}, labelModel, hoverLabelModel, {
-          labelFetcher: labelFetcher,
-          labelDataIndex: query,
-          defaultText: region.name,
-          useInsideStyle: false
-        }, {
-          textAlign: 'center',
-          textVerticalAlign: 'middle'
-        });
-        regionGroup.add(textEl);
-      } // setItemGraphicEl, setHoverStyle after all polygons and labels
-      // are added to the rigionGroup
-
-
-      if (data) {
-        data.setItemGraphicEl(dataIdx, regionGroup);
-      } else {
-        var regionModel = mapOrGeoModel.getRegionModel(region.name); // Package custom mouse event for geo component
-
-        compoundPath.eventData = {
-          componentType: 'geo',
-          componentIndex: mapOrGeoModel.componentIndex,
-          geoIndex: mapOrGeoModel.componentIndex,
-          name: region.name,
-          region: regionModel && regionModel.option || {}
-        };
-      }
-
-      var groupRegions = regionGroup.__regions || (regionGroup.__regions = []);
-      groupRegions.push(region);
-      setHoverStyle(regionGroup, hoverItemStyle, {
-        hoverSilentOnTouch: !!mapOrGeoModel.get('selectedMode')
-      });
-      regionsGroup.add(regionGroup);
-    });
-
-    this._updateController(mapOrGeoModel, ecModel, api);
-
-    updateMapSelectHandler(this, mapOrGeoModel, regionsGroup, api, fromView);
-    updateMapSelected(mapOrGeoModel, regionsGroup);
-  },
-  remove: function () {
-    this._regionsGroup.removeAll();
-
-    this._backgroundGroup.removeAll();
-
-    this._controller.dispose();
-
-    this._mapName && geoSourceManager.removeGraphic(this._mapName, this.uid);
-    this._mapName = null;
-    this._controllerHost = {};
-  },
-  _updateBackground: function (geo) {
-    var mapName = geo.map;
-
-    if (this._mapName !== mapName) {
-      each$1(geoSourceManager.makeGraphic(mapName, this.uid), function (root) {
-        this._backgroundGroup.add(root);
-      }, this);
-    }
-
-    this._mapName = mapName;
-  },
-  _updateController: function (mapOrGeoModel, ecModel, api) {
-    var geo = mapOrGeoModel.coordinateSystem;
-    var controller = this._controller;
-    var controllerHost = this._controllerHost;
-    controllerHost.zoomLimit = mapOrGeoModel.get('scaleLimit');
-    controllerHost.zoom = geo.getZoom(); // roamType is will be set default true if it is null
-
-    controller.enable(mapOrGeoModel.get('roam') || false);
-    var mainType = mapOrGeoModel.mainType;
-
-    function makeActionBase() {
-      var action = {
-        type: 'geoRoam',
-        componentType: mainType
-      };
-      action[mainType + 'Id'] = mapOrGeoModel.id;
-      return action;
-    }
-
-    controller.off('pan').on('pan', function (e) {
-      this._mouseDownFlag = false;
-      updateViewOnPan(controllerHost, e.dx, e.dy);
-      api.dispatchAction(extend(makeActionBase(), {
-        dx: e.dx,
-        dy: e.dy
-      }));
-    }, this);
-    controller.off('zoom').on('zoom', function (e) {
-      this._mouseDownFlag = false;
-      updateViewOnZoom(controllerHost, e.scale, e.originX, e.originY);
-      api.dispatchAction(extend(makeActionBase(), {
-        zoom: e.scale,
-        originX: e.originX,
-        originY: e.originY
-      }));
-
-      if (this._updateGroup) {
-        var scale = this.group.scale;
-
-        this._regionsGroup.traverse(function (el) {
-          if (el.type === 'text') {
-            el.attr('scale', [1 / scale[0], 1 / scale[1]]);
-          }
-        });
-      }
-    }, this);
-    controller.setPointerChecker(function (e, x, y) {
-      return geo.getViewRectAfterRoam().contain(x, y) && !onIrrelevantElement(e, api, mapOrGeoModel);
-    });
-  }
-};
-
-/*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*   http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
 extendComponentView({
   type: 'geo',
   init: function (ecModel, api) {
@@ -45728,129 +46518,6 @@ extendComponentView({
   dispose: function () {
     this._mapDraw && this._mapDraw.remove();
   }
-});
-
-/*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*   http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
-
-/**
- * @param {module:echarts/coord/View} view
- * @param {Object} payload
- * @param {Object} [zoomLimit]
- */
-function updateCenterAndZoom(view, payload, zoomLimit) {
-  var previousZoom = view.getZoom();
-  var center = view.getCenter();
-  var zoom = payload.zoom;
-  var point = view.dataToPoint(center);
-
-  if (payload.dx != null && payload.dy != null) {
-    point[0] -= payload.dx;
-    point[1] -= payload.dy;
-    var center = view.pointToData(point);
-    view.setCenter(center);
-  }
-
-  if (zoom != null) {
-    if (zoomLimit) {
-      var zoomMin = zoomLimit.min || 0;
-      var zoomMax = zoomLimit.max || Infinity;
-      zoom = Math.max(Math.min(previousZoom * zoom, zoomMax), zoomMin) / previousZoom;
-    } // Zoom on given point(originX, originY)
-
-
-    view.scale[0] *= zoom;
-    view.scale[1] *= zoom;
-    var position = view.position;
-    var fixX = (payload.originX - position[0]) * (zoom - 1);
-    var fixY = (payload.originY - position[1]) * (zoom - 1);
-    position[0] -= fixX;
-    position[1] -= fixY;
-    view.updateTransform(); // Get the new center
-
-    var center = view.pointToData(point);
-    view.setCenter(center);
-    view.setZoom(zoom * previousZoom);
-  }
-
-  return {
-    center: view.getCenter(),
-    zoom: view.getZoom()
-  };
-}
-
-/*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*   http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
-/**
- * @payload
- * @property {string} [componentType=series]
- * @property {number} [dx]
- * @property {number} [dy]
- * @property {number} [zoom]
- * @property {number} [originX]
- * @property {number} [originY]
- */
-
-registerAction({
-  type: 'geoRoam',
-  event: 'geoRoam',
-  update: 'updateTransform'
-}, function (payload, ecModel) {
-  var componentType = payload.componentType || 'series';
-  ecModel.eachComponent({
-    mainType: componentType,
-    query: payload
-  }, function (componentModel) {
-    var geo = componentModel.coordinateSystem;
-
-    if (geo.type !== 'geo') {
-      return;
-    }
-
-    var res = updateCenterAndZoom(geo, payload, componentModel.get('scaleLimit'));
-    componentModel.setCenter && componentModel.setCenter(res.center);
-    componentModel.setZoom && componentModel.setZoom(res.zoom); // All map series with same `map` use the same geo coordinate system
-    // So the center and zoom must be in sync. Include the series not selected by legend
-
-    if (componentType === 'series') {
-      each$1(componentModel.seriesGroup, function (seriesModel) {
-        seriesModel.setCenter(res.center);
-        seriesModel.setZoom(res.zoom);
-      });
-    }
-  });
 });
 
 /*
@@ -48341,7 +49008,7 @@ BaseAxisPointer.prototype = {
     var pointerOption = elOption.pointer;
 
     if (pointerOption) {
-      var pointerEl = inner$11(group).pointerEl = new graphic[pointerOption.type](clone$4(elOption.pointer));
+      var pointerEl = inner$11(group).pointerEl = new graphicUtil[pointerOption.type](clone$4(elOption.pointer));
       group.add(pointerEl);
     }
   },
@@ -55954,3000 +56621,476 @@ registerAction({
 * under the License.
 */
 
-var urn = 'urn:schemas-microsoft-com:vml';
-var win = typeof window === 'undefined' ? null : window;
-var vmlInited = false;
-var doc = win && win.document;
-function createNode(tagName) {
-  return doCreateNode(tagName);
-} // Avoid assign to an exported variable, for transforming to cjs.
+/*
+* Licensed to the Apache Software Foundation (ASF) under one
+* or more contributor license agreements.  See the NOTICE file
+* distributed with this work for additional information
+* regarding copyright ownership.  The ASF licenses this file
+* to you under the Apache License, Version 2.0 (the
+* "License"); you may not use this file except in compliance
+* with the License.  You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing,
+* software distributed under the License is distributed on an
+* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+* KIND, either express or implied.  See the License for the
+* specific language governing permissions and limitations
+* under the License.
+*/
+// Preprocessor
+// -------------
 
-var doCreateNode;
+registerPreprocessor(function (option) {
+  var graphicOption = option.graphic; // Convert
+  // {graphic: [{left: 10, type: 'circle'}, ...]}
+  // or
+  // {graphic: {left: 10, type: 'circle'}}
+  // to
+  // {graphic: [{elements: [{left: 10, type: 'circle'}, ...]}]}
 
-if (doc && !env$1.canvasSupported) {
-  try {
-    !doc.namespaces.zrvml && doc.namespaces.add('zrvml', urn);
-
-    doCreateNode = function (tagName) {
-      return doc.createElement('<zrvml:' + tagName + ' class="zrvml">');
-    };
-  } catch (e) {
-    doCreateNode = function (tagName) {
-      return doc.createElement('<' + tagName + ' xmlns="' + urn + '" class="zrvml">');
-    };
-  }
-} // From raphael
-
-
-function initVML() {
-  if (vmlInited || !doc) {
-    return;
-  }
-
-  vmlInited = true;
-  var styleSheets = doc.styleSheets;
-
-  if (styleSheets.length < 31) {
-    doc.createStyleSheet().addRule('.zrvml', 'behavior:url(#default#VML)');
-  } else {
-    // http://msdn.microsoft.com/en-us/library/ms531194%28VS.85%29.aspx
-    styleSheets[0].addRule('.zrvml', 'behavior:url(#default#VML)');
-  }
-}
-
-// http://www.w3.org/TR/NOTE-VML
-// TODO Use proxy like svg instead of overwrite brush methods
-var CMD$3 = PathProxy.CMD;
-var round$3 = Math.round;
-var sqrt = Math.sqrt;
-var abs$1 = Math.abs;
-var cos = Math.cos;
-var sin = Math.sin;
-var mathMax$5 = Math.max;
-
-if (!env$1.canvasSupported) {
-  var comma = ',';
-  var imageTransformPrefix = 'progid:DXImageTransform.Microsoft';
-  var Z = 21600;
-  var Z2 = Z / 2;
-  var ZLEVEL_BASE = 100000;
-  var Z_BASE = 1000;
-
-  var initRootElStyle = function (el) {
-    el.style.cssText = 'position:absolute;left:0;top:0;width:1px;height:1px;';
-    el.coordsize = Z + ',' + Z;
-    el.coordorigin = '0,0';
-  };
-
-  var encodeHtmlAttribute = function (s) {
-    return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
-  };
-
-  var rgb2Str = function (r, g, b) {
-    return 'rgb(' + [r, g, b].join(',') + ')';
-  };
-
-  var append = function (parent, child) {
-    if (child && parent && child.parentNode !== parent) {
-      parent.appendChild(child);
+  if (isArray(graphicOption)) {
+    if (!graphicOption[0] || !graphicOption[0].elements) {
+      option.graphic = [{
+        elements: graphicOption
+      }];
+    } else {
+      // Only one graphic instance can be instantiated. (We dont
+      // want that too many views are created in echarts._viewMap)
+      option.graphic = [option.graphic[0]];
     }
-  };
+  } else if (graphicOption && !graphicOption.elements) {
+    option.graphic = [{
+      elements: [graphicOption]
+    }];
+  }
+}); // ------
+// Model
+// ------
 
-  var remove = function (parent, child) {
-    if (child && parent && child.parentNode === parent) {
-      parent.removeChild(child);
-    }
-  };
+var GraphicModel = extendComponentModel({
+  type: 'graphic',
+  defaultOption: {
+    // Extra properties for each elements:
+    //
+    // left/right/top/bottom: (like 12, '22%', 'center', default undefined)
+    //      If left/rigth is set, shape.x/shape.cx/position will not be used.
+    //      If top/bottom is set, shape.y/shape.cy/position will not be used.
+    //      This mechanism is useful when you want to position a group/element
+    //      against the right side or the center of this container.
+    //
+    // width/height: (can only be pixel value, default 0)
+    //      Only be used to specify contianer(group) size, if needed. And
+    //      can not be percentage value (like '33%'). See the reason in the
+    //      layout algorithm below.
+    //
+    // bounding: (enum: 'all' (default) | 'raw')
+    //      Specify how to calculate boundingRect when locating.
+    //      'all': Get uioned and transformed boundingRect
+    //          from both itself and its descendants.
+    //          This mode simplies confining a group of elements in the bounding
+    //          of their ancester container (e.g., using 'right: 0').
+    //      'raw': Only use the boundingRect of itself and before transformed.
+    //          This mode is similar to css behavior, which is useful when you
+    //          want an element to be able to overflow its container. (Consider
+    //          a rotated circle needs to be located in a corner.)
+    // info: custom info. enables user to mount some info on elements and use them
+    //      in event handlers. Update them only when user specified, otherwise, remain.
+    // Note: elements is always behind its ancestors in this elements array.
+    elements: [],
+    parentId: null
+  },
 
-  var getZIndex = function (zlevel, z, z2) {
-    // z 的取值范围为 [0, 1000]
-    return (parseFloat(zlevel) || 0) * ZLEVEL_BASE + (parseFloat(z) || 0) * Z_BASE + z2;
-  };
+  /**
+   * Save el options for the sake of the performance (only update modified graphics).
+   * The order is the same as those in option. (ancesters -> descendants)
+   *
+   * @private
+   * @type {Array.<Object>}
+   */
+  _elOptionsToUpdate: null,
 
-  var parsePercent$3 = function (value, maxValue) {
-    if (typeof value === 'string') {
-      if (value.lastIndexOf('%') >= 0) {
-        return parseFloat(value) / 100 * maxValue;
+  /**
+   * @override
+   */
+  mergeOption: function (option) {
+    // Prevent default merge to elements
+    var elements = this.option.elements;
+    this.option.elements = null;
+    GraphicModel.superApply(this, 'mergeOption', arguments);
+    this.option.elements = elements;
+  },
+
+  /**
+   * @override
+   */
+  optionUpdated: function (newOption, isInit) {
+    var thisOption = this.option;
+    var newList = (isInit ? thisOption : newOption).elements;
+    var existList = thisOption.elements = isInit ? [] : thisOption.elements;
+    var flattenedList = [];
+
+    this._flatten(newList, flattenedList);
+
+    var mappingResult = mappingToExists(existList, flattenedList);
+    makeIdAndName(mappingResult); // Clear elOptionsToUpdate
+
+    var elOptionsToUpdate = this._elOptionsToUpdate = [];
+    each$1(mappingResult, function (resultItem, index) {
+      var newElOption = resultItem.option;
+
+      if (!newElOption) {
+        return;
       }
 
-      return parseFloat(value);
-    }
+      elOptionsToUpdate.push(newElOption);
+      setKeyInfoToNewElOption(resultItem, newElOption);
+      mergeNewElOptionToExist(existList, index, newElOption);
+      setLayoutInfoToExist(existList[index], newElOption);
+    }, this); // Clean
 
-    return value;
-  };
-  /***************************************************
-   * PATH
-   **************************************************/
-
-
-  var setColorAndOpacity = function (el, color, opacity) {
-    var colorArr = parse(color);
-    opacity = +opacity;
-
-    if (isNaN(opacity)) {
-      opacity = 1;
-    }
-
-    if (colorArr) {
-      el.color = rgb2Str(colorArr[0], colorArr[1], colorArr[2]);
-      el.opacity = opacity * colorArr[3];
-    }
-  };
-
-  var getColorAndAlpha = function (color) {
-    var colorArr = parse(color);
-    return [rgb2Str(colorArr[0], colorArr[1], colorArr[2]), colorArr[3]];
-  };
-
-  var updateFillNode = function (el, style, zrEl) {
-    // TODO pattern
-    var fill = style.fill;
-
-    if (fill != null) {
-      // Modified from excanvas
-      if (fill instanceof Gradient) {
-        var gradientType;
-        var angle = 0;
-        var focus = [0, 0]; // additional offset
-
-        var shift = 0; // scale factor for offset
-
-        var expansion = 1;
-        var rect = zrEl.getBoundingRect();
-        var rectWidth = rect.width;
-        var rectHeight = rect.height;
-
-        if (fill.type === 'linear') {
-          gradientType = 'gradient';
-          var transform = zrEl.transform;
-          var p0 = [fill.x * rectWidth, fill.y * rectHeight];
-          var p1 = [fill.x2 * rectWidth, fill.y2 * rectHeight];
-
-          if (transform) {
-            applyTransform(p0, p0, transform);
-            applyTransform(p1, p1, transform);
-          }
-
-          var dx = p1[0] - p0[0];
-          var dy = p1[1] - p0[1];
-          angle = Math.atan2(dx, dy) * 180 / Math.PI; // The angle should be a non-negative number.
-
-          if (angle < 0) {
-            angle += 360;
-          } // Very small angles produce an unexpected result because they are
-          // converted to a scientific notation string.
-
-
-          if (angle < 1e-6) {
-            angle = 0;
-          }
-        } else {
-          gradientType = 'gradientradial';
-          var p0 = [fill.x * rectWidth, fill.y * rectHeight];
-          var transform = zrEl.transform;
-          var scale$$1 = zrEl.scale;
-          var width = rectWidth;
-          var height = rectHeight;
-          focus = [// Percent in bounding rect
-          (p0[0] - rect.x) / width, (p0[1] - rect.y) / height];
-
-          if (transform) {
-            applyTransform(p0, p0, transform);
-          }
-
-          width /= scale$$1[0] * Z;
-          height /= scale$$1[1] * Z;
-          var dimension = mathMax$5(width, height);
-          shift = 2 * 0 / dimension;
-          expansion = 2 * fill.r / dimension - shift;
-        } // We need to sort the color stops in ascending order by offset,
-        // otherwise IE won't interpret it correctly.
-
-
-        var stops = fill.colorStops.slice();
-        stops.sort(function (cs1, cs2) {
-          return cs1.offset - cs2.offset;
-        });
-        var length$$1 = stops.length; // Color and alpha list of first and last stop
-
-        var colorAndAlphaList = [];
-        var colors = [];
-
-        for (var i = 0; i < length$$1; i++) {
-          var stop = stops[i];
-          var colorAndAlpha = getColorAndAlpha(stop.color);
-          colors.push(stop.offset * expansion + shift + ' ' + colorAndAlpha[0]);
-
-          if (i === 0 || i === length$$1 - 1) {
-            colorAndAlphaList.push(colorAndAlpha);
-          }
-        }
-
-        if (length$$1 >= 2) {
-          var color1 = colorAndAlphaList[0][0];
-          var color2 = colorAndAlphaList[1][0];
-          var opacity1 = colorAndAlphaList[0][1] * style.opacity;
-          var opacity2 = colorAndAlphaList[1][1] * style.opacity;
-          el.type = gradientType;
-          el.method = 'none';
-          el.focus = '100%';
-          el.angle = angle;
-          el.color = color1;
-          el.color2 = color2;
-          el.colors = colors.join(','); // When colors attribute is used, the meanings of opacity and o:opacity2
-          // are reversed.
-
-          el.opacity = opacity2; // FIXME g_o_:opacity ?
-
-          el.opacity2 = opacity1;
-        }
-
-        if (gradientType === 'radial') {
-          el.focusposition = focus.join(',');
-        }
+    for (var i = existList.length - 1; i >= 0; i--) {
+      if (existList[i] == null) {
+        existList.splice(i, 1);
       } else {
-        // FIXME Change from Gradient fill to color fill
-        setColorAndOpacity(el, fill, style.opacity);
+        // $action should be volatile, otherwise option gotten from
+        // `getOption` will contain unexpected $action.
+        delete existList[i].$action;
       }
     }
-  };
+  },
 
-  var updateStrokeNode = function (el, style) {
-    // if (style.lineJoin != null) {
-    //     el.joinstyle = style.lineJoin;
-    // }
-    // if (style.miterLimit != null) {
-    //     el.miterlimit = style.miterLimit * Z;
-    // }
-    // if (style.lineCap != null) {
-    //     el.endcap = style.lineCap;
-    // }
-    if (style.lineDash != null) {
-      el.dashstyle = style.lineDash.join(' ');
-    }
-
-    if (style.stroke != null && !(style.stroke instanceof Gradient)) {
-      setColorAndOpacity(el, style.stroke, style.opacity);
-    }
-  };
-
-  var updateFillAndStroke = function (vmlEl, type, style, zrEl) {
-    var isFill = type === 'fill';
-    var el = vmlEl.getElementsByTagName(type)[0]; // Stroke must have lineWidth
-
-    if (style[type] != null && style[type] !== 'none' && (isFill || !isFill && style.lineWidth)) {
-      vmlEl[isFill ? 'filled' : 'stroked'] = 'true'; // FIXME Remove before updating, or set `colors` will throw error
-
-      if (style[type] instanceof Gradient) {
-        remove(vmlEl, el);
+  /**
+   * Convert
+   * [{
+   *  type: 'group',
+   *  id: 'xx',
+   *  children: [{type: 'circle'}, {type: 'polygon'}]
+   * }]
+   * to
+   * [
+   *  {type: 'group', id: 'xx'},
+   *  {type: 'circle', parentId: 'xx'},
+   *  {type: 'polygon', parentId: 'xx'}
+   * ]
+   *
+   * @private
+   * @param {Array.<Object>} optionList option list
+   * @param {Array.<Object>} result result of flatten
+   * @param {Object} parentOption parent option
+   */
+  _flatten: function (optionList, result, parentOption) {
+    each$1(optionList, function (option) {
+      if (!option) {
+        return;
       }
+
+      if (parentOption) {
+        option.parentOption = parentOption;
+      }
+
+      result.push(option);
+      var children = option.children;
+
+      if (option.type === 'group' && children) {
+        this._flatten(children, result, option);
+      } // Deleting for JSON output, and for not affecting group creation.
+
+
+      delete option.children;
+    }, this);
+  },
+  // FIXME
+  // Pass to view using payload? setOption has a payload?
+  useElOptionsToUpdate: function () {
+    var els = this._elOptionsToUpdate; // Clear to avoid render duplicately when zooming.
+
+    this._elOptionsToUpdate = null;
+    return els;
+  }
+}); // -----
+// View
+// -----
+
+extendComponentView({
+  type: 'graphic',
+
+  /**
+   * @override
+   */
+  init: function (ecModel, api) {
+    /**
+     * @private
+     * @type {module:zrender/core/util.HashMap}
+     */
+    this._elMap = createHashMap();
+    /**
+     * @private
+     * @type {module:echarts/graphic/GraphicModel}
+     */
+
+    this._lastGraphicModel;
+  },
+
+  /**
+   * @override
+   */
+  render: function (graphicModel, ecModel, api) {
+    // Having leveraged between use cases and algorithm complexity, a very
+    // simple layout mechanism is used:
+    // The size(width/height) can be determined by itself or its parent (not
+    // implemented yet), but can not by its children. (Top-down travel)
+    // The location(x/y) can be determined by the bounding rect of itself
+    // (can including its descendants or not) and the size of its parent.
+    // (Bottom-up travel)
+    // When `chart.clear()` or `chart.setOption({...}, true)` with the same id,
+    // view will be reused.
+    if (graphicModel !== this._lastGraphicModel) {
+      this._clear();
+    }
+
+    this._lastGraphicModel = graphicModel;
+
+    this._updateElements(graphicModel);
+
+    this._relocate(graphicModel, api);
+  },
+
+  /**
+   * Update graphic elements.
+   *
+   * @private
+   * @param {Object} graphicModel graphic model
+   */
+  _updateElements: function (graphicModel) {
+    var elOptionsToUpdate = graphicModel.useElOptionsToUpdate();
+
+    if (!elOptionsToUpdate) {
+      return;
+    }
+
+    var elMap = this._elMap;
+    var rootGroup = this.group; // Top-down tranverse to assign graphic settings to each elements.
+
+    each$1(elOptionsToUpdate, function (elOption) {
+      var $action = elOption.$action;
+      var id = elOption.id;
+      var existEl = elMap.get(id);
+      var parentId = elOption.parentId;
+      var targetElParent = parentId != null ? elMap.get(parentId) : rootGroup;
+      var elOptionStyle = elOption.style;
+
+      if (elOption.type === 'text' && elOptionStyle) {
+        // In top/bottom mode, textVerticalAlign should not be used, which cause
+        // inaccurately locating.
+        if (elOption.hv && elOption.hv[1]) {
+          elOptionStyle.textVerticalAlign = elOptionStyle.textBaseline = null;
+        } // Compatible with previous setting: both support fill and textFill,
+        // stroke and textStroke.
+
+
+        !elOptionStyle.hasOwnProperty('textFill') && elOptionStyle.fill && (elOptionStyle.textFill = elOptionStyle.fill);
+        !elOptionStyle.hasOwnProperty('textStroke') && elOptionStyle.stroke && (elOptionStyle.textStroke = elOptionStyle.stroke);
+      } // Remove unnecessary props to avoid potential problems.
+
+
+      var elOptionCleaned = getCleanedElOption(elOption); // For simple, do not support parent change, otherwise reorder is needed.
+
+      if (!$action || $action === 'merge') {
+        existEl ? existEl.attr(elOptionCleaned) : createEl$1(id, targetElParent, elOptionCleaned, elMap);
+      } else if ($action === 'replace') {
+        removeEl(existEl, elMap);
+        createEl$1(id, targetElParent, elOptionCleaned, elMap);
+      } else if ($action === 'remove') {
+        removeEl(existEl, elMap);
+      }
+
+      var el = elMap.get(id);
+
+      if (el) {
+        el.__ecGraphicWidth = elOption.width;
+        el.__ecGraphicHeight = elOption.height;
+        setEventData(el, graphicModel, elOption);
+      }
+    });
+  },
+
+  /**
+   * Locate graphic elements.
+   *
+   * @private
+   * @param {Object} graphicModel graphic model
+   * @param {module:echarts/ExtensionAPI} api extension API
+   */
+  _relocate: function (graphicModel, api) {
+    var elOptions = graphicModel.option.elements;
+    var rootGroup = this.group;
+    var elMap = this._elMap; // Bottom-up tranvese all elements (consider ec resize) to locate elements.
+
+    for (var i = elOptions.length - 1; i >= 0; i--) {
+      var elOption = elOptions[i];
+      var el = elMap.get(elOption.id);
 
       if (!el) {
-        el = createNode(type);
+        continue;
       }
 
-      isFill ? updateFillNode(el, style, zrEl) : updateStrokeNode(el, style);
-      append(vmlEl, el);
-    } else {
-      vmlEl[isFill ? 'filled' : 'stroked'] = 'false';
-      remove(vmlEl, el);
-    }
-  };
-
-  var points$3 = [[], [], []];
-
-  var pathDataToString = function (path, m) {
-    var M = CMD$3.M;
-    var C = CMD$3.C;
-    var L = CMD$3.L;
-    var A = CMD$3.A;
-    var Q = CMD$3.Q;
-    var str = [];
-    var nPoint;
-    var cmdStr;
-    var cmd;
-    var i;
-    var xi;
-    var yi;
-    var data = path.data;
-    var dataLength = path.len();
-
-    for (i = 0; i < dataLength;) {
-      cmd = data[i++];
-      cmdStr = '';
-      nPoint = 0;
-
-      switch (cmd) {
-        case M:
-          cmdStr = ' m ';
-          nPoint = 1;
-          xi = data[i++];
-          yi = data[i++];
-          points$3[0][0] = xi;
-          points$3[0][1] = yi;
-          break;
-
-        case L:
-          cmdStr = ' l ';
-          nPoint = 1;
-          xi = data[i++];
-          yi = data[i++];
-          points$3[0][0] = xi;
-          points$3[0][1] = yi;
-          break;
-
-        case Q:
-        case C:
-          cmdStr = ' c ';
-          nPoint = 3;
-          var x1 = data[i++];
-          var y1 = data[i++];
-          var x2 = data[i++];
-          var y2 = data[i++];
-          var x3;
-          var y3;
-
-          if (cmd === Q) {
-            // Convert quadratic to cubic using degree elevation
-            x3 = x2;
-            y3 = y2;
-            x2 = (x2 + 2 * x1) / 3;
-            y2 = (y2 + 2 * y1) / 3;
-            x1 = (xi + 2 * x1) / 3;
-            y1 = (yi + 2 * y1) / 3;
-          } else {
-            x3 = data[i++];
-            y3 = data[i++];
-          }
-
-          points$3[0][0] = x1;
-          points$3[0][1] = y1;
-          points$3[1][0] = x2;
-          points$3[1][1] = y2;
-          points$3[2][0] = x3;
-          points$3[2][1] = y3;
-          xi = x3;
-          yi = y3;
-          break;
-
-        case A:
-          var x = 0;
-          var y = 0;
-          var sx = 1;
-          var sy = 1;
-          var angle = 0;
-
-          if (m) {
-            // Extract SRT from matrix
-            x = m[4];
-            y = m[5];
-            sx = sqrt(m[0] * m[0] + m[1] * m[1]);
-            sy = sqrt(m[2] * m[2] + m[3] * m[3]);
-            angle = Math.atan2(-m[1] / sy, m[0] / sx);
-          }
-
-          var cx = data[i++];
-          var cy = data[i++];
-          var rx = data[i++];
-          var ry = data[i++];
-          var startAngle = data[i++] + angle;
-          var endAngle = data[i++] + startAngle + angle; // FIXME
-          // var psi = data[i++];
-
-          i++;
-          var clockwise = data[i++];
-          var x0 = cx + cos(startAngle) * rx;
-          var y0 = cy + sin(startAngle) * ry;
-          var x1 = cx + cos(endAngle) * rx;
-          var y1 = cy + sin(endAngle) * ry;
-          var type = clockwise ? ' wa ' : ' at ';
-
-          if (Math.abs(x0 - x1) < 1e-4) {
-            // IE won't render arches drawn counter clockwise if x0 == x1.
-            if (Math.abs(endAngle - startAngle) > 1e-2) {
-              // Offset x0 by 1/80 of a pixel. Use something
-              // that can be represented in binary
-              if (clockwise) {
-                x0 += 270 / Z;
-              }
-            } else {
-              // Avoid case draw full circle
-              if (Math.abs(y0 - cy) < 1e-4) {
-                if (clockwise && x0 < cx || !clockwise && x0 > cx) {
-                  y1 -= 270 / Z;
-                } else {
-                  y1 += 270 / Z;
-                }
-              } else if (clockwise && y0 < cy || !clockwise && y0 > cy) {
-                x1 += 270 / Z;
-              } else {
-                x1 -= 270 / Z;
-              }
-            }
-          }
-
-          str.push(type, round$3(((cx - rx) * sx + x) * Z - Z2), comma, round$3(((cy - ry) * sy + y) * Z - Z2), comma, round$3(((cx + rx) * sx + x) * Z - Z2), comma, round$3(((cy + ry) * sy + y) * Z - Z2), comma, round$3((x0 * sx + x) * Z - Z2), comma, round$3((y0 * sy + y) * Z - Z2), comma, round$3((x1 * sx + x) * Z - Z2), comma, round$3((y1 * sy + y) * Z - Z2));
-          xi = x1;
-          yi = y1;
-          break;
-
-        case CMD$3.R:
-          var p0 = points$3[0];
-          var p1 = points$3[1]; // x0, y0
-
-          p0[0] = data[i++];
-          p0[1] = data[i++]; // x1, y1
-
-          p1[0] = p0[0] + data[i++];
-          p1[1] = p0[1] + data[i++];
-
-          if (m) {
-            applyTransform(p0, p0, m);
-            applyTransform(p1, p1, m);
-          }
-
-          p0[0] = round$3(p0[0] * Z - Z2);
-          p1[0] = round$3(p1[0] * Z - Z2);
-          p0[1] = round$3(p0[1] * Z - Z2);
-          p1[1] = round$3(p1[1] * Z - Z2);
-          str.push( // x0, y0
-          ' m ', p0[0], comma, p0[1], // x1, y0
-          ' l ', p1[0], comma, p0[1], // x1, y1
-          ' l ', p1[0], comma, p1[1], // x0, y1
-          ' l ', p0[0], comma, p1[1]);
-          break;
-
-        case CMD$3.Z:
-          // FIXME Update xi, yi
-          str.push(' x ');
-      }
-
-      if (nPoint > 0) {
-        str.push(cmdStr);
-
-        for (var k = 0; k < nPoint; k++) {
-          var p = points$3[k];
-          m && applyTransform(p, p, m); // 不 round 会非常慢
-
-          str.push(round$3(p[0] * Z - Z2), comma, round$3(p[1] * Z - Z2), k < nPoint - 1 ? comma : '');
-        }
-      }
-    }
-
-    return str.join('');
-  }; // Rewrite the original path method
-
-
-  Path.prototype.brushVML = function (vmlRoot) {
-    var style = this.style;
-    var vmlEl = this._vmlEl;
-
-    if (!vmlEl) {
-      vmlEl = createNode('shape');
-      initRootElStyle(vmlEl);
-      this._vmlEl = vmlEl;
-    }
-
-    updateFillAndStroke(vmlEl, 'fill', style, this);
-    updateFillAndStroke(vmlEl, 'stroke', style, this);
-    var m = this.transform;
-    var needTransform = m != null;
-    var strokeEl = vmlEl.getElementsByTagName('stroke')[0];
-
-    if (strokeEl) {
-      var lineWidth = style.lineWidth; // Get the line scale.
-      // Determinant of this.m_ means how much the area is enlarged by the
-      // transformation. So its square root can be used as a scale factor
-      // for width.
-
-      if (needTransform && !style.strokeNoScale) {
-        var det = m[0] * m[3] - m[1] * m[2];
-        lineWidth *= sqrt(abs$1(det));
-      }
-
-      strokeEl.weight = lineWidth + 'px';
-    }
-
-    var path = this.path || (this.path = new PathProxy());
-
-    if (this.__dirtyPath) {
-      path.beginPath();
-      path.subPixelOptimize = false;
-      this.buildPath(path, this.shape);
-      path.toStatic();
-      this.__dirtyPath = false;
-    }
-
-    vmlEl.path = pathDataToString(path, this.transform);
-    vmlEl.style.zIndex = getZIndex(this.zlevel, this.z, this.z2); // Append to root
-
-    append(vmlRoot, vmlEl); // Text
-
-    if (style.text != null) {
-      this.drawRectText(vmlRoot, this.getBoundingRect());
-    } else {
-      this.removeRectText(vmlRoot);
-    }
-  };
-
-  Path.prototype.onRemove = function (vmlRoot) {
-    remove(vmlRoot, this._vmlEl);
-    this.removeRectText(vmlRoot);
-  };
-
-  Path.prototype.onAdd = function (vmlRoot) {
-    append(vmlRoot, this._vmlEl);
-    this.appendRectText(vmlRoot);
-  };
-  /***************************************************
-   * IMAGE
-   **************************************************/
-
-
-  var isImage = function (img) {
-    // FIXME img instanceof Image 如果 img 是一个字符串的时候，IE8 下会报错
-    return typeof img === 'object' && img.tagName && img.tagName.toUpperCase() === 'IMG'; // return img instanceof Image;
-  }; // Rewrite the original path method
-
-
-  ZImage.prototype.brushVML = function (vmlRoot) {
-    var style = this.style;
-    var image = style.image; // Image original width, height
-
-    var ow;
-    var oh;
-
-    if (isImage(image)) {
-      var src = image.src;
-
-      if (src === this._imageSrc) {
-        ow = this._imageWidth;
-        oh = this._imageHeight;
-      } else {
-        var imageRuntimeStyle = image.runtimeStyle;
-        var oldRuntimeWidth = imageRuntimeStyle.width;
-        var oldRuntimeHeight = imageRuntimeStyle.height;
-        imageRuntimeStyle.width = 'auto';
-        imageRuntimeStyle.height = 'auto'; // get the original size
-
-        ow = image.width;
-        oh = image.height; // and remove overides
-
-        imageRuntimeStyle.width = oldRuntimeWidth;
-        imageRuntimeStyle.height = oldRuntimeHeight; // Caching image original width, height and src
-
-        this._imageSrc = src;
-        this._imageWidth = ow;
-        this._imageHeight = oh;
-      }
-
-      image = src;
-    } else {
-      if (image === this._imageSrc) {
-        ow = this._imageWidth;
-        oh = this._imageHeight;
-      }
-    }
-
-    if (!image) {
-      return;
-    }
-
-    var x = style.x || 0;
-    var y = style.y || 0;
-    var dw = style.width;
-    var dh = style.height;
-    var sw = style.sWidth;
-    var sh = style.sHeight;
-    var sx = style.sx || 0;
-    var sy = style.sy || 0;
-    var hasCrop = sw && sh;
-    var vmlEl = this._vmlEl;
-
-    if (!vmlEl) {
-      // FIXME 使用 group 在 left, top 都不是 0 的时候就无法显示了。
-      // vmlEl = vmlCore.createNode('group');
-      vmlEl = doc.createElement('div');
-      initRootElStyle(vmlEl);
-      this._vmlEl = vmlEl;
-    }
-
-    var vmlElStyle = vmlEl.style;
-    var hasRotation = false;
-    var m;
-    var scaleX = 1;
-    var scaleY = 1;
-
-    if (this.transform) {
-      m = this.transform;
-      scaleX = sqrt(m[0] * m[0] + m[1] * m[1]);
-      scaleY = sqrt(m[2] * m[2] + m[3] * m[3]);
-      hasRotation = m[1] || m[2];
-    }
-
-    if (hasRotation) {
-      // If filters are necessary (rotation exists), create them
-      // filters are bog-slow, so only create them if abbsolutely necessary
-      // The following check doesn't account for skews (which don't exist
-      // in the canvas spec (yet) anyway.
-      // From excanvas
-      var p0 = [x, y];
-      var p1 = [x + dw, y];
-      var p2 = [x, y + dh];
-      var p3 = [x + dw, y + dh];
-      applyTransform(p0, p0, m);
-      applyTransform(p1, p1, m);
-      applyTransform(p2, p2, m);
-      applyTransform(p3, p3, m);
-      var maxX = mathMax$5(p0[0], p1[0], p2[0], p3[0]);
-      var maxY = mathMax$5(p0[1], p1[1], p2[1], p3[1]);
-      var transformFilter = [];
-      transformFilter.push('M11=', m[0] / scaleX, comma, 'M12=', m[2] / scaleY, comma, 'M21=', m[1] / scaleX, comma, 'M22=', m[3] / scaleY, comma, 'Dx=', round$3(x * scaleX + m[4]), comma, 'Dy=', round$3(y * scaleY + m[5]));
-      vmlElStyle.padding = '0 ' + round$3(maxX) + 'px ' + round$3(maxY) + 'px 0'; // FIXME DXImageTransform 在 IE11 的兼容模式下不起作用
-
-      vmlElStyle.filter = imageTransformPrefix + '.Matrix(' + transformFilter.join('') + ', SizingMethod=clip)';
-    } else {
-      if (m) {
-        x = x * scaleX + m[4];
-        y = y * scaleY + m[5];
-      }
-
-      vmlElStyle.filter = '';
-      vmlElStyle.left = round$3(x) + 'px';
-      vmlElStyle.top = round$3(y) + 'px';
-    }
-
-    var imageEl = this._imageEl;
-    var cropEl = this._cropEl;
-
-    if (!imageEl) {
-      imageEl = doc.createElement('div');
-      this._imageEl = imageEl;
-    }
-
-    var imageELStyle = imageEl.style;
-
-    if (hasCrop) {
-      // Needs know image original width and height
-      if (!(ow && oh)) {
-        var tmpImage = new Image();
-        var self = this;
-
-        tmpImage.onload = function () {
-          tmpImage.onload = null;
-          ow = tmpImage.width;
-          oh = tmpImage.height; // Adjust image width and height to fit the ratio destinationSize / sourceSize
-
-          imageELStyle.width = round$3(scaleX * ow * dw / sw) + 'px';
-          imageELStyle.height = round$3(scaleY * oh * dh / sh) + 'px'; // Caching image original width, height and src
-
-          self._imageWidth = ow;
-          self._imageHeight = oh;
-          self._imageSrc = image;
-        };
-
-        tmpImage.src = image;
-      } else {
-        imageELStyle.width = round$3(scaleX * ow * dw / sw) + 'px';
-        imageELStyle.height = round$3(scaleY * oh * dh / sh) + 'px';
-      }
-
-      if (!cropEl) {
-        cropEl = doc.createElement('div');
-        cropEl.style.overflow = 'hidden';
-        this._cropEl = cropEl;
-      }
-
-      var cropElStyle = cropEl.style;
-      cropElStyle.width = round$3((dw + sx * dw / sw) * scaleX);
-      cropElStyle.height = round$3((dh + sy * dh / sh) * scaleY);
-      cropElStyle.filter = imageTransformPrefix + '.Matrix(Dx=' + -sx * dw / sw * scaleX + ',Dy=' + -sy * dh / sh * scaleY + ')';
-
-      if (!cropEl.parentNode) {
-        vmlEl.appendChild(cropEl);
-      }
-
-      if (imageEl.parentNode !== cropEl) {
-        cropEl.appendChild(imageEl);
-      }
-    } else {
-      imageELStyle.width = round$3(scaleX * dw) + 'px';
-      imageELStyle.height = round$3(scaleY * dh) + 'px';
-      vmlEl.appendChild(imageEl);
-
-      if (cropEl && cropEl.parentNode) {
-        vmlEl.removeChild(cropEl);
-        this._cropEl = null;
-      }
-    }
-
-    var filterStr = '';
-    var alpha = style.opacity;
-
-    if (alpha < 1) {
-      filterStr += '.Alpha(opacity=' + round$3(alpha * 100) + ') ';
-    }
-
-    filterStr += imageTransformPrefix + '.AlphaImageLoader(src=' + image + ', SizingMethod=scale)';
-    imageELStyle.filter = filterStr;
-    vmlEl.style.zIndex = getZIndex(this.zlevel, this.z, this.z2); // Append to root
-
-    append(vmlRoot, vmlEl); // Text
-
-    if (style.text != null) {
-      this.drawRectText(vmlRoot, this.getBoundingRect());
-    }
-  };
-
-  ZImage.prototype.onRemove = function (vmlRoot) {
-    remove(vmlRoot, this._vmlEl);
-    this._vmlEl = null;
-    this._cropEl = null;
-    this._imageEl = null;
-    this.removeRectText(vmlRoot);
-  };
-
-  ZImage.prototype.onAdd = function (vmlRoot) {
-    append(vmlRoot, this._vmlEl);
-    this.appendRectText(vmlRoot);
-  };
-  /***************************************************
-   * TEXT
-   **************************************************/
-
-
-  var DEFAULT_STYLE_NORMAL = 'normal';
-  var fontStyleCache = {};
-  var fontStyleCacheCount = 0;
-  var MAX_FONT_CACHE_SIZE = 100;
-  var fontEl = document.createElement('div');
-
-  var getFontStyle = function (fontString) {
-    var fontStyle = fontStyleCache[fontString];
-
-    if (!fontStyle) {
-      // Clear cache
-      if (fontStyleCacheCount > MAX_FONT_CACHE_SIZE) {
-        fontStyleCacheCount = 0;
-        fontStyleCache = {};
-      }
-
-      var style = fontEl.style;
-      var fontFamily;
-
-      try {
-        style.font = fontString;
-        fontFamily = style.fontFamily.split(',')[0];
-      } catch (e) {}
-
-      fontStyle = {
-        style: style.fontStyle || DEFAULT_STYLE_NORMAL,
-        variant: style.fontVariant || DEFAULT_STYLE_NORMAL,
-        weight: style.fontWeight || DEFAULT_STYLE_NORMAL,
-        size: parseFloat(style.fontSize || 12) | 0,
-        family: fontFamily || 'Microsoft YaHei'
+      var parentEl = el.parent;
+      var containerInfo = parentEl === rootGroup ? {
+        width: api.getWidth(),
+        height: api.getHeight()
+      } : {
+        // Like 'position:absolut' in css, default 0.
+        width: parentEl.__ecGraphicWidth || 0,
+        height: parentEl.__ecGraphicHeight || 0
       };
-      fontStyleCache[fontString] = fontStyle;
-      fontStyleCacheCount++;
+      positionElement(el, elOption, containerInfo, null, {
+        hv: elOption.hv,
+        boundingMode: elOption.bounding
+      });
     }
+  },
 
-    return fontStyle;
-  };
+  /**
+   * Clear all elements.
+   *
+   * @private
+   */
+  _clear: function () {
+    var elMap = this._elMap;
+    elMap.each(function (el) {
+      removeEl(el, elMap);
+    });
+    this._elMap = createHashMap();
+  },
 
-  var textMeasureEl; // Overwrite measure text method
+  /**
+   * @override
+   */
+  dispose: function () {
+    this._clear();
+  }
+});
 
-  $override$1('measureText', function (text, textFont) {
-    var doc$$1 = doc;
+function createEl$1(id, targetElParent, elOption, elMap) {
+  var graphicType = elOption.type;
+  var Clz = graphicUtil[graphicType.charAt(0).toUpperCase() + graphicType.slice(1)];
+  var el = new Clz(elOption);
+  targetElParent.add(el);
+  elMap.set(id, el);
+  el.__ecGraphicId = id;
+}
 
-    if (!textMeasureEl) {
-      textMeasureEl = doc$$1.createElement('div');
-      textMeasureEl.style.cssText = 'position:absolute;top:-20000px;left:0;' + 'padding:0;margin:0;border:none;white-space:pre;';
-      doc.body.appendChild(textMeasureEl);
+function removeEl(existEl, elMap) {
+  var existElParent = existEl && existEl.parent;
+
+  if (existElParent) {
+    existEl.type === 'group' && existEl.traverse(function (el) {
+      removeEl(el, elMap);
+    });
+    elMap.removeKey(existEl.__ecGraphicId);
+    existElParent.remove(existEl);
+  }
+} // Remove unnecessary props to avoid potential problems.
+
+
+function getCleanedElOption(elOption) {
+  elOption = extend({}, elOption);
+  each$1(['id', 'parentId', '$action', 'hv', 'bounding'].concat(LOCATION_PARAMS), function (name) {
+    delete elOption[name];
+  });
+  return elOption;
+}
+
+function isSetLoc(obj, props) {
+  var isSet;
+  each$1(props, function (prop) {
+    obj[prop] != null && obj[prop] !== 'auto' && (isSet = true);
+  });
+  return isSet;
+}
+
+function setKeyInfoToNewElOption(resultItem, newElOption) {
+  var existElOption = resultItem.exist; // Set id and type after id assigned.
+
+  newElOption.id = resultItem.keyInfo.id;
+  !newElOption.type && existElOption && (newElOption.type = existElOption.type); // Set parent id if not specified
+
+  if (newElOption.parentId == null) {
+    var newElParentOption = newElOption.parentOption;
+
+    if (newElParentOption) {
+      newElOption.parentId = newElParentOption.id;
+    } else if (existElOption) {
+      newElOption.parentId = existElOption.parentId;
     }
+  } // Clear
 
-    try {
-      textMeasureEl.style.font = textFont;
-    } catch (ex) {// Ignore failures to set to invalid font.
+
+  newElOption.parentOption = null;
+}
+
+function mergeNewElOptionToExist(existList, index, newElOption) {
+  // Update existing options, for `getOption` feature.
+  var newElOptCopy = extend({}, newElOption);
+  var existElOption = existList[index];
+  var $action = newElOption.$action || 'merge';
+
+  if ($action === 'merge') {
+    if (existElOption) {
+      // We can ensure that newElOptCopy and existElOption are not
+      // the same object, so `merge` will not change newElOptCopy.
+      merge(existElOption, newElOptCopy, true); // Rigid body, use ignoreSize.
+
+      mergeLayoutParam(existElOption, newElOptCopy, {
+        ignoreSize: true
+      }); // Will be used in render.
+
+      copyLayoutParams(newElOption, existElOption);
+    } else {
+      existList[index] = newElOptCopy;
     }
+  } else if ($action === 'replace') {
+    existList[index] = newElOptCopy;
+  } else if ($action === 'remove') {
+    // null will be cleaned later.
+    existElOption && (existList[index] = null);
+  }
+}
 
-    textMeasureEl.innerHTML = ''; // Don't use innerHTML or innerText because they allow markup/whitespace.
+function setLayoutInfoToExist(existItem, newElOption) {
+  if (!existItem) {
+    return;
+  }
 
-    textMeasureEl.appendChild(doc$$1.createTextNode(text));
-    return {
-      width: textMeasureEl.offsetWidth
+  existItem.hv = newElOption.hv = [// Rigid body, dont care `width`.
+  isSetLoc(newElOption, ['left', 'right']), // Rigid body, dont care `height`.
+  isSetLoc(newElOption, ['top', 'bottom'])]; // Give default group size. Otherwise layout error may occur.
+
+  if (existItem.type === 'group') {
+    existItem.width == null && (existItem.width = newElOption.width = 0);
+    existItem.height == null && (existItem.height = newElOption.height = 0);
+  }
+}
+
+function setEventData(el, graphicModel, elOption) {
+  var eventData = el.eventData; // Simple optimize for large amount of elements that no need event.
+
+  if (!el.silent && !el.ignore && !eventData) {
+    eventData = el.eventData = {
+      componentType: 'graphic',
+      componentIndex: graphicModel.componentIndex,
+      name: el.name
     };
-  });
-  var tmpRect$2 = new BoundingRect();
+  } // `elOption.info` enables user to mount some info on
+  // elements and use them in event handlers.
 
-  var drawRectText = function (vmlRoot, rect, textRect, fromTextEl) {
-    var style = this.style; // Optimize, avoid normalize every time.
 
-    this.__dirty && normalizeTextStyle(style, true);
-    var text = style.text; // Convert to string
-
-    text != null && (text += '');
-
-    if (!text) {
-      return;
-    } // Convert rich text to plain text. Rich text is not supported in
-    // IE8-, but tags in rich text template will be removed.
-
-
-    if (style.rich) {
-      var contentBlock = parseRichText(text, style);
-      text = [];
-
-      for (var i = 0; i < contentBlock.lines.length; i++) {
-        var tokens = contentBlock.lines[i].tokens;
-        var textLine = [];
-
-        for (var j = 0; j < tokens.length; j++) {
-          textLine.push(tokens[j].text);
-        }
-
-        text.push(textLine.join(''));
-      }
-
-      text = text.join('\n');
-    }
-
-    var x;
-    var y;
-    var align = style.textAlign;
-    var verticalAlign = style.textVerticalAlign;
-    var fontStyle = getFontStyle(style.font); // FIXME encodeHtmlAttribute ?
-
-    var font = fontStyle.style + ' ' + fontStyle.variant + ' ' + fontStyle.weight + ' ' + fontStyle.size + 'px "' + fontStyle.family + '"';
-    textRect = textRect || getBoundingRect(text, font, align, verticalAlign, style.textPadding, style.textLineHeight); // Transform rect to view space
-
-    var m = this.transform; // Ignore transform for text in other element
-
-    if (m && !fromTextEl) {
-      tmpRect$2.copy(rect);
-      tmpRect$2.applyTransform(m);
-      rect = tmpRect$2;
-    }
-
-    if (!fromTextEl) {
-      var textPosition = style.textPosition;
-      var distance$$1 = style.textDistance; // Text position represented by coord
-
-      if (textPosition instanceof Array) {
-        x = rect.x + parsePercent$3(textPosition[0], rect.width);
-        y = rect.y + parsePercent$3(textPosition[1], rect.height);
-        align = align || 'left';
-      } else {
-        var res = adjustTextPositionOnRect(textPosition, rect, distance$$1);
-        x = res.x;
-        y = res.y; // Default align and baseline when has textPosition
-
-        align = align || res.textAlign;
-        verticalAlign = verticalAlign || res.textVerticalAlign;
-      }
-    } else {
-      x = rect.x;
-      y = rect.y;
-    }
-
-    x = adjustTextX(x, textRect.width, align);
-    y = adjustTextY(y, textRect.height, verticalAlign); // Force baseline 'middle'
-
-    y += textRect.height / 2; // var fontSize = fontStyle.size;
-    // 1.75 is an arbitrary number, as there is no info about the text baseline
-    // switch (baseline) {
-    // case 'hanging':
-    // case 'top':
-    //     y += fontSize / 1.75;
-    //     break;
-    //     case 'middle':
-    //         break;
-    //     default:
-    //     // case null:
-    //     // case 'alphabetic':
-    //     // case 'ideographic':
-    //     // case 'bottom':
-    //         y -= fontSize / 2.25;
-    //         break;
-    // }
-    // switch (align) {
-    //     case 'left':
-    //         break;
-    //     case 'center':
-    //         x -= textRect.width / 2;
-    //         break;
-    //     case 'right':
-    //         x -= textRect.width;
-    //         break;
-    // case 'end':
-    // align = elementStyle.direction == 'ltr' ? 'right' : 'left';
-    // break;
-    // case 'start':
-    // align = elementStyle.direction == 'rtl' ? 'right' : 'left';
-    // break;
-    // default:
-    //     align = 'left';
-    // }
-
-    var createNode$$1 = createNode;
-    var textVmlEl = this._textVmlEl;
-    var pathEl;
-    var textPathEl;
-    var skewEl;
-
-    if (!textVmlEl) {
-      textVmlEl = createNode$$1('line');
-      pathEl = createNode$$1('path');
-      textPathEl = createNode$$1('textpath');
-      skewEl = createNode$$1('skew'); // FIXME Why here is not cammel case
-      // Align 'center' seems wrong
-
-      textPathEl.style['v-text-align'] = 'left';
-      initRootElStyle(textVmlEl);
-      pathEl.textpathok = true;
-      textPathEl.on = true;
-      textVmlEl.from = '0 0';
-      textVmlEl.to = '1000 0.05';
-      append(textVmlEl, skewEl);
-      append(textVmlEl, pathEl);
-      append(textVmlEl, textPathEl);
-      this._textVmlEl = textVmlEl;
-    } else {
-      // 这里是在前面 appendChild 保证顺序的前提下
-      skewEl = textVmlEl.firstChild;
-      pathEl = skewEl.nextSibling;
-      textPathEl = pathEl.nextSibling;
-    }
-
-    var coords = [x, y];
-    var textVmlElStyle = textVmlEl.style; // Ignore transform for text in other element
-
-    if (m && fromTextEl) {
-      applyTransform(coords, coords, m);
-      skewEl.on = true;
-      skewEl.matrix = m[0].toFixed(3) + comma + m[2].toFixed(3) + comma + m[1].toFixed(3) + comma + m[3].toFixed(3) + ',0,0'; // Text position
-
-      skewEl.offset = (round$3(coords[0]) || 0) + ',' + (round$3(coords[1]) || 0); // Left top point as origin
-
-      skewEl.origin = '0 0';
-      textVmlElStyle.left = '0px';
-      textVmlElStyle.top = '0px';
-    } else {
-      skewEl.on = false;
-      textVmlElStyle.left = round$3(x) + 'px';
-      textVmlElStyle.top = round$3(y) + 'px';
-    }
-
-    textPathEl.string = encodeHtmlAttribute(text); // TODO
-
-    try {
-      textPathEl.style.font = font;
-    } // Error font format
-    catch (e) {}
-
-    updateFillAndStroke(textVmlEl, 'fill', {
-      fill: style.textFill,
-      opacity: style.opacity
-    }, this);
-    updateFillAndStroke(textVmlEl, 'stroke', {
-      stroke: style.textStroke,
-      opacity: style.opacity,
-      lineDash: style.lineDash
-    }, this);
-    textVmlEl.style.zIndex = getZIndex(this.zlevel, this.z, this.z2); // Attached to root
-
-    append(vmlRoot, textVmlEl);
-  };
-
-  var removeRectText = function (vmlRoot) {
-    remove(vmlRoot, this._textVmlEl);
-    this._textVmlEl = null;
-  };
-
-  var appendRectText = function (vmlRoot) {
-    append(vmlRoot, this._textVmlEl);
-  };
-
-  var list = [RectText, Displayable, ZImage, Path, Text]; // In case Displayable has been mixed in RectText
-
-  for (var i$2 = 0; i$2 < list.length; i$2++) {
-    var proto$7 = list[i$2].prototype;
-    proto$7.drawRectText = drawRectText;
-    proto$7.removeRectText = removeRectText;
-    proto$7.appendRectText = appendRectText;
-  }
-
-  Text.prototype.brushVML = function (vmlRoot) {
-    var style = this.style;
-
-    if (style.text != null) {
-      this.drawRectText(vmlRoot, {
-        x: style.x || 0,
-        y: style.y || 0,
-        width: 0,
-        height: 0
-      }, this.getBoundingRect(), true);
-    } else {
-      this.removeRectText(vmlRoot);
-    }
-  };
-
-  Text.prototype.onRemove = function (vmlRoot) {
-    this.removeRectText(vmlRoot);
-  };
-
-  Text.prototype.onAdd = function (vmlRoot) {
-    this.appendRectText(vmlRoot);
-  };
-}
-
-/**
- * VML Painter.
- *
- * @module zrender/vml/Painter
- */
-function parseInt10$1(val) {
-  return parseInt(val, 10);
-}
-/**
- * @alias module:zrender/vml/Painter
- */
-
-
-function VMLPainter(root, storage) {
-  initVML();
-  this.root = root;
-  this.storage = storage;
-  var vmlViewport = document.createElement('div');
-  var vmlRoot = document.createElement('div');
-  vmlViewport.style.cssText = 'display:inline-block;overflow:hidden;position:relative;width:300px;height:150px;';
-  vmlRoot.style.cssText = 'position:absolute;left:0;top:0;';
-  root.appendChild(vmlViewport);
-  this._vmlRoot = vmlRoot;
-  this._vmlViewport = vmlViewport;
-  this.resize(); // Modify storage
-
-  var oldDelFromStorage = storage.delFromStorage;
-  var oldAddToStorage = storage.addToStorage;
-
-  storage.delFromStorage = function (el) {
-    oldDelFromStorage.call(storage, el);
-
-    if (el) {
-      el.onRemove && el.onRemove(vmlRoot);
-    }
-  };
-
-  storage.addToStorage = function (el) {
-    // Displayable already has a vml node
-    el.onAdd && el.onAdd(vmlRoot);
-    oldAddToStorage.call(storage, el);
-  };
-
-  this._firstPaint = true;
-}
-
-VMLPainter.prototype = {
-  constructor: VMLPainter,
-  getType: function () {
-    return 'vml';
-  },
-
-  /**
-   * @return {HTMLDivElement}
-   */
-  getViewportRoot: function () {
-    return this._vmlViewport;
-  },
-  getViewportRootOffset: function () {
-    var viewportRoot = this.getViewportRoot();
-
-    if (viewportRoot) {
-      return {
-        offsetLeft: viewportRoot.offsetLeft || 0,
-        offsetTop: viewportRoot.offsetTop || 0
-      };
-    }
-  },
-
-  /**
-   * 刷新
-   */
-  refresh: function () {
-    var list = this.storage.getDisplayList(true, true);
-
-    this._paintList(list);
-  },
-  _paintList: function (list) {
-    var vmlRoot = this._vmlRoot;
-
-    for (var i = 0; i < list.length; i++) {
-      var el = list[i];
-
-      if (el.invisible || el.ignore) {
-        if (!el.__alreadyNotVisible) {
-          el.onRemove(vmlRoot);
-        } // Set as already invisible
-
-
-        el.__alreadyNotVisible = true;
-      } else {
-        if (el.__alreadyNotVisible) {
-          el.onAdd(vmlRoot);
-        }
-
-        el.__alreadyNotVisible = false;
-
-        if (el.__dirty) {
-          el.beforeBrush && el.beforeBrush();
-          (el.brushVML || el.brush).call(el, vmlRoot);
-          el.afterBrush && el.afterBrush();
-        }
-      }
-
-      el.__dirty = false;
-    }
-
-    if (this._firstPaint) {
-      // Detached from document at first time
-      // to avoid page refreshing too many times
-      // FIXME 如果每次都先 removeChild 可能会导致一些填充和描边的效果改变
-      this._vmlViewport.appendChild(vmlRoot);
-
-      this._firstPaint = false;
-    }
-  },
-  resize: function (width, height) {
-    var width = width == null ? this._getWidth() : width;
-    var height = height == null ? this._getHeight() : height;
-
-    if (this._width !== width || this._height !== height) {
-      this._width = width;
-      this._height = height;
-      var vmlViewportStyle = this._vmlViewport.style;
-      vmlViewportStyle.width = width + 'px';
-      vmlViewportStyle.height = height + 'px';
-    }
-  },
-  dispose: function () {
-    this.root.innerHTML = '';
-    this._vmlRoot = this._vmlViewport = this.storage = null;
-  },
-  getWidth: function () {
-    return this._width;
-  },
-  getHeight: function () {
-    return this._height;
-  },
-  clear: function () {
-    if (this._vmlViewport) {
-      this.root.removeChild(this._vmlViewport);
-    }
-  },
-  _getWidth: function () {
-    var root = this.root;
-    var stl = root.currentStyle;
-    return (root.clientWidth || parseInt10$1(stl.width)) - parseInt10$1(stl.paddingLeft) - parseInt10$1(stl.paddingRight) | 0;
-  },
-  _getHeight: function () {
-    var root = this.root;
-    var stl = root.currentStyle;
-    return (root.clientHeight || parseInt10$1(stl.height)) - parseInt10$1(stl.paddingTop) - parseInt10$1(stl.paddingBottom) | 0;
-  }
-}; // Not supported methods
-
-function createMethodNotSupport(method) {
-  return function () {
-    zrLog('In IE8.0 VML mode painter not support method "' + method + '"');
-  };
-} // Unsupported methods
-
-
-each$1(['getLayer', 'insertLayer', 'eachLayer', 'eachBuiltinLayer', 'eachOtherLayer', 'getLayers', 'modLayer', 'delLayer', 'clearLayer', 'toDataURL', 'pathToImage'], function (name) {
-  VMLPainter.prototype[name] = createMethodNotSupport(name);
-});
-
-registerPainter('vml', VMLPainter);
-
-var svgURI = 'http://www.w3.org/2000/svg';
-function createElement(name) {
-  return document.createElementNS(svgURI, name);
-}
-
-// TODO
-// 1. shadow
-// 2. Image: sx, sy, sw, sh
-var CMD$4 = PathProxy.CMD;
-var arrayJoin = Array.prototype.join;
-var NONE = 'none';
-var mathRound = Math.round;
-var mathSin$3 = Math.sin;
-var mathCos$3 = Math.cos;
-var PI$3 = Math.PI;
-var PI2$5 = Math.PI * 2;
-var degree = 180 / PI$3;
-var EPSILON$4 = 1e-4;
-
-function round4(val) {
-  return mathRound(val * 1e4) / 1e4;
-}
-
-function isAroundZero$1(val) {
-  return val < EPSILON$4 && val > -EPSILON$4;
-}
-
-function pathHasFill(style, isText) {
-  var fill = isText ? style.textFill : style.fill;
-  return fill != null && fill !== NONE;
-}
-
-function pathHasStroke(style, isText) {
-  var stroke = isText ? style.textStroke : style.stroke;
-  return stroke != null && stroke !== NONE;
-}
-
-function setTransform(svgEl, m) {
-  if (m) {
-    attr(svgEl, 'transform', 'matrix(' + arrayJoin.call(m, ',') + ')');
+  if (eventData) {
+    eventData.info = el.info;
   }
 }
-
-function attr(el, key, val) {
-  if (!val || val.type !== 'linear' && val.type !== 'radial') {
-    // Don't set attribute for gradient, since it need new dom nodes
-    el.setAttribute(key, val);
-  }
-}
-
-function attrXLink(el, key, val) {
-  el.setAttributeNS('http://www.w3.org/1999/xlink', key, val);
-}
-
-function bindStyle(svgEl, style, isText, el) {
-  if (pathHasFill(style, isText)) {
-    var fill = isText ? style.textFill : style.fill;
-    fill = fill === 'transparent' ? NONE : fill;
-    /**
-     * FIXME:
-     * This is a temporary fix for Chrome's clipping bug
-     * that happens when a clip-path is referring another one.
-     * This fix should be used before Chrome's bug is fixed.
-     * For an element that has clip-path, and fill is none,
-     * set it to be "rgba(0, 0, 0, 0.002)" will hide the element.
-     * Otherwise, it will show black fill color.
-     * 0.002 is used because this won't work for alpha values smaller
-     * than 0.002.
-     *
-     * See
-     * https://bugs.chromium.org/p/chromium/issues/detail?id=659790
-     * for more information.
-     */
-
-    if (svgEl.getAttribute('clip-path') !== 'none' && fill === NONE) {
-      fill = 'rgba(0, 0, 0, 0.002)';
-    }
-
-    attr(svgEl, 'fill', fill);
-    attr(svgEl, 'fill-opacity', style.fillOpacity != null ? style.fillOpacity * style.opacity : style.opacity);
-  } else {
-    attr(svgEl, 'fill', NONE);
-  }
-
-  if (pathHasStroke(style, isText)) {
-    var stroke = isText ? style.textStroke : style.stroke;
-    stroke = stroke === 'transparent' ? NONE : stroke;
-    attr(svgEl, 'stroke', stroke);
-    var strokeWidth = isText ? style.textStrokeWidth : style.lineWidth;
-    var strokeScale = !isText && style.strokeNoScale ? el.getLineScale() : 1;
-    attr(svgEl, 'stroke-width', strokeWidth / strokeScale); // stroke then fill for text; fill then stroke for others
-
-    attr(svgEl, 'paint-order', isText ? 'stroke' : 'fill');
-    attr(svgEl, 'stroke-opacity', style.strokeOpacity != null ? style.strokeOpacity : style.opacity);
-    var lineDash = style.lineDash;
-
-    if (lineDash) {
-      attr(svgEl, 'stroke-dasharray', style.lineDash.join(','));
-      attr(svgEl, 'stroke-dashoffset', mathRound(style.lineDashOffset || 0));
-    } else {
-      attr(svgEl, 'stroke-dasharray', '');
-    } // PENDING
-
-
-    style.lineCap && attr(svgEl, 'stroke-linecap', style.lineCap);
-    style.lineJoin && attr(svgEl, 'stroke-linejoin', style.lineJoin);
-    style.miterLimit && attr(svgEl, 'stroke-miterlimit', style.miterLimit);
-  } else {
-    attr(svgEl, 'stroke', NONE);
-  }
-}
-/***************************************************
- * PATH
- **************************************************/
-
-
-function pathDataToString$1(path) {
-  var str = [];
-  var data = path.data;
-  var dataLength = path.len();
-
-  for (var i = 0; i < dataLength;) {
-    var cmd = data[i++];
-    var cmdStr = '';
-    var nData = 0;
-
-    switch (cmd) {
-      case CMD$4.M:
-        cmdStr = 'M';
-        nData = 2;
-        break;
-
-      case CMD$4.L:
-        cmdStr = 'L';
-        nData = 2;
-        break;
-
-      case CMD$4.Q:
-        cmdStr = 'Q';
-        nData = 4;
-        break;
-
-      case CMD$4.C:
-        cmdStr = 'C';
-        nData = 6;
-        break;
-
-      case CMD$4.A:
-        var cx = data[i++];
-        var cy = data[i++];
-        var rx = data[i++];
-        var ry = data[i++];
-        var theta = data[i++];
-        var dTheta = data[i++];
-        var psi = data[i++];
-        var clockwise = data[i++];
-        var dThetaPositive = Math.abs(dTheta);
-        var isCircle = isAroundZero$1(dThetaPositive - PI2$5) && !isAroundZero$1(dThetaPositive);
-        var large = false;
-
-        if (dThetaPositive >= PI2$5) {
-          large = true;
-        } else if (isAroundZero$1(dThetaPositive)) {
-          large = false;
-        } else {
-          large = (dTheta > -PI$3 && dTheta < 0 || dTheta > PI$3) === !!clockwise;
-        }
-
-        var x0 = round4(cx + rx * mathCos$3(theta));
-        var y0 = round4(cy + ry * mathSin$3(theta)); // It will not draw if start point and end point are exactly the same
-        // We need to shift the end point with a small value
-        // FIXME A better way to draw circle ?
-
-        if (isCircle) {
-          if (clockwise) {
-            dTheta = PI2$5 - 1e-4;
-          } else {
-            dTheta = -PI2$5 + 1e-4;
-          }
-
-          large = true;
-
-          if (i === 9) {
-            // Move to (x0, y0) only when CMD.A comes at the
-            // first position of a shape.
-            // For instance, when drawing a ring, CMD.A comes
-            // after CMD.M, so it's unnecessary to move to
-            // (x0, y0).
-            str.push('M', x0, y0);
-          }
-        }
-
-        var x = round4(cx + rx * mathCos$3(theta + dTheta));
-        var y = round4(cy + ry * mathSin$3(theta + dTheta)); // FIXME Ellipse
-
-        str.push('A', round4(rx), round4(ry), mathRound(psi * degree), +large, +clockwise, x, y);
-        break;
-
-      case CMD$4.Z:
-        cmdStr = 'Z';
-        break;
-
-      case CMD$4.R:
-        var x = round4(data[i++]);
-        var y = round4(data[i++]);
-        var w = round4(data[i++]);
-        var h = round4(data[i++]);
-        str.push('M', x, y, 'L', x + w, y, 'L', x + w, y + h, 'L', x, y + h, 'L', x, y);
-        break;
-    }
-
-    cmdStr && str.push(cmdStr);
-
-    for (var j = 0; j < nData; j++) {
-      // PENDING With scale
-      str.push(round4(data[i++]));
-    }
-  }
-
-  return str.join(' ');
-}
-
-var svgPath = {};
-svgPath.brush = function (el) {
-  var style = el.style;
-  var svgEl = el.__svgEl;
-
-  if (!svgEl) {
-    svgEl = createElement('path');
-    el.__svgEl = svgEl;
-  }
-
-  if (!el.path) {
-    el.createPathProxy();
-  }
-
-  var path = el.path;
-
-  if (el.__dirtyPath) {
-    path.beginPath();
-    path.subPixelOptimize = false;
-    el.buildPath(path, el.shape);
-    el.__dirtyPath = false;
-    var pathStr = pathDataToString$1(path);
-
-    if (pathStr.indexOf('NaN') < 0) {
-      // Ignore illegal path, which may happen such in out-of-range
-      // data in Calendar series.
-      attr(svgEl, 'd', pathStr);
-    }
-  }
-
-  bindStyle(svgEl, style, false, el);
-  setTransform(svgEl, el.transform);
-
-  if (style.text != null) {
-    svgTextDrawRectText(el, el.getBoundingRect());
-  }
-};
-/***************************************************
- * IMAGE
- **************************************************/
-
-
-var svgImage = {};
-svgImage.brush = function (el) {
-  var style = el.style;
-  var image = style.image;
-
-  if (image instanceof HTMLImageElement) {
-    var src = image.src;
-    image = src;
-  }
-
-  if (!image) {
-    return;
-  }
-
-  var x = style.x || 0;
-  var y = style.y || 0;
-  var dw = style.width;
-  var dh = style.height;
-  var svgEl = el.__svgEl;
-
-  if (!svgEl) {
-    svgEl = createElement('image');
-    el.__svgEl = svgEl;
-  }
-
-  if (image !== el.__imageSrc) {
-    attrXLink(svgEl, 'href', image); // Caching image src
-
-    el.__imageSrc = image;
-  }
-
-  attr(svgEl, 'width', dw);
-  attr(svgEl, 'height', dh);
-  attr(svgEl, 'x', x);
-  attr(svgEl, 'y', y);
-  setTransform(svgEl, el.transform);
-
-  if (style.text != null) {
-    svgTextDrawRectText(el, el.getBoundingRect());
-  }
-};
-/***************************************************
- * TEXT
- **************************************************/
-
-
-var svgText = {};
-var tmpRect$3 = new BoundingRect();
-
-var svgTextDrawRectText = function (el, rect, textRect) {
-  var style = el.style;
-  el.__dirty && normalizeTextStyle(style, true);
-  var text = style.text; // Convert to string
-
-  if (text == null) {
-    // Draw no text only when text is set to null, but not ''
-    return;
-  } else {
-    text += '';
-  }
-
-  var textSvgEl = el.__textSvgEl;
-
-  if (!textSvgEl) {
-    textSvgEl = createElement('text');
-    el.__textSvgEl = textSvgEl;
-  }
-
-  var x;
-  var y;
-  var textPosition = style.textPosition;
-  var distance = style.textDistance;
-  var align = style.textAlign || 'left';
-
-  if (typeof style.fontSize === 'number') {
-    style.fontSize += 'px';
-  }
-
-  var font = style.font || [style.fontStyle || '', style.fontWeight || '', style.fontSize || '', style.fontFamily || ''].join(' ') || DEFAULT_FONT$1;
-  var verticalAlign = getVerticalAlignForSvg(style.textVerticalAlign);
-  textRect = getBoundingRect(text, font, align, verticalAlign, style.textPadding, style.textLineHeight);
-  var lineHeight = textRect.lineHeight; // Text position represented by coord
-
-  if (textPosition instanceof Array) {
-    x = rect.x + textPosition[0];
-    y = rect.y + textPosition[1];
-  } else {
-    var newPos = adjustTextPositionOnRect(textPosition, rect, distance);
-    x = newPos.x;
-    y = newPos.y;
-    verticalAlign = getVerticalAlignForSvg(newPos.textVerticalAlign);
-    align = newPos.textAlign;
-  }
-
-  attr(textSvgEl, 'alignment-baseline', verticalAlign);
-
-  if (font) {
-    textSvgEl.style.font = font;
-  }
-
-  var textPadding = style.textPadding; // Make baseline top
-
-  attr(textSvgEl, 'x', x);
-  attr(textSvgEl, 'y', y);
-  bindStyle(textSvgEl, style, true, el);
-
-  if (el instanceof Text || el.style.transformText) {
-    // Transform text with element
-    setTransform(textSvgEl, el.transform);
-  } else {
-    if (el.transform) {
-      tmpRect$3.copy(rect);
-      tmpRect$3.applyTransform(el.transform);
-      rect = tmpRect$3;
-    } else {
-      var pos = el.transformCoordToGlobal(rect.x, rect.y);
-      rect.x = pos[0];
-      rect.y = pos[1];
-      el.transform = identity(create$1());
-    } // Text rotation, but no element transform
-
-
-    var origin = style.textOrigin;
-
-    if (origin === 'center') {
-      x = textRect.width / 2 + x;
-      y = textRect.height / 2 + y;
-    } else if (origin) {
-      x = origin[0] + x;
-      y = origin[1] + y;
-    }
-
-    var rotate$$1 = -style.textRotation || 0;
-    var transform = create$1(); // Apply textRotate to element matrix
-
-    rotate(transform, transform, rotate$$1);
-    var pos = [el.transform[4], el.transform[5]];
-    translate(transform, transform, pos);
-    setTransform(textSvgEl, transform);
-  }
-
-  var textLines = text.split('\n');
-  var nTextLines = textLines.length;
-  var textAnchor = align; // PENDING
-
-  if (textAnchor === 'left') {
-    textAnchor = 'start';
-    textPadding && (x += textPadding[3]);
-  } else if (textAnchor === 'right') {
-    textAnchor = 'end';
-    textPadding && (x -= textPadding[1]);
-  } else if (textAnchor === 'center') {
-    textAnchor = 'middle';
-    textPadding && (x += (textPadding[3] - textPadding[1]) / 2);
-  }
-
-  var dy = 0;
-
-  if (verticalAlign === 'after-edge') {
-    dy = -textRect.height + lineHeight;
-    textPadding && (dy -= textPadding[2]);
-  } else if (verticalAlign === 'middle') {
-    dy = (-textRect.height + lineHeight) / 2;
-    textPadding && (y += (textPadding[0] - textPadding[2]) / 2);
-  } else {
-    textPadding && (dy += textPadding[0]);
-  } // Font may affect position of each tspan elements
-
-
-  if (el.__text !== text || el.__textFont !== font) {
-    var tspanList = el.__tspanList || [];
-    el.__tspanList = tspanList;
-
-    for (var i = 0; i < nTextLines; i++) {
-      // Using cached tspan elements
-      var tspan = tspanList[i];
-
-      if (!tspan) {
-        tspan = tspanList[i] = createElement('tspan');
-        textSvgEl.appendChild(tspan);
-        attr(tspan, 'alignment-baseline', verticalAlign);
-        attr(tspan, 'text-anchor', textAnchor);
-      } else {
-        tspan.innerHTML = '';
-      }
-
-      attr(tspan, 'x', x);
-      attr(tspan, 'y', y + i * lineHeight + dy);
-      tspan.appendChild(document.createTextNode(textLines[i]));
-    } // Remove unsed tspan elements
-
-
-    for (; i < tspanList.length; i++) {
-      textSvgEl.removeChild(tspanList[i]);
-    }
-
-    tspanList.length = nTextLines;
-    el.__text = text;
-    el.__textFont = font;
-  } else if (el.__tspanList.length) {
-    // Update span x and y
-    var len = el.__tspanList.length;
-
-    for (var i = 0; i < len; ++i) {
-      var tspan = el.__tspanList[i];
-
-      if (tspan) {
-        attr(tspan, 'x', x);
-        attr(tspan, 'y', y + i * lineHeight + dy);
-      }
-    }
-  }
-};
-
-function getVerticalAlignForSvg(verticalAlign) {
-  if (verticalAlign === 'middle') {
-    return 'middle';
-  } else if (verticalAlign === 'bottom') {
-    return 'after-edge';
-  } else {
-    return 'hanging';
-  }
-}
-
-svgText.drawRectText = svgTextDrawRectText;
-
-svgText.brush = function (el) {
-  var style = el.style;
-
-  if (style.text != null) {
-    // 强制设置 textPosition
-    style.textPosition = [0, 0];
-    svgTextDrawRectText(el, {
-      x: style.x || 0,
-      y: style.y || 0,
-      width: 0,
-      height: 0
-    }, el.getBoundingRect());
-  }
-};
-
-// Myers' Diff Algorithm
-// Modified from https://github.com/kpdecker/jsdiff/blob/master/src/diff/base.js
-function Diff() {}
-
-Diff.prototype = {
-  diff: function (oldArr, newArr, equals) {
-    if (!equals) {
-      equals = function (a, b) {
-        return a === b;
-      };
-    }
-
-    this.equals = equals;
-    var self = this;
-    oldArr = oldArr.slice();
-    newArr = newArr.slice(); // Allow subclasses to massage the input prior to running
-
-    var newLen = newArr.length;
-    var oldLen = oldArr.length;
-    var editLength = 1;
-    var maxEditLength = newLen + oldLen;
-    var bestPath = [{
-      newPos: -1,
-      components: []
-    }]; // Seed editLength = 0, i.e. the content starts with the same values
-
-    var oldPos = this.extractCommon(bestPath[0], newArr, oldArr, 0);
-
-    if (bestPath[0].newPos + 1 >= newLen && oldPos + 1 >= oldLen) {
-      var indices = [];
-
-      for (var i = 0; i < newArr.length; i++) {
-        indices.push(i);
-      } // Identity per the equality and tokenizer
-
-
-      return [{
-        indices: indices,
-        count: newArr.length
-      }];
-    } // Main worker method. checks all permutations of a given edit length for acceptance.
-
-
-    function execEditLength() {
-      for (var diagonalPath = -1 * editLength; diagonalPath <= editLength; diagonalPath += 2) {
-        var basePath;
-        var addPath = bestPath[diagonalPath - 1];
-        var removePath = bestPath[diagonalPath + 1];
-        var oldPos = (removePath ? removePath.newPos : 0) - diagonalPath;
-
-        if (addPath) {
-          // No one else is going to attempt to use this value, clear it
-          bestPath[diagonalPath - 1] = undefined;
-        }
-
-        var canAdd = addPath && addPath.newPos + 1 < newLen;
-        var canRemove = removePath && 0 <= oldPos && oldPos < oldLen;
-
-        if (!canAdd && !canRemove) {
-          // If this path is a terminal then prune
-          bestPath[diagonalPath] = undefined;
-          continue;
-        } // Select the diagonal that we want to branch from. We select the prior
-        // path whose position in the new string is the farthest from the origin
-        // and does not pass the bounds of the diff graph
-
-
-        if (!canAdd || canRemove && addPath.newPos < removePath.newPos) {
-          basePath = clonePath(removePath);
-          self.pushComponent(basePath.components, undefined, true);
-        } else {
-          basePath = addPath; // No need to clone, we've pulled it from the list
-
-          basePath.newPos++;
-          self.pushComponent(basePath.components, true, undefined);
-        }
-
-        oldPos = self.extractCommon(basePath, newArr, oldArr, diagonalPath); // If we have hit the end of both strings, then we are done
-
-        if (basePath.newPos + 1 >= newLen && oldPos + 1 >= oldLen) {
-          return buildValues(self, basePath.components, newArr, oldArr);
-        } else {
-          // Otherwise track this path as a potential candidate and continue.
-          bestPath[diagonalPath] = basePath;
-        }
-      }
-
-      editLength++;
-    }
-
-    while (editLength <= maxEditLength) {
-      var ret = execEditLength();
-
-      if (ret) {
-        return ret;
-      }
-    }
-  },
-  pushComponent: function (components, added, removed) {
-    var last = components[components.length - 1];
-
-    if (last && last.added === added && last.removed === removed) {
-      // We need to clone here as the component clone operation is just
-      // as shallow array clone
-      components[components.length - 1] = {
-        count: last.count + 1,
-        added: added,
-        removed: removed
-      };
-    } else {
-      components.push({
-        count: 1,
-        added: added,
-        removed: removed
-      });
-    }
-  },
-  extractCommon: function (basePath, newArr, oldArr, diagonalPath) {
-    var newLen = newArr.length;
-    var oldLen = oldArr.length;
-    var newPos = basePath.newPos;
-    var oldPos = newPos - diagonalPath;
-    var commonCount = 0;
-
-    while (newPos + 1 < newLen && oldPos + 1 < oldLen && this.equals(newArr[newPos + 1], oldArr[oldPos + 1])) {
-      newPos++;
-      oldPos++;
-      commonCount++;
-    }
-
-    if (commonCount) {
-      basePath.components.push({
-        count: commonCount
-      });
-    }
-
-    basePath.newPos = newPos;
-    return oldPos;
-  },
-  tokenize: function (value) {
-    return value.slice();
-  },
-  join: function (value) {
-    return value.slice();
-  }
-};
-
-function buildValues(diff, components, newArr, oldArr) {
-  var componentPos = 0;
-  var componentLen = components.length;
-  var newPos = 0;
-  var oldPos = 0;
-
-  for (; componentPos < componentLen; componentPos++) {
-    var component = components[componentPos];
-
-    if (!component.removed) {
-      var indices = [];
-
-      for (var i = newPos; i < newPos + component.count; i++) {
-        indices.push(i);
-      }
-
-      component.indices = indices;
-      newPos += component.count; // Common case
-
-      if (!component.added) {
-        oldPos += component.count;
-      }
-    } else {
-      var indices = [];
-
-      for (var i = oldPos; i < oldPos + component.count; i++) {
-        indices.push(i);
-      }
-
-      component.indices = indices;
-      oldPos += component.count;
-    }
-  }
-
-  return components;
-}
-
-function clonePath(path) {
-  return {
-    newPos: path.newPos,
-    components: path.components.slice(0)
-  };
-}
-
-var arrayDiff = new Diff();
-var arrayDiff$1 = function (oldArr, newArr, callback) {
-  return arrayDiff.diff(oldArr, newArr, callback);
-};
-
-/**
- * @file Manages elements that can be defined in <defs> in SVG,
- *       e.g., gradients, clip path, etc.
- * @author Zhang Wenli
- */
-var MARK_UNUSED = '0';
-var MARK_USED = '1';
-/**
- * Manages elements that can be defined in <defs> in SVG,
- * e.g., gradients, clip path, etc.
- *
- * @class
- * @param {number}          zrId      zrender instance id
- * @param {SVGElement}      svgRoot   root of SVG document
- * @param {string|string[]} tagNames  possible tag names
- * @param {string}          markLabel label name to make if the element
- *                                    is used
- */
-
-function Definable(zrId, svgRoot, tagNames, markLabel, domName) {
-  this._zrId = zrId;
-  this._svgRoot = svgRoot;
-  this._tagNames = typeof tagNames === 'string' ? [tagNames] : tagNames;
-  this._markLabel = markLabel;
-  this._domName = domName || '_dom';
-  this.nextId = 0;
-}
-
-Definable.prototype.createElement = createElement;
-/**
- * Get the <defs> tag for svgRoot; optionally creates one if not exists.
- *
- * @param {boolean} isForceCreating if need to create when not exists
- * @return {SVGDefsElement} SVG <defs> element, null if it doesn't
- * exist and isForceCreating is false
- */
-
-Definable.prototype.getDefs = function (isForceCreating) {
-  var svgRoot = this._svgRoot;
-
-  var defs = this._svgRoot.getElementsByTagName('defs');
-
-  if (defs.length === 0) {
-    // Not exist
-    if (isForceCreating) {
-      defs = svgRoot.insertBefore(this.createElement('defs'), // Create new tag
-      svgRoot.firstChild // Insert in the front of svg
-      );
-
-      if (!defs.contains) {
-        // IE doesn't support contains method
-        defs.contains = function (el) {
-          var children = defs.children;
-
-          if (!children) {
-            return false;
-          }
-
-          for (var i = children.length - 1; i >= 0; --i) {
-            if (children[i] === el) {
-              return true;
-            }
-          }
-
-          return false;
-        };
-      }
-
-      return defs;
-    } else {
-      return null;
-    }
-  } else {
-    return defs[0];
-  }
-};
-/**
- * Update DOM element if necessary.
- *
- * @param {Object|string} element style element. e.g., for gradient,
- *                                it may be '#ccc' or {type: 'linear', ...}
- * @param {Function|undefined} onUpdate update callback
- */
-
-
-Definable.prototype.update = function (element, onUpdate) {
-  if (!element) {
-    return;
-  }
-
-  var defs = this.getDefs(false);
-
-  if (element[this._domName] && defs.contains(element[this._domName])) {
-    // Update DOM
-    if (typeof onUpdate === 'function') {
-      onUpdate(element);
-    }
-  } else {
-    // No previous dom, create new
-    var dom = this.add(element);
-
-    if (dom) {
-      element[this._domName] = dom;
-    }
-  }
-};
-/**
- * Add gradient dom to defs
- *
- * @param {SVGElement} dom DOM to be added to <defs>
- */
-
-
-Definable.prototype.addDom = function (dom) {
-  var defs = this.getDefs(true);
-  defs.appendChild(dom);
-};
-/**
- * Remove DOM of a given element.
- *
- * @param {SVGElement} element element to remove dom
- */
-
-
-Definable.prototype.removeDom = function (element) {
-  var defs = this.getDefs(false);
-
-  if (defs && element[this._domName]) {
-    defs.removeChild(element[this._domName]);
-    element[this._domName] = null;
-  }
-};
-/**
- * Get DOMs of this element.
- *
- * @return {HTMLDomElement} doms of this defineable elements in <defs>
- */
-
-
-Definable.prototype.getDoms = function () {
-  var defs = this.getDefs(false);
-
-  if (!defs) {
-    // No dom when defs is not defined
-    return [];
-  }
-
-  var doms = [];
-  each$1(this._tagNames, function (tagName) {
-    var tags = defs.getElementsByTagName(tagName); // Note that tags is HTMLCollection, which is array-like
-    // rather than real array.
-    // So `doms.concat(tags)` add tags as one object.
-
-    doms = doms.concat([].slice.call(tags));
-  });
-  return doms;
-};
-/**
- * Mark DOMs to be unused before painting, and clear unused ones at the end
- * of the painting.
- */
-
-
-Definable.prototype.markAllUnused = function () {
-  var doms = this.getDoms();
-  var that = this;
-  each$1(doms, function (dom) {
-    dom[that._markLabel] = MARK_UNUSED;
-  });
-};
-/**
- * Mark a single DOM to be used.
- *
- * @param {SVGElement} dom DOM to mark
- */
-
-
-Definable.prototype.markUsed = function (dom) {
-  if (dom) {
-    dom[this._markLabel] = MARK_USED;
-  }
-};
-/**
- * Remove unused DOMs defined in <defs>
- */
-
-
-Definable.prototype.removeUnused = function () {
-  var defs = this.getDefs(false);
-
-  if (!defs) {
-    // Nothing to remove
-    return;
-  }
-
-  var doms = this.getDoms();
-  var that = this;
-  each$1(doms, function (dom) {
-    if (dom[that._markLabel] !== MARK_USED) {
-      // Remove gradient
-      defs.removeChild(dom);
-    }
-  });
-};
-/**
- * Get SVG proxy.
- *
- * @param {Displayable} displayable displayable element
- * @return {Path|Image|Text} svg proxy of given element
- */
-
-
-Definable.prototype.getSvgProxy = function (displayable) {
-  if (displayable instanceof Path) {
-    return svgPath;
-  } else if (displayable instanceof ZImage) {
-    return svgImage;
-  } else if (displayable instanceof Text) {
-    return svgText;
-  } else {
-    return svgPath;
-  }
-};
-/**
- * Get text SVG element.
- *
- * @param {Displayable} displayable displayable element
- * @return {SVGElement} SVG element of text
- */
-
-
-Definable.prototype.getTextSvgElement = function (displayable) {
-  return displayable.__textSvgEl;
-};
-/**
- * Get SVG element.
- *
- * @param {Displayable} displayable displayable element
- * @return {SVGElement} SVG element
- */
-
-
-Definable.prototype.getSvgElement = function (displayable) {
-  return displayable.__svgEl;
-};
-
-/**
- * @file Manages SVG gradient elements.
- * @author Zhang Wenli
- */
-/**
- * Manages SVG gradient elements.
- *
- * @class
- * @extends Definable
- * @param   {number}     zrId    zrender instance id
- * @param   {SVGElement} svgRoot root of SVG document
- */
-
-function GradientManager(zrId, svgRoot) {
-  Definable.call(this, zrId, svgRoot, ['linearGradient', 'radialGradient'], '__gradient_in_use__');
-}
-
-inherits(GradientManager, Definable);
-/**
- * Create new gradient DOM for fill or stroke if not exist,
- * but will not update gradient if exists.
- *
- * @param {SvgElement}  svgElement   SVG element to paint
- * @param {Displayable} displayable  zrender displayable element
- */
-
-GradientManager.prototype.addWithoutUpdate = function (svgElement, displayable) {
-  if (displayable && displayable.style) {
-    var that = this;
-    each$1(['fill', 'stroke'], function (fillOrStroke) {
-      if (displayable.style[fillOrStroke] && (displayable.style[fillOrStroke].type === 'linear' || displayable.style[fillOrStroke].type === 'radial')) {
-        var gradient = displayable.style[fillOrStroke];
-        var defs = that.getDefs(true); // Create dom in <defs> if not exists
-
-        var dom;
-
-        if (gradient._dom) {
-          // Gradient exists
-          dom = gradient._dom;
-
-          if (!defs.contains(gradient._dom)) {
-            // _dom is no longer in defs, recreate
-            that.addDom(dom);
-          }
-        } else {
-          // New dom
-          dom = that.add(gradient);
-        }
-
-        that.markUsed(displayable);
-        var id = dom.getAttribute('id');
-        svgElement.setAttribute(fillOrStroke, 'url(#' + id + ')');
-      }
-    });
-  }
-};
-/**
- * Add a new gradient tag in <defs>
- *
- * @param   {Gradient} gradient zr gradient instance
- * @return {SVGLinearGradientElement | SVGRadialGradientElement}
- *                            created DOM
- */
-
-
-GradientManager.prototype.add = function (gradient) {
-  var dom;
-
-  if (gradient.type === 'linear') {
-    dom = this.createElement('linearGradient');
-  } else if (gradient.type === 'radial') {
-    dom = this.createElement('radialGradient');
-  } else {
-    zrLog('Illegal gradient type.');
-    return null;
-  } // Set dom id with gradient id, since each gradient instance
-  // will have no more than one dom element.
-  // id may exists before for those dirty elements, in which case
-  // id should remain the same, and other attributes should be
-  // updated.
-
-
-  gradient.id = gradient.id || this.nextId++;
-  dom.setAttribute('id', 'zr' + this._zrId + '-gradient-' + gradient.id);
-  this.updateDom(gradient, dom);
-  this.addDom(dom);
-  return dom;
-};
-/**
- * Update gradient.
- *
- * @param {Gradient} gradient zr gradient instance
- */
-
-
-GradientManager.prototype.update = function (gradient) {
-  var that = this;
-  Definable.prototype.update.call(this, gradient, function () {
-    var type = gradient.type;
-    var tagName = gradient._dom.tagName;
-
-    if (type === 'linear' && tagName === 'linearGradient' || type === 'radial' && tagName === 'radialGradient') {
-      // Gradient type is not changed, update gradient
-      that.updateDom(gradient, gradient._dom);
-    } else {
-      // Remove and re-create if type is changed
-      that.removeDom(gradient);
-      that.add(gradient);
-    }
-  });
-};
-/**
- * Update gradient dom
- *
- * @param {Gradient} gradient zr gradient instance
- * @param {SVGLinearGradientElement | SVGRadialGradientElement} dom
- *                            DOM to update
- */
-
-
-GradientManager.prototype.updateDom = function (gradient, dom) {
-  if (gradient.type === 'linear') {
-    dom.setAttribute('x1', gradient.x);
-    dom.setAttribute('y1', gradient.y);
-    dom.setAttribute('x2', gradient.x2);
-    dom.setAttribute('y2', gradient.y2);
-  } else if (gradient.type === 'radial') {
-    dom.setAttribute('cx', gradient.x);
-    dom.setAttribute('cy', gradient.y);
-    dom.setAttribute('r', gradient.r);
-  } else {
-    zrLog('Illegal gradient type.');
-    return;
-  }
-
-  if (gradient.global) {
-    // x1, x2, y1, y2 in range of 0 to canvas width or height
-    dom.setAttribute('gradientUnits', 'userSpaceOnUse');
-  } else {
-    // x1, x2, y1, y2 in range of 0 to 1
-    dom.setAttribute('gradientUnits', 'objectBoundingBox');
-  } // Remove color stops if exists
-
-
-  dom.innerHTML = ''; // Add color stops
-
-  var colors = gradient.colorStops;
-
-  for (var i = 0, len = colors.length; i < len; ++i) {
-    var stop = this.createElement('stop');
-    stop.setAttribute('offset', colors[i].offset * 100 + '%');
-    var color = colors[i].color;
-
-    if (color.indexOf('rgba' > -1)) {
-      // Fix Safari bug that stop-color not recognizing alpha #9014
-      var opacity = parse(color)[3];
-      var hex = toHex(color); // stop-color cannot be color, since:
-      // The opacity value used for the gradient calculation is the
-      // *product* of the value of stop-opacity and the opacity of the
-      // value of stop-color.
-      // See https://www.w3.org/TR/SVG2/pservers.html#StopOpacityProperty
-
-      stop.setAttribute('stop-color', '#' + hex);
-      stop.setAttribute('stop-opacity', opacity);
-    } else {
-      stop.setAttribute('stop-color', colors[i].color);
-    }
-
-    dom.appendChild(stop);
-  } // Store dom element in gradient, to avoid creating multiple
-  // dom instances for the same gradient element
-
-
-  gradient._dom = dom;
-};
-/**
- * Mark a single gradient to be used
- *
- * @param {Displayable} displayable displayable element
- */
-
-
-GradientManager.prototype.markUsed = function (displayable) {
-  if (displayable.style) {
-    var gradient = displayable.style.fill;
-
-    if (gradient && gradient._dom) {
-      Definable.prototype.markUsed.call(this, gradient._dom);
-    }
-
-    gradient = displayable.style.stroke;
-
-    if (gradient && gradient._dom) {
-      Definable.prototype.markUsed.call(this, gradient._dom);
-    }
-  }
-};
-
-/**
- * @file Manages SVG clipPath elements.
- * @author Zhang Wenli
- */
-/**
- * Manages SVG clipPath elements.
- *
- * @class
- * @extends Definable
- * @param   {number}     zrId    zrender instance id
- * @param   {SVGElement} svgRoot root of SVG document
- */
-
-function ClippathManager(zrId, svgRoot) {
-  Definable.call(this, zrId, svgRoot, 'clipPath', '__clippath_in_use__');
-}
-
-inherits(ClippathManager, Definable);
-/**
- * Update clipPath.
- *
- * @param {Displayable} displayable displayable element
- */
-
-ClippathManager.prototype.update = function (displayable) {
-  var svgEl = this.getSvgElement(displayable);
-
-  if (svgEl) {
-    this.updateDom(svgEl, displayable.__clipPaths, false);
-  }
-
-  var textEl = this.getTextSvgElement(displayable);
-
-  if (textEl) {
-    // Make another clipPath for text, since it's transform
-    // matrix is not the same with svgElement
-    this.updateDom(textEl, displayable.__clipPaths, true);
-  }
-
-  this.markUsed(displayable);
-};
-/**
- * Create an SVGElement of displayable and create a <clipPath> of its
- * clipPath
- *
- * @param {Displayable} parentEl  parent element
- * @param {ClipPath[]}  clipPaths clipPaths of parent element
- * @param {boolean}     isText    if parent element is Text
- */
-
-
-ClippathManager.prototype.updateDom = function (parentEl, clipPaths, isText) {
-  if (clipPaths && clipPaths.length > 0) {
-    // Has clipPath, create <clipPath> with the first clipPath
-    var defs = this.getDefs(true);
-    var clipPath = clipPaths[0];
-    var clipPathEl;
-    var id;
-    var dom = isText ? '_textDom' : '_dom';
-
-    if (clipPath[dom]) {
-      // Use a dom that is already in <defs>
-      id = clipPath[dom].getAttribute('id');
-      clipPathEl = clipPath[dom]; // Use a dom that is already in <defs>
-
-      if (!defs.contains(clipPathEl)) {
-        // This happens when set old clipPath that has
-        // been previously removed
-        defs.appendChild(clipPathEl);
-      }
-    } else {
-      // New <clipPath>
-      id = 'zr' + this._zrId + '-clip-' + this.nextId;
-      ++this.nextId;
-      clipPathEl = this.createElement('clipPath');
-      clipPathEl.setAttribute('id', id);
-      defs.appendChild(clipPathEl);
-      clipPath[dom] = clipPathEl;
-    } // Build path and add to <clipPath>
-
-
-    var svgProxy = this.getSvgProxy(clipPath);
-
-    if (clipPath.transform && clipPath.parent.invTransform && !isText) {
-      /**
-       * If a clipPath has a parent with transform, the transform
-       * of parent should not be considered when setting transform
-       * of clipPath. So we need to transform back from parent's
-       * transform, which is done by multiplying parent's inverse
-       * transform.
-       */
-      // Store old transform
-      var transform = Array.prototype.slice.call(clipPath.transform); // Transform back from parent, and brush path
-
-      mul$1(clipPath.transform, clipPath.parent.invTransform, clipPath.transform);
-      svgProxy.brush(clipPath); // Set back transform of clipPath
-
-      clipPath.transform = transform;
-    } else {
-      svgProxy.brush(clipPath);
-    }
-
-    var pathEl = this.getSvgElement(clipPath);
-    clipPathEl.innerHTML = '';
-    /**
-     * Use `cloneNode()` here to appendChild to multiple parents,
-     * which may happend when Text and other shapes are using the same
-     * clipPath. Since Text will create an extra clipPath DOM due to
-     * different transform rules.
-     */
-
-    clipPathEl.appendChild(pathEl.cloneNode());
-    parentEl.setAttribute('clip-path', 'url(#' + id + ')');
-
-    if (clipPaths.length > 1) {
-      // Make the other clipPaths recursively
-      this.updateDom(clipPathEl, clipPaths.slice(1), isText);
-    }
-  } else {
-    // No clipPath
-    if (parentEl) {
-      parentEl.setAttribute('clip-path', 'none');
-    }
-  }
-};
-/**
- * Mark a single clipPath to be used
- *
- * @param {Displayable} displayable displayable element
- */
-
-
-ClippathManager.prototype.markUsed = function (displayable) {
-  var that = this;
-
-  if (displayable.__clipPaths && displayable.__clipPaths.length > 0) {
-    each$1(displayable.__clipPaths, function (clipPath) {
-      if (clipPath._dom) {
-        Definable.prototype.markUsed.call(that, clipPath._dom);
-      }
-
-      if (clipPath._textDom) {
-        Definable.prototype.markUsed.call(that, clipPath._textDom);
-      }
-    });
-  }
-};
-
-/**
- * @file Manages SVG shadow elements.
- * @author Zhang Wenli
- */
-/**
- * Manages SVG shadow elements.
- *
- * @class
- * @extends Definable
- * @param   {number}     zrId    zrender instance id
- * @param   {SVGElement} svgRoot root of SVG document
- */
-
-function ShadowManager(zrId, svgRoot) {
-  Definable.call(this, zrId, svgRoot, ['filter'], '__filter_in_use__', '_shadowDom');
-}
-
-inherits(ShadowManager, Definable);
-/**
- * Create new shadow DOM for fill or stroke if not exist,
- * but will not update shadow if exists.
- *
- * @param {SvgElement}  svgElement   SVG element to paint
- * @param {Displayable} displayable  zrender displayable element
- */
-
-ShadowManager.prototype.addWithoutUpdate = function (svgElement, displayable) {
-  if (displayable && hasShadow(displayable.style)) {
-    var style = displayable.style; // Create dom in <defs> if not exists
-
-    var dom;
-
-    if (style._shadowDom) {
-      // Gradient exists
-      dom = style._shadowDom;
-      var defs = this.getDefs(true);
-
-      if (!defs.contains(style._shadowDom)) {
-        // _shadowDom is no longer in defs, recreate
-        this.addDom(dom);
-      }
-    } else {
-      // New dom
-      dom = this.add(displayable);
-    }
-
-    this.markUsed(displayable);
-    var id = dom.getAttribute('id');
-    svgElement.style.filter = 'url(#' + id + ')';
-  }
-};
-/**
- * Add a new shadow tag in <defs>
- *
- * @param {Displayable} displayable  zrender displayable element
- * @return {SVGFilterElement} created DOM
- */
-
-
-ShadowManager.prototype.add = function (displayable) {
-  var dom = this.createElement('filter');
-  var style = displayable.style; // Set dom id with shadow id, since each shadow instance
-  // will have no more than one dom element.
-  // id may exists before for those dirty elements, in which case
-  // id should remain the same, and other attributes should be
-  // updated.
-
-  style._shadowDomId = style._shadowDomId || this.nextId++;
-  dom.setAttribute('id', 'zr' + this._zrId + '-shadow-' + style._shadowDomId);
-  this.updateDom(displayable, dom);
-  this.addDom(dom);
-  return dom;
-};
-/**
- * Update shadow.
- *
- * @param {Displayable} displayable  zrender displayable element
- */
-
-
-ShadowManager.prototype.update = function (svgElement, displayable) {
-  var style = displayable.style;
-
-  if (hasShadow(style)) {
-    var that = this;
-    Definable.prototype.update.call(this, displayable, function (style) {
-      that.updateDom(displayable, style._shadowDom);
-    });
-  } else {
-    // Remove shadow
-    this.remove(svgElement, style);
-  }
-};
-/**
- * Remove DOM and clear parent filter
- */
-
-
-ShadowManager.prototype.remove = function (svgElement, style) {
-  if (style._shadowDomId != null) {
-    this.removeDom(style);
-    svgElement.style.filter = '';
-  }
-};
-/**
- * Update shadow dom
- *
- * @param {Displayable} displayable  zrender displayable element
- * @param {SVGFilterElement} dom DOM to update
- */
-
-
-ShadowManager.prototype.updateDom = function (displayable, dom) {
-  var domChild = dom.getElementsByTagName('feDropShadow');
-
-  if (domChild.length === 0) {
-    domChild = this.createElement('feDropShadow');
-  } else {
-    domChild = domChild[0];
-  }
-
-  var style = displayable.style;
-  var scaleX = displayable.scale ? displayable.scale[0] || 1 : 1;
-  var scaleY = displayable.scale ? displayable.scale[1] || 1 : 1; // TODO: textBoxShadowBlur is not supported yet
-
-  var offsetX, offsetY, blur, color;
-
-  if (style.shadowBlur || style.shadowOffsetX || style.shadowOffsetY) {
-    offsetX = style.shadowOffsetX || 0;
-    offsetY = style.shadowOffsetY || 0;
-    blur = style.shadowBlur;
-    color = style.shadowColor;
-  } else if (style.textShadowBlur) {
-    offsetX = style.textShadowOffsetX || 0;
-    offsetY = style.textShadowOffsetY || 0;
-    blur = style.textShadowBlur;
-    color = style.textShadowColor;
-  } else {
-    // Remove shadow
-    this.removeDom(dom, style);
-    return;
-  }
-
-  domChild.setAttribute('dx', offsetX / scaleX);
-  domChild.setAttribute('dy', offsetY / scaleY);
-  domChild.setAttribute('flood-color', color); // Divide by two here so that it looks the same as in canvas
-  // See: https://html.spec.whatwg.org/multipage/canvas.html#dom-context-2d-shadowblur
-
-  var stdDx = blur / 2 / scaleX;
-  var stdDy = blur / 2 / scaleY;
-  var stdDeviation = stdDx + ' ' + stdDy;
-  domChild.setAttribute('stdDeviation', stdDeviation); // Fix filter clipping problem
-
-  dom.setAttribute('x', '-100%');
-  dom.setAttribute('y', '-100%');
-  dom.setAttribute('width', Math.ceil(blur / 2 * 200) + '%');
-  dom.setAttribute('height', Math.ceil(blur / 2 * 200) + '%');
-  dom.appendChild(domChild); // Store dom element in shadow, to avoid creating multiple
-  // dom instances for the same shadow element
-
-  style._shadowDom = dom;
-};
-/**
- * Mark a single shadow to be used
- *
- * @param {Displayable} displayable displayable element
- */
-
-
-ShadowManager.prototype.markUsed = function (displayable) {
-  var style = displayable.style;
-
-  if (style && style._shadowDom) {
-    Definable.prototype.markUsed.call(this, style._shadowDom);
-  }
-};
-
-function hasShadow(style) {
-  // TODO: textBoxShadowBlur is not supported yet
-  return style && (style.shadowBlur || style.shadowOffsetX || style.shadowOffsetY || style.textShadowBlur || style.textShadowOffsetX || style.textShadowOffsetY);
-}
-
-/**
- * SVG Painter
- * @module zrender/svg/Painter
- */
-function parseInt10$2(val) {
-  return parseInt(val, 10);
-}
-
-function getSvgProxy(el) {
-  if (el instanceof Path) {
-    return svgPath;
-  } else if (el instanceof ZImage) {
-    return svgImage;
-  } else if (el instanceof Text) {
-    return svgText;
-  } else {
-    return svgPath;
-  }
-}
-
-function checkParentAvailable(parent, child) {
-  return child && parent && child.parentNode !== parent;
-}
-
-function insertAfter(parent, child, prevSibling) {
-  if (checkParentAvailable(parent, child) && prevSibling) {
-    var nextSibling = prevSibling.nextSibling;
-    nextSibling ? parent.insertBefore(child, nextSibling) : parent.appendChild(child);
-  }
-}
-
-function prepend(parent, child) {
-  if (checkParentAvailable(parent, child)) {
-    var firstChild = parent.firstChild;
-    firstChild ? parent.insertBefore(child, firstChild) : parent.appendChild(child);
-  }
-}
-
-function remove$1(parent, child) {
-  if (child && parent && child.parentNode === parent) {
-    parent.removeChild(child);
-  }
-}
-
-function getTextSvgElement(displayable) {
-  return displayable.__textSvgEl;
-}
-
-function getSvgElement(displayable) {
-  return displayable.__svgEl;
-}
-/**
- * @alias module:zrender/svg/Painter
- * @constructor
- * @param {HTMLElement} root 绘图容器
- * @param {module:zrender/Storage} storage
- * @param {Object} opts
- */
-
-
-var SVGPainter = function (root, storage, opts, zrId) {
-  this.root = root;
-  this.storage = storage;
-  this._opts = opts = extend({}, opts || {});
-  var svgRoot = createElement('svg');
-  svgRoot.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-  svgRoot.setAttribute('version', '1.1');
-  svgRoot.setAttribute('baseProfile', 'full');
-  svgRoot.style.cssText = 'user-select:none;position:absolute;left:0;top:0;';
-  this.gradientManager = new GradientManager(zrId, svgRoot);
-  this.clipPathManager = new ClippathManager(zrId, svgRoot);
-  this.shadowManager = new ShadowManager(zrId, svgRoot);
-  var viewport = document.createElement('div');
-  viewport.style.cssText = 'overflow:hidden;position:relative';
-  this._svgRoot = svgRoot;
-  this._viewport = viewport;
-  root.appendChild(viewport);
-  viewport.appendChild(svgRoot);
-  this.resize(opts.width, opts.height);
-  this._visibleList = [];
-};
-
-SVGPainter.prototype = {
-  constructor: SVGPainter,
-  getType: function () {
-    return 'svg';
-  },
-  getViewportRoot: function () {
-    return this._viewport;
-  },
-  getViewportRootOffset: function () {
-    var viewportRoot = this.getViewportRoot();
-
-    if (viewportRoot) {
-      return {
-        offsetLeft: viewportRoot.offsetLeft || 0,
-        offsetTop: viewportRoot.offsetTop || 0
-      };
-    }
-  },
-  refresh: function () {
-    var list = this.storage.getDisplayList(true);
-
-    this._paintList(list);
-  },
-  setBackgroundColor: function (backgroundColor) {
-    // TODO gradient
-    this._viewport.style.background = backgroundColor;
-  },
-  _paintList: function (list) {
-    this.gradientManager.markAllUnused();
-    this.clipPathManager.markAllUnused();
-    this.shadowManager.markAllUnused();
-    var svgRoot = this._svgRoot;
-    var visibleList = this._visibleList;
-    var listLen = list.length;
-    var newVisibleList = [];
-    var i;
-
-    for (i = 0; i < listLen; i++) {
-      var displayable = list[i];
-      var svgProxy = getSvgProxy(displayable);
-      var svgElement = getSvgElement(displayable) || getTextSvgElement(displayable);
-
-      if (!displayable.invisible) {
-        if (displayable.__dirty) {
-          svgProxy && svgProxy.brush(displayable); // Update clipPath
-
-          this.clipPathManager.update(displayable); // Update gradient and shadow
-
-          if (displayable.style) {
-            this.gradientManager.update(displayable.style.fill);
-            this.gradientManager.update(displayable.style.stroke);
-            this.shadowManager.update(svgElement, displayable);
-          }
-
-          displayable.__dirty = false;
-        }
-
-        newVisibleList.push(displayable);
-      }
-    }
-
-    var diff = arrayDiff$1(visibleList, newVisibleList);
-    var prevSvgElement; // First do remove, in case element moved to the head and do remove
-    // after add
-
-    for (i = 0; i < diff.length; i++) {
-      var item = diff[i];
-
-      if (item.removed) {
-        for (var k = 0; k < item.count; k++) {
-          var displayable = visibleList[item.indices[k]];
-          var svgElement = getSvgElement(displayable);
-          var textSvgElement = getTextSvgElement(displayable);
-          remove$1(svgRoot, svgElement);
-          remove$1(svgRoot, textSvgElement);
-        }
-      }
-    }
-
-    for (i = 0; i < diff.length; i++) {
-      var item = diff[i];
-
-      if (item.added) {
-        for (var k = 0; k < item.count; k++) {
-          var displayable = newVisibleList[item.indices[k]];
-          var svgElement = getSvgElement(displayable);
-          var textSvgElement = getTextSvgElement(displayable);
-          prevSvgElement ? insertAfter(svgRoot, svgElement, prevSvgElement) : prepend(svgRoot, svgElement);
-
-          if (svgElement) {
-            insertAfter(svgRoot, textSvgElement, svgElement);
-          } else if (prevSvgElement) {
-            insertAfter(svgRoot, textSvgElement, prevSvgElement);
-          } else {
-            prepend(svgRoot, textSvgElement);
-          } // Insert text
-
-
-          insertAfter(svgRoot, textSvgElement, svgElement);
-          prevSvgElement = textSvgElement || svgElement || prevSvgElement;
-          this.gradientManager.addWithoutUpdate(svgElement, displayable);
-          this.shadowManager.addWithoutUpdate(prevSvgElement, displayable);
-          this.clipPathManager.markUsed(displayable);
-        }
-      } else if (!item.removed) {
-        for (var k = 0; k < item.count; k++) {
-          var displayable = newVisibleList[item.indices[k]];
-          prevSvgElement = svgElement = getTextSvgElement(displayable) || getSvgElement(displayable) || prevSvgElement;
-          this.gradientManager.markUsed(displayable);
-          this.gradientManager.addWithoutUpdate(svgElement, displayable);
-          this.shadowManager.markUsed(displayable);
-          this.shadowManager.addWithoutUpdate(svgElement, displayable);
-          this.clipPathManager.markUsed(displayable);
-        }
-      }
-    }
-
-    this.gradientManager.removeUnused();
-    this.clipPathManager.removeUnused();
-    this.shadowManager.removeUnused();
-    this._visibleList = newVisibleList;
-  },
-  _getDefs: function (isForceCreating) {
-    var svgRoot = this._svgRoot;
-
-    var defs = this._svgRoot.getElementsByTagName('defs');
-
-    if (defs.length === 0) {
-      // Not exist
-      if (isForceCreating) {
-        var defs = svgRoot.insertBefore(createElement('defs'), // Create new tag
-        svgRoot.firstChild // Insert in the front of svg
-        );
-
-        if (!defs.contains) {
-          // IE doesn't support contains method
-          defs.contains = function (el) {
-            var children = defs.children;
-
-            if (!children) {
-              return false;
-            }
-
-            for (var i = children.length - 1; i >= 0; --i) {
-              if (children[i] === el) {
-                return true;
-              }
-            }
-
-            return false;
-          };
-        }
-
-        return defs;
-      } else {
-        return null;
-      }
-    } else {
-      return defs[0];
-    }
-  },
-  resize: function (width, height) {
-    var viewport = this._viewport; // FIXME Why ?
-
-    viewport.style.display = 'none'; // Save input w/h
-
-    var opts = this._opts;
-    width != null && (opts.width = width);
-    height != null && (opts.height = height);
-    width = this._getSize(0);
-    height = this._getSize(1);
-    viewport.style.display = '';
-
-    if (this._width !== width || this._height !== height) {
-      this._width = width;
-      this._height = height;
-      var viewportStyle = viewport.style;
-      viewportStyle.width = width + 'px';
-      viewportStyle.height = height + 'px';
-      var svgRoot = this._svgRoot; // Set width by 'svgRoot.width = width' is invalid
-
-      svgRoot.setAttribute('width', width);
-      svgRoot.setAttribute('height', height);
-    }
-  },
-
-  /**
-   * 获取绘图区域宽度
-   */
-  getWidth: function () {
-    return this._width;
-  },
-
-  /**
-   * 获取绘图区域高度
-   */
-  getHeight: function () {
-    return this._height;
-  },
-  _getSize: function (whIdx) {
-    var opts = this._opts;
-    var wh = ['width', 'height'][whIdx];
-    var cwh = ['clientWidth', 'clientHeight'][whIdx];
-    var plt = ['paddingLeft', 'paddingTop'][whIdx];
-    var prb = ['paddingRight', 'paddingBottom'][whIdx];
-
-    if (opts[wh] != null && opts[wh] !== 'auto') {
-      return parseFloat(opts[wh]);
-    }
-
-    var root = this.root; // IE8 does not support getComputedStyle, but it use VML.
-
-    var stl = document.defaultView.getComputedStyle(root);
-    return (root[cwh] || parseInt10$2(stl[wh]) || parseInt10$2(root.style[wh])) - (parseInt10$2(stl[plt]) || 0) - (parseInt10$2(stl[prb]) || 0) | 0;
-  },
-  dispose: function () {
-    this.root.innerHTML = '';
-    this._svgRoot = this._viewport = this.storage = null;
-  },
-  clear: function () {
-    if (this._viewport) {
-      this.root.removeChild(this._viewport);
-    }
-  },
-  pathToDataUrl: function () {
-    this.refresh();
-    var html = this._svgRoot.outerHTML;
-    return 'data:image/svg+xml;charset=UTF-8,' + html;
-  }
-}; // Not supported methods
-
-function createMethodNotSupport$1(method) {
-  return function () {
-    zrLog('In SVG mode painter not support method "' + method + '"');
-  };
-} // Unsuppoted methods
-
-
-each$1(['getLayer', 'insertLayer', 'eachLayer', 'eachBuiltinLayer', 'eachOtherLayer', 'getLayers', 'modLayer', 'delLayer', 'clearLayer', 'toDataURL', 'pathToImage'], function (name) {
-  SVGPainter.prototype[name] = createMethodNotSupport$1(name);
-});
-
-registerPainter('svg', SVGPainter);
 
 exports.version = version;
 exports.dependencies = dependencies;
@@ -58988,7 +57131,7 @@ exports.color = color;
 exports.parseGeoJSON = parseGeoJson$1;
 exports.parseGeoJson = parseGeoJson;
 exports.util = ecUtil;
-exports.graphic = graphic$1;
+exports.graphic = graphic;
 exports.List = List;
 exports.Model = Model;
 exports.Axis = Axis;

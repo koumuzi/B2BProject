@@ -48,12 +48,12 @@ public class AdminHomeController extends BaseController {
     public String getZout() {
     	return "admin/zout";
     }
-    @RequestMapping(value ="admin/map")
-    public String getMap() {
-    	return "admin/map";
+    @RequestMapping(value ="admin/beijingMap")
+    public String getBeijingMap() {
+    	return "admin/beijingMap";
     }
-    
-    
+
+	
     //转到后台管理-主页
     @RequestMapping(value = "admin", method = RequestMethod.GET)
     public String goToPage(HttpSession session, Map<String, Object> map) throws ParseException {
@@ -276,6 +276,18 @@ public class AdminHomeController extends BaseController {
         }
     }
     
+    @ResponseBody
+    @RequestMapping(value = "admin/home/beijingMap", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public String getBeijingMapByDate(@RequestParam(required = false) String beginDate, @RequestParam(required = false) String endDate,Map<String, Object> map) throws ParseException {
+    
+    	if (beginDate != null && endDate != null && beginDate.length()!=0 && endDate.length()!=0) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            return getSaleData(simpleDateFormat.parse(beginDate), simpleDateFormat.parse(endDate)).toJSONString();
+        } else {
+            return getSaleData(null, null).toJSONString();
+        }
+    }
+    
     //获取图表的JSON数据
     private JSONObject getsellYearData(Date beginDate,Date endDate) throws ParseException {
         JSONObject sellJson = new JSONObject();
@@ -366,8 +378,6 @@ public class AdminHomeController extends BaseController {
         
         int[] salecount = salecountlist.stream().mapToInt(Integer::intValue).toArray();
 
-        
-        
         zoutJson.put("category", JSONArray.parseArray(JSON.toJSONString(category)));
         zoutJson.put("salecount", JSONArray.parseArray(JSON.toJSONString(salecount)));
         return zoutJson;
