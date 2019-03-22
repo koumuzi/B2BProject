@@ -48,7 +48,8 @@ public class DistributionDataImpl implements DistributionDataServer {
 			lngLat.put(user.getName(), countArray);
 		}
 		jsonobject.put("geoCoordMap", JSON.toJSONString(lngLat));
-		jsonobject.put("data", JSON.toJSONString(counts));
+		jsonobject.put("count_data", JSON.toJSONString(counts));
+
 		return jsonobject;
 	}
 

@@ -30,7 +30,7 @@ public class DistributionDataController {
 	@RequestMapping(value ="admin/RegionalDistribution")
     public String getDistributionDate(Map<String, Object> map) {
     	
-    	map.put("Distribution", distributionDataServer.getUserDistributionData().toJSONString());
+
     	
     	return "admin/regionalDistribution";
     }
