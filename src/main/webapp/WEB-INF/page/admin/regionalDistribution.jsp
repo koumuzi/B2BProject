@@ -42,7 +42,7 @@
        
        function getUserDistributionData(Distribution) {
     	   
-    	  console.log(Distribution)
+    	  console.log(Distribution.get("geoCoordMap"))
     	  
 
            if (Distribution == null) {
