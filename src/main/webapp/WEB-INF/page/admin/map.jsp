@@ -215,7 +215,7 @@ option = {
             }
         }
     },
-    tooltip: {
+    tooltip: { 
         trigger: 'item'
     },
     grid: {
