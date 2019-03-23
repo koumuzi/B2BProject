@@ -21,6 +21,17 @@
  			   myChart.setOption(option, true);
 			}
 		
+			window.onresize = function(){
+
+			    myChart.resize();
+
+			    myChart.resize();
+
+			    myChart.resize();
+
+			    myChart.resize();
+
+			}
 			getUserDistributionData()
 		});
        
@@ -72,8 +83,8 @@
                 	                   	    },
                 	                   	    legend: {
                 	                   	        orient: 'vertical',
-                	                   	        y: 'top',
-                	                   	        x:'left',
+                	                   	        y: '5%',
+                	                   	        x: '5%',
                 	                   	        data:['用户数量'],
                 	                   	        textStyle: {
                 	                   	            color: '#fff'
@@ -237,7 +248,6 @@
                 	                   	            coordinateSystem: 'geo',
                 	                   	            data: convertData(countdata),
                 	                   	            symbolSize: function (val) {
-                	                   	          
                 	                   	                return val[2] ;
                 	                   	            },
                 	                   	            label: {
