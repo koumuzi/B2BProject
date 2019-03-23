@@ -6,6 +6,6 @@ import com.xq.tmall.entity.UnsalableInfo;
 
 public interface UnsalableDataMapper {
 	
-	List<UnsalableInfo> gUnsalableInfos();
+	List<UnsalableInfo> getUnsalableInfos();
 
 }

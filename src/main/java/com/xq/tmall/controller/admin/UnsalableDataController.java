@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xq.tmall.service.UnsalableDataService;;
 
 public class UnsalableDataController{
-	@Resource(name = "unsalableDataServer")
+	@Resource(name = "unsalableDataService")
 	private UnsalableDataService unsalableDataServer = null;
 
 	
