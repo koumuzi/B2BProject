@@ -87,6 +87,7 @@
                 	                   	        x: '5%',
                 	                   	        data:['用户数量'],
                 	                   	        textStyle: {
+                	                   	        	fontSize: 24,
                 	                   	            color: '#fff'
                 	                   	        }
                 	                   	    },

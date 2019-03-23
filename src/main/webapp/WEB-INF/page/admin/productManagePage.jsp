@@ -134,7 +134,7 @@
                             var product_title = data.productList[i].product_title;
                             var product_create_date = data.productList[i].product_create_date;
                             //显示产品数据
-                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_product_select_" + product_id + "'><label for='cbx_product_select_" + product_id + "'></label></td><td title='"+product_name+"'>" + product_name + "</td><td title='"+product_title+"'>" + product_title + "</td><td title='"+product_price+"'>" + product_price + "</td><td title='"+product_sale_price+"'>" + product_sale_price + "</td><td title='"+product_create_date+"'>" + product_create_date + "</td><td><span class='" + isEnabledClass + "' title='"+isEnabledTitle+"'>"+ isEnabled + "</span></td><td><span class='td_special' title='查看产品详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>详情</a></span></td><td hidden><span class='product_id'>" + product_id + "</span></td></tr>");
+                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_product_select_" + product_id + "'><label for='cbx_product_select_" + product_id + "'></label></td><td title='"+product_name+"'>" + product_name + "</td><td title='"+product_title+"'>" + product_title + "</td><td title='"+product_price+"'>" + product_price + "</td><td title='"+product_sale_price+"'>" + product_sale_price + "</td><td title='"+product_create_date+"'>" + product_create_date + "</td><td><span class='" + isEnabledClass + "' title='"+isEnabledTitle+"'>"+ isEnabled + "</span></td><td><span class='td_special' title='查看产品详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>详情</a></span></td><td><span class='td_special' title='查看产品详情'><a href='javascript:void(0);' onclick='delet(this)'>删除</a></span></td><td></tr><span class='product_id'>" + product_id + "</span></td></tr>");
                         }
                         //绑定事件
                         tbody.children("tr").click(function () {
@@ -176,6 +176,7 @@
             $("#div_home_title").children("span").text(title);
             document.title = "大创项目管理后台 - "+title;
             //ajax请求页面
+           
             ajaxUtil.getPage(url,null,true);
         }
 
@@ -279,6 +280,7 @@
                 <span class="orderByAsc orderBySelect"></span>
             </th>
             <th>操作</th>
+            <th>删除产品</th>
             <th hidden>产品ID</th>
         </tr>
         </thead>
@@ -299,6 +301,7 @@
                     </c:choose>
                 </td>
                 <td><span class="td_special" title="查看产品详情"><a href="javascript:void(0)" onclick="getChildPage(this)">详情</a></span></td>
+                <td><span class="td_special" title="删除产品"><a href="javascript:void(0)" onclick="delet(this)">删除</a></span></td>
                 <td hidden><span class="product_id">${product.product_id}</span></td>
             </tr>
         </c:forEach>

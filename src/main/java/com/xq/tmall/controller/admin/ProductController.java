@@ -69,6 +69,7 @@ public class ProductController extends BaseController{
     @RequestMapping(value="admin/product/{pid}",method = RequestMethod.GET)
     public String goToDetailsPage(HttpSession session, Map<String, Object> map, @PathVariable Integer pid/* 产品ID */) {
         logger.info("检查管理员权限");
+        System.out.println(pid);
         Object adminId = checkAdmin(session);
         if(adminId == null){
             return "admin/include/loginMessage";
