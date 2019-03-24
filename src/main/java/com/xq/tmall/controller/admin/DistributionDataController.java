@@ -34,6 +34,10 @@ public class DistributionDataController {
     	
     	return "admin/regionalDistribution";
     }
+	@RequestMapping(value ="admin/unsalableData")
+    public String getUnsalableData(Map<String, Object> map) {   	
+    	return "admin/unsalableData";
+    }
 	
 	 @ResponseBody
 	    @RequestMapping(value = "admin/home/consumer", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
