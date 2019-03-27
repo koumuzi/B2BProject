@@ -48,9 +48,9 @@ public class AdminHomeController extends BaseController {
     public String getZout() {
     	return "admin/zout";
     }
-    @RequestMapping(value ="admin/beijingMap")
+    @RequestMapping(value ="admin/powerBI")
     public String getBeijingMap() {
-    	return "admin/beijingMap";
+    	return "admin/powerBI";
     }
 
 	
