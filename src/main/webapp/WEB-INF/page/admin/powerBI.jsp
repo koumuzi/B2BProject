@@ -9,8 +9,8 @@
 </head>
 <body>
 <div id="iframepage">
-<iframe src="https://app.powerbi.com/view?r=eyJrIjoiNzMxY2UyNmYtODljNC00NzljLWIwMjEtOWU0MTAxZjBjZTNmIiwidCI6IjhhMzg3OTFhLTZhZjktNGQwYS05ZDIyLTZkNjg0NTQ1MmE2YyIsImMiOjEwfQ%3D%3D" 
-align="middle" id="iframepage"  width="100%" height="800" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"  >
+<iframe width="100%" height="800" 
+src="https://app.powerbi.com/view?r=eyJrIjoiZjcyNzFmNTYtZmZlZS00ZjVjLTg5ODEtNDAwNjEyZGFjNTIzIiwidCI6IjhhMzg3OTFhLTZhZjktNGQwYS05ZDIyLTZkNjg0NTQ1MmE2YyIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true">
 </iframe>
 </div>
 </body>
