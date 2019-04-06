@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "mybatis-3-mapper.dtd">
+<mapper namespace="com.xq.tmall.dao.RoutePlanningMapper">
+    <resultMap id="Position" type="com.xq.tmall.entity.Position">
+        <result property="lng" column="lng"/>
+        <result property="lat" column="lat"/>
+    </resultMap>
+    <select id="getlongitudeAndlatitudeOfUser"  resultMap="Position">
+        select lng,lat from sh_area where sh_area.address_name=#{province} and sh_area.shortname=#{city} and sh_area.name=#{country}
+    </select>
+    
+    <select id="getlongitudeAndlatitudeOfProduct" resultMap="Position">
+        SELECT lng,lat from (
+		select  area.lng,area.lat
+		FROM (
+			SELECT 
+				sh_area.address_areaId,sh_area.lng,sh_area.lat 
+			from sh_area ) as area
+		INNER JOIN (
+			SELECT product_origin from product  where product.product_id = #{pid}
+		) as  pro 
+		on pro.product_origin = area.address_areaId)
+ 		as  temp 
+    </select>
+</mapper>

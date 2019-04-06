@@ -17,4 +17,5 @@
     <script src="${pageContext.request.contextPath}/res/js/base.js"></script>
     <script src="${pageContext.request.contextPath}/res/js/china.js"></script>
 	<script src="${pageContext.request.contextPath}/res/js/world.js"></script>
+	<script type="text/javascript" src='https://webapi.amap.com/maps?v=1.4.14&key=9b75fad1e1af55bdd45c3ae69baca36c&plugin=AMap.TruckDriving'></script> 
 </head>

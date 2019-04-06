@@ -71,6 +71,13 @@
             //ajax请求页面
             ajaxUtil.getPage("product/" + $(obj).parents("tr").find(".product_id").text(), null, true);
         }
+        
+        function getRoutePlanning(obj) {
+        	document.title = "Tmall管理后台 - 产品物流";
+        	var temp = "${requestScope.order.productOrder_detail_address}";
+        	ajaxUtil.getPage("product/RoutingPlanning/" + $(obj).parents("tr").find(".product_id").text()+"?place="+temp,null,true);
+        }
+        
 
         //获取用户子界面
         function getUserPage(id) {
@@ -192,6 +199,7 @@
             <th>价格</th>
             <th>备注</th>
             <th>操作</th>
+            <th>物流</th>
             <th hidden class="product_id">产品ID</th>
         </tr>
         </thead>
@@ -210,6 +218,8 @@
                 <td title="${item.productOrderItem_userMessage}">${item.productOrderItem_userMessage}</td>
                 <td><span class="td_special" title="查看产品详情"><a href="javascript:void(0)"
                                                                onclick="getChildPage(this)">详情</a></span></td>
+                 <td><span class="td_special" title="物流"><a href="javascript:void(0)"
+                                                               onclick="getRoutePlanning(this)">物流</a></span></td>
                 <td hidden><span class="product_id">${item.productOrderItem_product.product_id}</span></td>
             </tr>
         </c:forEach>

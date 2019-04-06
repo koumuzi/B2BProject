@@ -81,6 +81,7 @@ public class OrderController extends BaseController{
         Stack<String> addressStack = new Stack<>();
         //详细地址
         addressStack.push(order.getProductOrder_detail_address());
+       
         //最后一级地址
         addressStack.push(address.getAddress_name() + " ");
         //如果不是第一级地址
@@ -88,10 +89,13 @@ public class OrderController extends BaseController{
             address = addressService.get(address.getAddress_regionId().getAddress_areaId());
             addressStack.push(address.getAddress_name() + " ");
         }
+        
+        
         StringBuilder builder = new StringBuilder();
         while (!addressStack.empty()) {
             builder.append(addressStack.pop());
         }
+        
         logger.warn("订单地址字符串：{}", builder);
         order.setProductOrder_detail_address(builder.toString());
         logger.info("获取订单详情-用户信息");
