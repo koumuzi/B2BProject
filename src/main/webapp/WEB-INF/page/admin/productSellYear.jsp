@@ -5,15 +5,7 @@
 </style>
 </head>
 <body>
-	<ul id="chartByDate">
-		<li><span class="chartDateBtn text_info select">最近一周</span></li>
-		<li class="chartDateBtn"><input class="chartDateInput"
-			id="input_beginDate" type="date" title="开始日期" /><span class="split">—</span>
-			<input class="chartDateInput details_unit" id="input_endDate"
-			type="date" title="结束日期" /></li>
-		<li><input class="frm_btn" id="btn_chart_search" type="button"
-			value="查询" /></li>
-	</ul>
+	
 	<div id="chartDiv" style="width: 100%; height: 500px"></div>
 	<div class="container"></div>
 	<script>
