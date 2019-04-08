@@ -60,7 +60,7 @@ window.init = function(){
 		 var path = [];
 		    path.push({lnglat:lngAndLat.product_lngAndLat});//起点
 		    path.push({lnglat:lngAndLat.user_lngAndLat});//终点
-		    
+		   
 		    driving.search(path, function(status, result) {
 		        // result即是对应的货车导航信息，相关数据结构文档请参考 https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
 		        if (status === 'complete') {
@@ -72,15 +72,7 @@ window.init = function(){
            
 	 
 	 });
-}  
-		 
-		
-		 
-		 
-		
-		
-		
-	
+}  		
 </script>
 </body>
 </html>

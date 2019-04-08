@@ -29,9 +29,6 @@ public class DistributionDataController {
 	
 	@RequestMapping(value ="admin/RegionalDistribution")
     public String getDistributionDate(Map<String, Object> map) {
-    	
-
-    	
     	return "admin/regionalDistribution";
     }
 	@RequestMapping(value ="admin/unsalableData")
