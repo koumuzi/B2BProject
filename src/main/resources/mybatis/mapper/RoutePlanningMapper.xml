@@ -7,8 +7,91 @@
         <result property="lng" column="lng"/>
         <result property="lat" column="lat"/>
     </resultMap>
+    
+    <resultMap id="Group" type="com.xq.tmall.entity.Group">
+        <result property="productorder_address" column="productorder_address"/>
+        <result property="productorder_id" column="productorder_id"/>
+        <result property="productorder_post" column="productorder_post"/>
+        <result property="productorder_receiver" column="productorder_receiver"/>
+        <result property="productorder_status" column="productorder_status"/>
+        <result property="productorder_user_id" column="productorder_user_id"/>
+        <result property="productorderitem_product_id" column="productorderitem_product_id"/>
+        <result property="product_lng" column="product_lng"/>
+        <result property="product_lat" column="product_lat"/>
+        <result property="product_id" column="product_id"/>
+        <result property="product_name" column="product_name"/>
+        <result property="product_price" column="product_price"/>
+        <result property="product_title" column="product_title"/>
+        <result property="province_lng" column="province_lng"/>
+        <result property="province_lat" column="province_lat"/>
+        <result property="province_lng" column="province_lng"/>
+        <result property="cuntry_lng" column="cuntry_lng"/>
+        <result property="cuntry_lat" column="cuntry_lat"/>
+        <result property="city_lng" column="city_lng"/>
+        <result property="city_lat" column="city_lat"/>
+        <result property="productorder_code" column="productorder_code"/>
+        <result property="product_address_name" column="product_address_name"/>
+        <result property="product_shortname" column="product_shortname"/>
+        <result property="product_name" column="product_name"/>
+        <result property="productorder_mobile" column="productorder_mobile"/>
+    </resultMap>
+    
+	
+	<select id="getGroupBuyInfo" resultMap="Group">
+    	select DISTINCT
+					sh_area4.product_address_name,
+					sh_area4.product_shortname,
+					sh_area4.product_place_name,
+					sh_area4.lng product_lng,
+					sh_area4.lat product_lat,
+					product.product_id,
+					product.product_name,
+					product.product_price,
+					product.product_title,
+					sh_area3.province_lng,
+					sh_area3.province_lat,
+					sh_area2.cuntry_lng,
+					sh_area2.cuntry_lat,
+					sh_area1.city_lng,
+					sh_area1.city_lat,
+					productorder_address,
+					productorder_id,productorder_post,
+					productorder_receiver,
+					productorder_status,productorder_user_id,
+					productorderitem_product_id,
+					productorder_code,
+					productorder_mobile
+ 			from ( 
+ 			select productorder_address,productorder_id,productorder_post,productorder_receiver,productorder_status,productorder_user_id,productorder_code,productorder_mobile
+ 			from groupBuy 
+ 			where group_id = #{gid} ) groupBuy
+ 			INNER JOIN (
+ 				select productorderitem_product_id,productorderitem_order_id from groupOrderitem
+				) groupOrderitem 
+ 				on groupBuy.productorder_id = groupOrderitem.productorderitem_order_id
+ 			inner join (
+ 					SELECT sh_area.lng city_lng,sh_area.lat city_lat,sh_area.address_areaId,shortname,sh_area.address_name from sh_area 
+				) sh_area1 on sh_area1.address_areaId = groupBuy.productorder_address
+				inner join (
+ 						SELECT  sh_area.lng cuntry_lng,sh_area.lat cuntry_lat,sh_area.name,sh_area.shortname from sh_area 
+				) sh_area2 on sh_area2.name = sh_area1.shortname
+				inner join ( 
+ 						SELECT  DISTINCT sh_area.lng province_lng,sh_area.lat province_lat,sh_area.shortname from sh_area where sh_area.address_name = sh_area.shortname and sh_area.address_name = sh_area.`name`
+  				) sh_area3 on sh_area3.shortname = sh_area1.address_name
+  		 INNER JOIN (
+						SELECT product_id,product_name,product_title,product_price,product_origin from product
+				) product on product.product_id = groupOrderitem.productorderitem_product_id
+			inner join (
+					SELECT sh_area.address_areaId,sh_area.lng,sh_area.lat,sh_area.address_name product_address_name,sh_area.shortname product_shortname,sh_area.`name` product_place_name from sh_area
+				) sh_area4 on sh_area4.address_areaId = product.product_origin
+    </select>
+	
+    
     <select id="getlongitudeAndlatitudeOfUser"  resultMap="Position">
-        select lng,lat from sh_area where sh_area.address_name=#{province} and sh_area.shortname=#{city} and sh_area.name=#{country}
+        select 
+        	lng,lat 
+        	from sh_area 
+        		where sh_area.address_name=#{province} and sh_area.shortname=#{city} and sh_area.name=#{country}
     </select>
     
     <select id="getlongitudeAndlatitudeOfProduct" resultMap="Position">
@@ -24,4 +107,9 @@
 		on pro.product_origin = area.address_areaId)
  		as  temp 
     </select>
+    
+    <select id ="getGroupBuyId" parameterType="java.lang.Integer"  resultType="Integer">
+    		SELECT DISTINCT groupBuy.group_id FROM groupBuy order by group_id;
+    </select>
+    
 </mapper>

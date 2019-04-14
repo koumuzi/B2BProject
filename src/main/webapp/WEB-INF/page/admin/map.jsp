@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <title>货车路线规划－使用经纬度</title>
-    <script type="text/javascript" src='https://webapi.amap.com/maps?v=1.4.14&key=9b75fad1e1af55bdd45c3ae69baca36c&plugin=AMap.TruckDriving&callback=init'></script> 
+    <script type="text/javascript" src='https://webapi.amap.com/maps?v=1.4.14&key=9b75fad1e1af55bdd45c3ae69baca36c&plugin=AMap.Driving&callback=init'></script> 
     <style>
     html,
     body,
@@ -48,7 +48,7 @@ window.init = function(){
 	     center: [116.397428, 39.90923]
     });  
     
-    AMap.service('AMap.TruckDriving',function(){//回调函数
+    AMap.service('AMap.Driving',function(){//回调函数
 		 var truckOptions = {
 		        	map: map,
 		            policy:0,
@@ -56,7 +56,7 @@ window.init = function(){
 		            city:'beijing',
 		            panel:'panel'
 		    };
-		 var driving = new AMap.TruckDriving(truckOptions);
+		 var driving = new AMap.Driving(truckOptions);
 		 var path = [];
 		    path.push({lnglat:lngAndLat.product_lngAndLat});//起点
 		    path.push({lnglat:lngAndLat.user_lngAndLat});//终点
