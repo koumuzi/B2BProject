@@ -8,10 +8,10 @@
 <body>
 </head>
 <body>
-<div id="iframepage">
-<iframe width="100%" height="800" 
-src="https://app.powerbi.com/view?r=eyJrIjoiZjcyNzFmNTYtZmZlZS00ZjVjLTg5ODEtNDAwNjEyZGFjNTIzIiwidCI6IjhhMzg3OTFhLTZhZjktNGQwYS05ZDIyLTZkNjg0NTQ1MmE2YyIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true">
-</iframe>
-</div>
+	<div id="iframepage" >
+		<iframe width="1500px" height="900px" 
+		src="https://app.powerbi.com/view?r=eyJrIjoiZjcyNzFmNTYtZmZlZS00ZjVjLTg5ODEtNDAwNjEyZGFjNTIzIiwidCI6IjhhMzg3OTFhLTZhZjktNGQwYS05ZDIyLTZkNjg0NTQ1MmE2YyIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true">
+		</iframe>
+	</div>
 </body>
 </html>

@@ -20,7 +20,7 @@
 				option = {
 					title : {
 						text : '动态数据',
-						subtext : '纯属虚构'
+						subtext : '模拟用户实时下单'
 					},
 					tooltip : {
 						trigger : 'axis',
@@ -60,7 +60,7 @@
 									while (len--) {
 										res.unshift(now.toLocaleTimeString()
 												.replace(/^\D*/, ''));
-										now = new Date(now - 2000);
+										now = new Date(now - 100);
 									}
 									return res;
 								})()
