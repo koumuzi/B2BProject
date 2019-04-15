@@ -7,16 +7,18 @@
 <meta charset="UTF-8">
 <style type="text/css">
 body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+.table_normal_div{
+    position: relative;
+    min-height: 0px;
+}
 </style>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=4pfUa6c0Fpum3lwQYvaXSNakvbawYRgq&callback=init"></script>
 <script>
         //检索数据集
-        var dataList = {
-            "product_name": null,
-            "category_id": null,
-            "product_sale_price": null,
-            "product_price": null,
-            "product_isEnabled_array": null,
+         var dataList = {
+            "productOrder_code": null,
+            "productOrder_post": null,
+            "productOrder_status_array": null,
             "orderBy": null,
             "isDesc": true
         };
@@ -48,7 +50,7 @@ body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-fami
                 dataList.orderBy = null;
                 dataList.isDesc = true;
                 //获取数据
-                getData($(this), "admin/product/0/10", null);
+                getData($(this), "admin/groupBuy/"+gid);
                 //清除排序样式
                 var table = $("#table_product_list");
                 table.find("span.orderByDesc,span.orderByAsc").css("opacity","0");
@@ -65,7 +67,7 @@ body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-fami
                 //是否倒序排序
                 dataList.isDesc = $(this).attr("data-sort")==="asc";
 
-                getData($(this), "admin/product/0/10", dataList);
+               
                 //设置排序
                 table.find("span.orderByDesc,span.orderByAsc").css("opacity","0");
                 if(dataList.isDesc){
@@ -83,14 +85,92 @@ body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-fami
         });
         //获取产品数据
         function getData(object,url) {
-            var table = $("#table_product_list");
+        	var table = $("#table_productOrder_list");
             var tbody = table.children("tbody").first();
+            var tMap = document.getElementById("allmap")
+ 
             $.ajax({
                 url: url,
                 type: "get",
                 traditional: true,
                 success: function (data) {
+                	var info = JSON.parse(data)
+    				x=document.getElementById("span_order_address");  // 找到元素
+    				x.innerHTML=info.product_info.product_address;
+    				   //清空原有数据
+                    tbody.empty();
+                    tMap.innerHTML = "";
                     
+                    //设置样式
+                    $(".loader").css("display","none");
+                    object.attr("disabled",false);
+                    //显示订单统计数据
+                    $("#productOrder_count_data").text(data.productOrderCount);
+                    if (info.productOrderList.length > 0) {
+                        for (var i = 0; i < info.productOrderList.length; i++) {
+                            var productOrderStatusClass;
+                            var productOrderStatusTitle;
+                            var productOrderStatus;
+                            switch (info.productOrderList[i].productOrder_status) {
+                                case 0:
+                                    productOrderStatusClass = "td_await";
+                                    productOrderStatusTitle = "等待买家付款";
+                                    productOrderStatus = "等待买家付款";
+                                    break;
+                                case 1:
+                                    productOrderStatusClass = "td_warn";
+                                    productOrderStatusTitle = "买家已付款，等待卖家发货";
+                                    productOrderStatus = "等待卖家发货";
+                                    break;
+                                case 2:
+                                    productOrderStatusClass = "td_wait";
+                                    productOrderStatusTitle = "卖家已发货，等待买家确认";
+                                    productOrderStatus = "等待买家确认";
+                                    break;
+                                case 3:
+                                    productOrderStatusClass = "td_success";
+                                    productOrderStatusTitle = "交易成功";
+                                    productOrderStatus = "交易成功";
+                                    break;
+                                default:
+                                    productOrderStatusClass = "td_error";
+                                    productOrderStatusTitle = "交易关闭";
+                                    productOrderStatus = "交易关闭";
+                                    break;
+                            }
+                            var productOrder_id = info.productOrderList[i].productOrder_id;
+                            var productOrder_code = info.productOrderList[i].productOrder_code;
+                            var productOrder_post = info.productOrderList[i].productOrder_post;
+                            var productOrder_receiver = info.productOrderList[i].productOrder_receiver;
+                            var productOrder_mobile = info.productOrderList[i].productOrder_mobile;
+                            var productOrder_userMessage = info.productOrderList[i].productOrder_userMessage;
+                            //显示用户数据
+                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_productOrder_select_" + productOrder_id + "'><label for='cbx_productOrder_select_" + productOrder_id + "'></label></td><td title='" + productOrder_code + "'>" + productOrder_code + "</td><td title='" + productOrder_post + "'>" + productOrder_post + "</td><td title='" + productOrder_receiver + "'>" + productOrder_receiver + "</td><td title='" + productOrder_mobile + "'>" + productOrder_mobile + "</td><td><span class='" + productOrderStatusClass + "' title= '" + productOrderStatusTitle + "'>" + productOrderStatus + "</span></td><td><span class='td_special' title='查看订单详情'><a href='javascript:void(0)' onclick='getChildPage(this)'>详情</a></span></td><td hidden class='order_id'>" + productOrder_id + "</td></tr>");
+                        }
+                        //绑定事件
+                        tbody.children("tr").click(function () {
+                            trDataStyle($(this));
+                        });
+                    }
+                    var order_address = info.order_address
+					var map = new BMap.Map("allmap");
+                    if (order_address.length>0) {
+                    	map.centerAndZoom(new BMap.Point(order_address[0].product_lng,order_address[0].product_lat), 11);
+                    	}
+		        	map.enableScrollWheelZoom(true);
+		        	map.addControl(new BMap.NavigationControl());               // 添加平移缩放控件  
+		        	map.addControl(new BMap.ScaleControl());                    // 添加比例尺控件  
+		        	map.addControl(new BMap.OverviewMapControl());     
+		        	
+		        	for (var i=0;i<order_address.length;i++)
+		        	{
+		        		var start = new BMap.Point(order_address[i].product_lng,order_address[i].product_lat);
+		            	var end = new BMap.Point(order_address[i].city_lng,order_address[i].city_lat);
+		            	var pause2 = new BMap.Point(order_address[i].cuntry_lng,order_address[i].cuntry_lat)
+		            	var driving = new BMap.DrivingRoute(map, {renderOptions:{map: map, autoViewport: true}})
+		            	driving.search(start, end,{waypoints:[pause2]});//waypoints表示途经点
+		            	 
+		        	}
                 },
                 beforeSend: function () {
                     $(".loader").css("display","block");
@@ -111,30 +191,52 @@ body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-fami
             ajaxUtil.getPage("order/" + $(obj).parents("tr").find(".order_id").text(), null, true);
         }
 
-        //获取页码数据
-        function getPage(index) {
-            getData($(this), "admin/product/" + index + "/10", dataList);
-        }
-        
+       
         
         window.init = function(){  
-        	var order_address = ('${requestScope.order_address}')
-        	alert(order_address)
-        	var map = new BMap.Map("allmap");
-        	map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
-        	map.enableScrollWheelZoom(true);
         	
+        	var order_address = [
+        			<c:forEach items="${requestScope.order_address}" var="order"> 
+        			{
+        				product_lng:"${order.product_lng}",
+        			 	product_lat:"${order.product_lat}",
+        			 	province_lng:"${order.province_lng}",
+        			 	province_lat:"${order.province_lat}",
+        			 	cuntry_lng:"${order.cuntry_lng}",
+        			 	cuntry_lat:"${order.cuntry_lat}",
+        			 	city_lng:"${order.city_lng}",
+        			 	city_lat:"${order.city_lat}"	
+        			},
+    			
+    				</c:forEach>];
+        	var map = new BMap.Map("allmap");
+        	if (order_address.length>0) {
+        	map.centerAndZoom(new BMap.Point(order_address[0].product_lng,order_address[0].product_lat), 11);
+        	}
+        	map.enableScrollWheelZoom(true);
+        	map.addControl(new BMap.NavigationControl());               // 添加平移缩放控件  
+        	map.addControl(new BMap.ScaleControl());                    // 添加比例尺控件  
+        	map.addControl(new BMap.OverviewMapControl());              //添加缩略地图控件  
         	for (var i=0;i<order_address.length;i++)
         	{
         		
-  
+        		var start = new BMap.Point(order_address[i].product_lng,order_address[i].product_lat);
+            	var end = new BMap.Point(order_address[i].city_lng,order_address[i].city_lat);
+            	
+            	var pause2 = new BMap.Point(order_address[i].cuntry_lng,order_address[i].cuntry_lat)
+            
+            	var driving = new BMap.DrivingRoute(map, {renderOptions:{map: map, autoViewport: true}})
+            	
+            	driving.search(start, end,{waypoints:[pause2]},{strokeColor:"blue", strokeWeight:20, strokeOpacity:1});//waypoints表示途经点
         	}
         
-
+			
+        	
         }
     </script>
 </head>
 <body>
+<div style="height: 1000px; wight:1000px;overflow-y:scroll" >
 <div class="frm_div text_info">
     <div class="frm_group">
         <label class="frm_label" id="lbl_product_category_id" for="select_product_category">团号</label>
@@ -221,7 +323,10 @@ body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-fami
     </tbody>
      </table>
      </div>
-     
-     <div id="allmap" style="width: 100%;height: 900px"></div>
+    <div class="details_div">
+    	<span class="details_title text_info">物流信息</span>
+    </div>
+     <div id="allmap" style="width: 60%;height: 1000px; }"></div>
+     </div>
 </body>
 </html>

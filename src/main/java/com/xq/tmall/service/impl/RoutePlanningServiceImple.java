@@ -76,9 +76,7 @@ public class RoutePlanningServiceImple implements RoutePlanningService {
 		List<ProductOrder> productOrderList = new ArrayList<ProductOrder>();
 		List<Map<String,String>> order_address = new ArrayList<Map<String,String>>();
 		Map<String,String> product_info = new HashMap<String,String>();
-	       
 		product_info.put("product_address",group_info.get(0).getProduct_address_name()+" "+group_info.get(0).getProduct_shortname()+" "+ group_info.get(0).getProduct_place_name());
-		
 		for (Group group: group_info) {
 			ProductOrder tem = new ProductOrder();
 			tem.setProductOrder_id(group.getProductorder_id());
@@ -90,9 +88,10 @@ public class RoutePlanningServiceImple implements RoutePlanningService {
 			productOrderList.add(tem);
 			Map<String,String> map = new HashMap<String,String>();
 			map.put("product_lng", group.getProduct_lng());
+			//System.out.print(group.getProduct_lng()+"\t"+group.getProduct_lat()+"\t"+group.getCuntry_lng()+"\t"+group.getCuntry_lat()+"\t"+group.getCity_lng()+"\t"+group.getCity_lat());
 			map.put("product_lat", group.getProduct_lat());
 			map.put("province_lng", group.getProvince_lng());
-			map.put("province_lng", group.getProduct_lat());
+			map.put("province_lat", group.getProvince_lat());
 			map.put("cuntry_lng", group.getCuntry_lng());
 			map.put("cuntry_lat",group.getCuntry_lat());
 			map.put("city_lng",group.getCity_lng());

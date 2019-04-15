@@ -1,6 +1,7 @@
 package com.xq.tmall.controller.admin;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -86,7 +87,7 @@ public class RoutePlanningController  extends BaseController  {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "admin/groupBuy/{gid}")
+	@RequestMapping(value = "admin/groupBuy/{gid}",produces = {"application/text;charset=UTF-8"})
 	public String getGroupBuyInfoByGroupIdAjax(@PathVariable int gid,Map<String, Object> map,HttpSession session) {
 		 logger.info("检查管理员权限");
 	        Object adminId = checkAdmin(session);

@@ -80,7 +80,6 @@ public class ProductController extends BaseController{
         logger.info("获取产品详情-图片信息");
         Integer product_id =product.getProduct_id();
         List<ProductImage> productImageList = productImageService.getList(product_id, null, null);
-        System.out.println(productImageList);
         List<ProductImage> singleProductImageList = new ArrayList<>(5);
         List<ProductImage> detailsProductImageList = new ArrayList<>(8);
         for (ProductImage productImage : productImageList) {
