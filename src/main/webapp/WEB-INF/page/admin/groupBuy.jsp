@@ -143,9 +143,10 @@ body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-fami
                             var productOrder_post = info.productOrderList[i].productOrder_post;
                             var productOrder_receiver = info.productOrderList[i].productOrder_receiver;
                             var productOrder_mobile = info.productOrderList[i].productOrder_mobile;
+                            var productOrder_detail_address = info.productOrderList[i].productOrder_detail_address;
                             var productOrder_userMessage = info.productOrderList[i].productOrder_userMessage;
                             //显示用户数据
-                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_productOrder_select_" + productOrder_id + "'><label for='cbx_productOrder_select_" + productOrder_id + "'></label></td><td title='" + productOrder_code + "'>" + productOrder_code + "</td><td title='" + productOrder_post + "'>" + productOrder_post + "</td><td title='" + productOrder_receiver + "'>" + productOrder_receiver + "</td><td title='" + productOrder_mobile + "'>" + productOrder_mobile + "</td><td><span class='" + productOrderStatusClass + "' title= '" + productOrderStatusTitle + "'>" + productOrderStatus + "</span></td><td><span class='td_special' title='查看订单详情'><a href='javascript:void(0)' onclick='getChildPage(this)'>详情</a></span></td><td hidden class='order_id'>" + productOrder_id + "</td></tr>");
+                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_productOrder_select_" + productOrder_id + "'><label for='cbx_productOrder_select_" + productOrder_id + "'></label></td><td title='" + productOrder_code + "'>" + productOrder_code + "</td><td title='" + productOrder_post + "'>" + productOrder_post + "</td><td title='" + productOrder_receiver + "'>" + productOrder_receiver + "</td><td title='" + productOrder_mobile + "'>" + productOrder_mobile + "</td><td title='" + productOrder_detail_address + "'>" + productOrder_detail_address + "</td><td><span class='" + productOrderStatusClass + "' title= '" + productOrderStatusTitle + "'>" + productOrderStatus + "</span></td><td><span class='td_special' title='查看订单详情'><a href='javascript:void(0)' onclick='getChildPage(this)'>详情</a></span></td><td hidden class='order_id'>" + productOrder_id + "</td></tr>");
                         }
                         //绑定事件
                         tbody.children("tr").click(function () {
@@ -222,11 +223,8 @@ body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-fami
         		
         		var start = new BMap.Point(order_address[i].product_lng,order_address[i].product_lat);
             	var end = new BMap.Point(order_address[i].city_lng,order_address[i].city_lat);
-            	
             	var pause2 = new BMap.Point(order_address[i].cuntry_lng,order_address[i].cuntry_lat)
-            
             	var driving = new BMap.DrivingRoute(map, {renderOptions:{map: map, autoViewport: true}})
-            	
             	driving.search(start, end,{waypoints:[pause2]},{strokeColor:"blue", strokeWeight:20, strokeOpacity:1});//waypoints表示途经点
         	}
         
@@ -281,6 +279,7 @@ body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-fami
         </th>
         <th>收货人</th>
         <th>联系方式</th>
+        <th>收货地址</th>
         <th class="data_info" data-sort="asc" data-name="productOrder_status">
             <span>订单状态</span>
             <span class="orderByDesc"></span>
@@ -298,6 +297,7 @@ body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-fami
             <td title="${productOrder.productOrder_post}">${productOrder.productOrder_post}</td>
             <td title="${productOrder.productOrder_receiver}">${productOrder.productOrder_receiver}</td>
             <td title="${productOrder.productOrder_mobile}">${productOrder.productOrder_mobile}</td>
+           	<td title="${productOrder.productOrder_mobile}">${productOrder.productOrder_detail_address}</td>
             <td>
                 <c:choose>
                     <c:when test="${productOrder.productOrder_status==0}">

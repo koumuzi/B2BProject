@@ -21,11 +21,8 @@
         <result property="product_id" column="product_id"/>
         <result property="product_name" column="product_name"/>
         <result property="product_price" column="product_price"/>
-        <result property="product_title" column="product_title"/>
-        <result property="province_lng" column="province_lng"/>
-        <result property="province_lat" column="province_lat"/>
-        <result property="province_lng" column="province_lng"/>
         <result property="cuntry_lng" column="cuntry_lng"/>
+        <result property="merger_name" column="merger_name"/>
         <result property="cuntry_lat" column="cuntry_lat"/>
         <result property="city_lng" column="city_lng"/>
         <result property="city_lat" column="city_lat"/>
@@ -44,20 +41,20 @@
 					sh_area4.product_place_name,
 					sh_area4.lng product_lng,
 					sh_area4.lat product_lat,
+					sh_area1.merger_name,
 					product.product_id,
 					product.product_name,
 					product.product_price,
-					product.product_title,
-					sh_area3.province_lng,
-					sh_area3.province_lat,
 					sh_area2.cuntry_lng,
 					sh_area2.cuntry_lat,
 					sh_area1.city_lng,
 					sh_area1.city_lat,
 					productorder_address,
-					productorder_id,productorder_post,
+					productorder_id,
+					productorder_post,
 					productorder_receiver,
-					productorder_status,productorder_user_id,
+					productorder_status,
+					productorder_user_id,
 					productorderitem_product_id,
 					productorder_code,
 					productorder_mobile
@@ -70,20 +67,17 @@
 				) groupOrderitem 
  				on groupBuy.productorder_id = groupOrderitem.productorderitem_order_id
  			inner join (
- 					SELECT sh_area.lng city_lng,sh_area.lat city_lat,sh_area.address_areaId,shortname,sh_area.address_name from sh_area 
+ 					SELECT sh_area.lng city_lng,sh_area.lat city_lat,sh_area.address_areaId,shortname,sh_area.address_name,sh_area.merger_name from sh_area 
 				) sh_area1 on sh_area1.address_areaId = groupBuy.productorder_address
 				inner join (
  						SELECT  sh_area.lng cuntry_lng,sh_area.lat cuntry_lat,sh_area.name,sh_area.shortname from sh_area 
 				) sh_area2 on sh_area2.name = sh_area1.shortname
-				inner join ( 
- 						SELECT  DISTINCT sh_area.lng province_lng,sh_area.lat province_lat,sh_area.shortname from sh_area where sh_area.address_name = sh_area.shortname and sh_area.address_name = sh_area.`name`
-  				) sh_area3 on sh_area3.shortname = sh_area1.address_name
   		 INNER JOIN (
 						SELECT product_id,product_name,product_title,product_price,product_origin from product
 				) product on product.product_id = groupOrderitem.productorderitem_product_id
 			inner join (
 					SELECT sh_area.address_areaId,sh_area.lng,sh_area.lat,sh_area.address_name product_address_name,sh_area.shortname product_shortname,sh_area.`name` product_place_name from sh_area
-				) sh_area4 on sh_area4.address_areaId = product.product_origin
+				) sh_area4 on sh_area4.address_areaId = product.product_origin;
     </select>
 	
     

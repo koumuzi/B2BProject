@@ -85,13 +85,12 @@ public class RoutePlanningServiceImple implements RoutePlanningService {
 			tem.setProductOrder_receiver(group.getProductorder_receiver());
 			tem.setProductOrder_mobile(group.getProductorder_mobile());
 			tem.setProductOrder_status(group.getProductorder_status());
+			tem.setProductOrder_detail_address(group.getMerger_name().replace(",", " ").replace("中国", ""));
 			productOrderList.add(tem);
 			Map<String,String> map = new HashMap<String,String>();
 			map.put("product_lng", group.getProduct_lng());
 			//System.out.print(group.getProduct_lng()+"\t"+group.getProduct_lat()+"\t"+group.getCuntry_lng()+"\t"+group.getCuntry_lat()+"\t"+group.getCity_lng()+"\t"+group.getCity_lat());
 			map.put("product_lat", group.getProduct_lat());
-			map.put("province_lng", group.getProvince_lng());
-			map.put("province_lat", group.getProvince_lat());
 			map.put("cuntry_lng", group.getCuntry_lng());
 			map.put("cuntry_lat",group.getCuntry_lat());
 			map.put("city_lng",group.getCity_lng());

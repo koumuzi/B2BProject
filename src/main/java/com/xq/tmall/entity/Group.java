@@ -25,14 +25,21 @@ public class Group {
 	private String product_shortname;
 	private String product_place_name;
 	
+	private String merger_name;
 	
+
+	public String getMerger_name() {
+		return merger_name;
+	}
+
+	public void setMerger_name(String merger_name) {
+		this.merger_name = merger_name;
+	}
+
 	private String product_lat;
 	private String product_id;
 	private String product_name;
 	private String product_price;
-	private String product_title;
-	private String province_lng;
-	private String province_lat;
 	private String cuntry_lng;
 	private String cuntry_lat;
 	private String city_lng;
@@ -119,30 +126,6 @@ public class Group {
 
 	public void setProduct_price(String product_price) {
 		this.product_price = product_price;
-	}
-
-	public String getProduct_title() {
-		return product_title;
-	}
-
-	public void setProduct_title(String product_title) {
-		this.product_title = product_title;
-	}
-
-	public String getProvince_lng() {
-		return province_lng;
-	}
-
-	public void setProvince_lng(String province_lng) {
-		this.province_lng = province_lng;
-	}
-
-	public String getProvince_lat() {
-		return province_lat;
-	}
-
-	public void setProvince_lat(String province_lat) {
-		this.province_lat = province_lat;
 	}
 
 	public String getCuntry_lng() {
