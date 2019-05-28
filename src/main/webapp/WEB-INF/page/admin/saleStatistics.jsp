@@ -11,7 +11,6 @@
     var app = {};
     option = null;
     app.title = '销售情况统计';
-
     option = {
         title: {
             text: '销售情况统计',
@@ -81,7 +80,6 @@
     
     
     function getSaleData(beginDate, endDate,saleJson ) {
-
         if (saleJson == null) {
             $.ajax({
                 url: "/tmall/admin/home/sale",
@@ -131,24 +129,20 @@
             padding: 0;
             margin-bottom: 40px;
         }
-
         #chartByDate > li {
             display: inline-block;
             list-style: none;
         }
-
         #chartByDate > li > .frm_input {
             color: #999;
             height: 29px;
             cursor: pointer;
         }
-
         #chartTotal {
             width: 100%;
             margin-bottom: 30px;
             padding: 0 20px;
         }
-
         #chartTotal > li {
             width: 35%;
             display: inline-block;
@@ -156,53 +150,44 @@
             padding: 0 40px;
             cursor: pointer;
         }
-
         #chartTotal > li + li {
             border-left: 2px solid #eee;
         }
-
         #chartTotal > li:first-child {
             width: 31.5%;
             padding-left: 0;
         }
-
         #chartTotal > li:last-child {
             width: 31.5%;
             padding-right: 0;
         }
-
         #chartTotal .chartTotalTitle {
             height: 20px;
             text-indent: 3px;
         }
-
         .chartTotalTitle .chartTitleText {
             float: left;
             font-weight: bold;
             font-size: 14px;
             color: #666;
         }
-
         .chartTotalTitle .chartTitleUnit {
             float: right;
             font-weight: bold;
             font-size: 14px;
             color: #666;
         }
-
         #chartTotal .chartTotalValue {
             font-size: 28px;
             font-weight: bold;
             color: #666;
         }
-
         #chartTotal .chartTotalStyle {
             width: 100%;
             height: 6px;
             border-radius: 10px;
             margin-top: 10px;
         }
-
         .chartDateBtn {
             display: inline-block;
             padding: 5px 10px;
@@ -213,42 +198,34 @@
             font-size: 12px;
             cursor: pointer;
         }
-
         span.chartDateBtn.select {
             background: #70BBF4;
             border: 1px solid #70BBF4;
             color: white;
         }
-
         .chartDateInput {
             color: #999;
             outline: none;
             border: 0;
         }
-
         input[type=date]::-webkit-inner-spin-button {
             display: none
         }
-
         input[type=date]::-webkit-clear-button {
             display: none
         }
-
         #btn_chart_search {
             position: relative;
             top: 1px;
         }
-
         .split {
             color: #999;
             padding-right: 10px;
         }
-
         #chartDiv {
             border: 1px solid #eee;
             padding: 20px;
         }
-
     </style>
 </head>
 <body>
@@ -260,6 +237,6 @@
     <li><input class="frm_btn" id="btn_chart_search" type="button" value="查询"/></li>
 </ul>
 <div id="chartDiv" style="width: 100%;height: 500px"></div>
-<div class="container"></div>
+
 </body>
 </html>

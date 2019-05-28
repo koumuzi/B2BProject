@@ -8,7 +8,16 @@ public class ProductSale {
 	
 	private String product_category_name;
 
+	private double salecolume;
 	
+	public double getSalecolume() {
+		return salecolume;
+	}
+
+	public void setSalecolume(double salecolume) {
+		this.salecolume = salecolume;
+	}
+
 	public String getProduct_category_id() {
 		return product_category_id;
 	}

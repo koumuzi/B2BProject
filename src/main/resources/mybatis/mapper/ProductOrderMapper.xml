@@ -173,4 +173,18 @@
  		) as prod
  
     </select>
+    
+    <select id="getSaleVolumeByDate" resultType="productSale">
+    select productorder_category_id,sum(productorderitem_price) salecolume from (
+		select * from (
+			Select productorderitem_order_id,productorderitem_price from productOrderItem
+		) productOrderitem1 
+		INNER JOIN (
+			select productOrder.productorder_id,productorder_category_id from productOrder where productorder_confirm_date BETWEEN  #{beginDate} AND #{endDate}
+		) productOrdre1 on productOrdre1.productorder_id = productOrderitem1.productorderitem_order_id
+		
+	
+) temp GROUP BY temp.productorder_category_id
+    </select>
+    
 </mapper>

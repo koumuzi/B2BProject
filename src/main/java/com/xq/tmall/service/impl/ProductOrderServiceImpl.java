@@ -71,4 +71,10 @@ public class ProductOrderServiceImpl implements ProductOrderService{
 		// TODO Auto-generated method stub
 		return productOrderMapper.getSaleByDate(beginDate, endDate);
 	}
+
+	@Override
+	public List<ProductSale> getSaleVolumeByDate(Date beginDate, Date endDate) {
+		
+		return productOrderMapper.getSaleVolumeByDate(beginDate, endDate);
+	}
 }

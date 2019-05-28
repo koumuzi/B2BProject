@@ -24,5 +24,5 @@ public interface ProductOrderService {
     Integer getTotal(ProductOrder productOrder,Byte[] productOrder_status_array);
     
     List<ProductSale> getSaleByDate(Date beginDate, Date endDate);
-    
-}
+    List<ProductSale> getSaleVolumeByDate(Date beginDate, Date endDate);
+}	

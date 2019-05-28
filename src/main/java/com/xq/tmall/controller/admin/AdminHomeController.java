@@ -228,17 +228,26 @@ public class AdminHomeController extends BaseController {
         logger.info("获取时间段数组");
         
         logger.info("获取总交易额订单列表");
+        
         List<ProductSale> ProductSaleGroup = productOrderService.getSaleByDate(beginDate, endDate);
+        //List<ProductSale> ProductSaleVolume = productOrderService.getSaleVolumeByDate(beginDate, endDate);
+        
         logger.info("根据订单状态分类");
         //产品种类
         List<String> categorylist = new ArrayList<>();
         //销售量
         List<Integer> salecountlist = new ArrayList<>();
         
+        //Map<String,Double> saleVolume = new HashMap<String,Double>();
         for (ProductSale sale :ProductSaleGroup ) {
         	categorylist.add(sale.getProduct_category_name());
         	salecountlist.add(sale.getCount());
         }
+        
+//        for (ProductSale sale :ProductSaleVolume ) {
+//        	saleVolume.put(sale.getProduct_category_name(), sale.getSalecolume());
+//        }
+
 
         String[] category = new String[categorylist.size()];
 
@@ -246,6 +255,7 @@ public class AdminHomeController extends BaseController {
         
         int[] salecount = salecountlist.stream().mapToInt(Integer::intValue).toArray();
 
+       // saleJson.put("saleVolume", saleVolume);
         
         
         saleJson.put("category", JSONArray.parseArray(JSON.toJSONString(category)));
